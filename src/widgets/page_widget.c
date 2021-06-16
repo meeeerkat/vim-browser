@@ -19,3 +19,12 @@ void page_widget_display(page_t *page)
     // TODO: make the page here
     wrefresh(window);
 }
+
+void page_widget_prepare_input_handling()
+{
+
+}
+bool page_widget_handle_input(int16_t c)
+{
+    return false;
+}

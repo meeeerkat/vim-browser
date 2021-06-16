@@ -1,28 +1,40 @@
 #include "controller.h"
-#include "view.h"
 #include "widgets/tabs_widget.h"
 #include "widgets/page_widget.h"
 #include "widgets/command_widget.h"
+#include "input_handler.h"
 
 
 void controller_init()
 {
-    view_init();
+    // ncurses init
+    initscr();
 
-    model_init();
+    // widgets init
     tabs_widget_init();
     page_widget_init();
     command_widget_init();
+
+    // helpers init
+    model_init();
+    input_handler_init();
+
+    input_handler_wait_and_read();
 }
 
 void controller_free()
 {
+    // helpers freeing
+    input_handler_free();
     model_free();
+
+    // widgets freeing
     tabs_widget_free();
     page_widget_free();
     command_widget_free();
 
-    view_close();
+    // ncurses closing
+    endwin();
 }
 
 int8_t controller_open_in_current_tab(char *url)

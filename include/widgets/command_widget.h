@@ -6,4 +6,8 @@
 void command_widget_init();
 void command_widget_free();
 
+// input handling
+void command_widget_prepare_input_handling();
+bool command_widget_handle_input(int16_t c);
+
 #endif
