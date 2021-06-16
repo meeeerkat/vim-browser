@@ -11,16 +11,18 @@ typedef struct data {
 
 static data_t data;
 
+static void update_view();
+
 
 void tabs_widget_init()
 {
     // Takes only the first line
     data.window = newwin(1, COLS, 0, 0);
     data.pages = malloc(sizeof(page_t*) * MAX_TABS_INDEX);
-    // There is only a tab at startup (an empty one for now)
+    data.tabs_nb = 0;
     data.current_tab_index = 0;
-    data.tabs_nb = 1;
-    data.pages[0] = page_init();
+    // There is only a tab at startup (an empty one for now)
+    tabs_widget_add_tab();
 }
 void tabs_widget_free()
 {
@@ -31,7 +33,32 @@ void tabs_widget_free()
     delwin(data.window);
 }
 
-page_t *tabs_widget_current_page()
+page_t *tabs_widget_get_displayed_page()
 {
     return data.pages[data.current_tab_index];
+}
+
+page_t *tabs_widget_add_tab()
+{
+    page_t *new_page = page_init();
+    data.pages[data.tabs_nb] = new_page;
+    data.tabs_nb++;
+    update_view();
+    return new_page;
+}
+void tabs_widget_set_current_tab(uint8_t new_tab_index)
+{
+    data.current_tab_index = new_tab_index;
+    update_view();
+}
+
+void update_view()
+{
+    wclear(data.window);
+
+    const uint8_t tab_size = COLS/data.tabs_nb;
+    for (uint8_t i=0; i < data.tabs_nb; i++)
+        mvwprintw(data.window, 0, i*tab_size, "%hhu", i);
+
+    wrefresh(data.window);
 }
