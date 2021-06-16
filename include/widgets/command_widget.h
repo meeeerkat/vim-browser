@@ -10,10 +10,4 @@ void command_widget_free();
 void command_widget_prepare_input_handling();
 bool command_widget_handle_input(int16_t c);
 
-// Private
-static void print_command();
-static void reset();
-static void insert_char(char c);
-static void delete_char(int16_t pos);
-
 #endif

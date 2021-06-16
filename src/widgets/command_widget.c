@@ -14,6 +14,17 @@ typedef struct command_widget_data {
 
 static command_widget_data_t data;
 
+
+// Private declarations
+static void print_command();
+static void reset();
+static void insert_char(char c);
+static void delete_char(int16_t pos);
+
+
+
+
+
 void command_widget_init()
 {
     // Takes only the last line
@@ -30,7 +41,7 @@ void command_widget_free()
 
 
 // Inputs
-static void reset()
+void reset()
 {
     data.command_cursor = 0;
     data.command_length = 0;
@@ -44,7 +55,7 @@ void command_widget_prepare_input_handling()
     wrefresh(data.window);
 }
 
-static void print_command()
+void print_command()
 {
     wclear(data.window);
     data.current_command[data.command_length] = '\0';
@@ -55,7 +66,7 @@ static void print_command()
     wrefresh(data.window);
 }
 
-static void insert_char(char c)
+void insert_char(char c)
 {
     // Inserting char
     for (int32_t i=data.command_length; i >= data.command_cursor; i--)
@@ -66,7 +77,7 @@ static void insert_char(char c)
     data.command_length++;
 }
 
-static void delete_char(int16_t pos)
+void delete_char(int16_t pos)
 {
     for (uint16_t i=pos; i < data.command_length; i++)
         data.current_command[i] = data.current_command[i+1];
