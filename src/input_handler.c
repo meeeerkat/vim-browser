@@ -29,7 +29,7 @@ void input_handler_free()
 void input_handler_wait_and_read()
 {
     while (TRUE) {
-        const char c = getch();
+        const uint16_t c = getch();
         if (c == ESC)
             data.forwarding_target = None;
 
