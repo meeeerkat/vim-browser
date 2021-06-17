@@ -1,3 +1,4 @@
+#include <string.h>
 #include "controller.h"
 #include "widgets/tabs_widget.h"
 #include "widgets/page_widget.h"
@@ -55,3 +56,4 @@ int8_t controller_open_in_new_tab(char *url)
         return -1;
     return 0;
 }
+

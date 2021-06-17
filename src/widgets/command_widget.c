@@ -1,14 +1,14 @@
 #include <stdlib.h>
 #include "widgets/command_widget.h"
+#include "command/handler.h"
 
-#define MAX_COMMAND_LENGTH 1000
 #define KEY_OTHER_ENTER 10
 
 
 
 typedef struct command_widget_data {
     WINDOW *window;
-    char current_command[MAX_COMMAND_LENGTH];
+    char current_command[COMMAND_MAX_LENGTH];
     uint16_t command_cursor, command_length;
 } command_widget_data_t;
 
@@ -68,7 +68,6 @@ void print_command()
 
 void insert_char(char c)
 {
-    // Inserting char
     for (int32_t i=data.command_length; i >= data.command_cursor; i--)
         data.current_command[i+1] = data.current_command[i];
     data.current_command[data.command_cursor] = c;
@@ -93,16 +92,13 @@ bool command_widget_handle_input(int16_t code)
 {
     // TODO: handle ESC to leave command input forwarding
     // (or another key since ncurses seems to have problems with ESC)
+    // TODO: handle backspace to delete char (cancel works but isn't enought)
+    // TODO: handle KEY_UP & KEY_BOTTOM + command history
 
     switch (code) {
         //case KEY_ENTER:
         case KEY_OTHER_ENTER:
-            // Dirty temporary setup to be able to quit easily
-            // TODO: actual parsing of the command and execute it (maybe not in this module ??)
-            if (data.current_command[0] == 'q') {
-                endwin();
-                exit(0);
-            }
+            command_handler_exec(data.current_command);
             reset();
             return false;
 
@@ -126,6 +122,7 @@ bool command_widget_handle_input(int16_t code)
             return true;
     }
 
+    // If we're here then the code is a simple character
     insert_char((char) code);
     print_command();
 

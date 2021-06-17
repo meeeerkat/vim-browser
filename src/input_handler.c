@@ -40,6 +40,9 @@ void input_handler_wait_and_read()
         else if(data.forwarding_target == Command && !command_widget_handle_input(c))
             data.forwarding_target = None;
 
+        if (data.forwarding_target != None)
+            continue;
+
         /* These ifs only modifies the forwarding target but there are single
         ** press keys that should be passed directly
         ** such as arrow keys to page_widget (to scroll)

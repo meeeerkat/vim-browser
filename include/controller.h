@@ -11,5 +11,4 @@ int8_t controller_open_in_current_tab(char *url);
 int8_t controller_open_in_new_tab(char *url);
 
 
-
 #endif

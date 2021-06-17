@@ -7,7 +7,6 @@
 int main()
 {
     controller_init();
-    controller_free();
     
     return 0;
 }
