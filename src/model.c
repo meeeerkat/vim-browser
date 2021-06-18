@@ -39,7 +39,7 @@ int8_t model_load_page(char *url, page_t *page)
     curl_easy_setopt(model.curl, CURLOPT_WRITEDATA, page->doc);
     int err = curl_easy_perform(model.curl);
     if (err) {
-        fprintf(stderr, "%s\n", model.curl_errbuf);
+        //fprintf(stderr, "%s\n", model.curl_errbuf);
         return -1;
     }
     status = lxb_html_document_parse_chunk_end(page->doc);

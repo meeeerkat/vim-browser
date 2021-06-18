@@ -11,15 +11,18 @@ void controller_init()
     // ncurses init
     initscr();
 
+    // helpers init
+    model_init();
+    input_handler_init();
+
     // widgets init
     tabs_widget_init();
     page_widget_init();
     command_widget_init();
 
-    // helpers init
-    model_init();
-    input_handler_init();
+    controller_open_in_current_tab("https://duckduckgo.com");
 
+    // Setup complete, now everything is done after an user command
     input_handler_wait_and_read();
 }
 

@@ -8,6 +8,9 @@
 enum ForwardingTarget{ None, Page, Command };
 
 typedef struct input_handler_data {
+    // fake 0 sized window that only serves to get input (wgetch)
+    // because wgetch refreshes the window every time it's called
+    WINDOW *fake_window;
     enum ForwardingTarget forwarding_target;
 } input_handler_data_t;
 
@@ -16,20 +19,23 @@ static input_handler_data_t data;
 
 void input_handler_init()
 {
-    data.forwarding_target = None;
     // ncurses inputs init
+    data.fake_window = newwin(0,0,LINES-1,COLS-1);
     raw();
     keypad(stdscr, TRUE);
     noecho();
+    
+    data.forwarding_target = None;
 }
 void input_handler_free()
 {
+    delwin(data.fake_window);
 }
 
 void input_handler_wait_and_read()
 {
     while (TRUE) {
-        const uint16_t c = getch();
+        const uint16_t c = wgetch(data.fake_window);
         if (c == ESC)
             data.forwarding_target = None;
 
