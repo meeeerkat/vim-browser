@@ -6,6 +6,7 @@
 #include "widgets/command.h"
 #include "input_handler.h"
 #include "commands/open.h"
+#include "commands/handler.h"
 
 
 void controller_init()
@@ -18,9 +19,9 @@ void controller_init()
     input_handler_init();
 
     // widgets init
-    widgets_tabs_init();
+    widgets_tabs_init(widgets_page_display);
     widgets_page_init();
-    widgets_command_init();
+    widgets_command_init(commands_handler_exec);
 
     // Opening base window
     commands_open_in_current_tab("https://duckduckgo.com");

@@ -4,7 +4,7 @@
 #include <ncurses.h>
 #include "model/page.h"
 
-void widgets_tabs_init();
+void widgets_tabs_init(void (*update_page_display_callback) (model_page_t*));
 void widgets_tabs_free();
 
 model_page_t *widgets_tabs_get_displayed_page();

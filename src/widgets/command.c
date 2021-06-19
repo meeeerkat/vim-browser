@@ -17,6 +17,7 @@ typedef struct widgets_command_data {
     char history[HISTORY_MAX_NB][COMMAND_MAX_LENGTH]; // History cache
     int16_t history_cursor; // Currently displayed history command
     uint16_t history_nb; // Nb of commands in history
+    void (*exec_command_callback) (char*);
 } widgets_command_data_t;
 
 static widgets_command_data_t data;
@@ -33,13 +34,15 @@ static void set_command(char *command);
 
 
 
-void widgets_command_init()
+void widgets_command_init(void (*exec_command_callback) (char*))
 {
+    data.history_nb = 0;
+    data.exec_command_callback = exec_command_callback;
+
     // Takes only the last line
     data.window = newwin(1, COLS, LINES-1, 0);
     keypad(data.window, TRUE);
 
-    data.history_nb = 0;
     reset();
 }
 void widgets_command_free()
@@ -118,7 +121,7 @@ void widgets_command_handle_input()
             case KEY_OTHER_ENTER:
                 data.history_cursor = data.history_nb;
                 strcpy(data.history[data.history_nb++], data.current_command);
-                commands_handler_exec(data.current_command);
+                data.exec_command_callback(data.current_command);
                 reset();
                 return;
 

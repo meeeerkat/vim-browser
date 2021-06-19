@@ -3,7 +3,7 @@
 
 #include <ncurses.h>
 
-void widgets_command_init();
+void widgets_command_init(void (*exec_command_callback) (char*));
 void widgets_command_free();
 
 // input handling

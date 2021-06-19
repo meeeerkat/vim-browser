@@ -1,5 +1,5 @@
 #include "widgets/tabs.h"
-#include "widgets/page.h"
+#include "model/page.h"
 
 #define TABS_MAX_NB 10
 
@@ -8,6 +8,7 @@ typedef struct data {
     model_page_t **pages;
     uint8_t current_tab_index;
     uint8_t tabs_nb;
+    void (*update_page_display_callback) (model_page_t*);
 } data_t;
 
 
@@ -16,13 +17,14 @@ static data_t data;
 static void update_view();
 
 
-void widgets_tabs_init()
+void widgets_tabs_init(void (*update_page_display_callback) (model_page_t*))
 {
     // Takes only the first line
     data.window = newwin(1, COLS, 0, 0);
     data.pages = malloc(sizeof(model_page_t*) * TABS_MAX_NB);
     data.tabs_nb = 0;
     data.current_tab_index = 0;
+    data.update_page_display_callback = update_page_display_callback;
 
     widgets_tabs_add_tab();
 }
@@ -88,7 +90,7 @@ void widgets_tabs_close_tab(uint8_t tab_index)
     // If it's the one deleted, the next one is displayed except if it's the last one
     else if(data.current_tab_index == tab_index && data.current_tab_index == data.tabs_nb) {
         data.current_tab_index--;
-        widgets_page_display(data.pages[data.current_tab_index]);
+        data.update_page_display_callback(data.pages[data.current_tab_index]);
     }
     
     update_view();
