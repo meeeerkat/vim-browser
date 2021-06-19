@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <ncurses.h>
 #include "widgets/command_widget.h"
 #include "command/handler.h"
 
@@ -29,6 +30,7 @@ void command_widget_init()
 {
     // Takes only the last line
     data.window = newwin(1, COLS, LINES-1, 0);
+    keypad(data.window, TRUE);
 
     reset();
 }
@@ -46,12 +48,6 @@ void reset()
     data.command_cursor = 0;
     data.command_length = 0;
     wclear(data.window);
-    wrefresh(data.window);
-}
-
-void command_widget_prepare_input_handling()
-{
-    waddch(data.window, ':');
     wrefresh(data.window);
 }
 
@@ -88,43 +84,49 @@ void delete_char(int16_t pos)
     }
 }
 
-bool command_widget_handle_input(int16_t code)
+void command_widget_handle_input()
 {
-    // TODO: handle ESC to leave command input forwarding
-    // (or another key since ncurses seems to have problems with ESC)
-    // TODO: handle backspace to delete char (cancel works but isn't enought)
-    // TODO: handle KEY_UP & KEY_BOTTOM + command history
+    waddch(data.window, ':');
+    wrefresh(data.window);
+    
+    while (TRUE) {
+        const uint16_t code = wgetch(data.window);
+        // TODO: handle ESC to leave command input forwarding
+        // (or another key since ncurses seems to have problems with ESC)
+        // TODO: handle backspace to delete char (cancel works but isn't enought)
+        // TODO: handle KEY_UP & KEY_BOTTOM + command history
 
-    switch (code) {
-        //case KEY_ENTER:
-        case KEY_OTHER_ENTER:
-            command_handler_exec(data.current_command);
-            reset();
-            return false;
+        switch (code) {
+            case KEY_ENTER:
+            case KEY_OTHER_ENTER:
+                command_handler_exec(data.current_command);
+                reset();
+                return;
 
-        case KEY_DC:
-            delete_char(data.command_cursor);
-            print_command();
-            return true;
+            case KEY_DC:
+                delete_char(data.command_cursor);
+                print_command();
+                break;
 
-        case KEY_LEFT:
-            if (data.command_cursor > 0) {
-                wmove(data.window, 0, (--data.command_cursor)+1);
-                wrefresh(data.window);
-            }
-            return true;
+            case KEY_LEFT:
+                if (data.command_cursor > 0) {
+                    wmove(data.window, 0, (--data.command_cursor)+1);
+                    wrefresh(data.window);
+                }
+                break;
 
-        case KEY_RIGHT:
-            if (data.command_cursor < data.command_length) {
-                wmove(data.window, 0, (++data.command_cursor)+1);
-                wrefresh(data.window);
-            }
-            return true;
+            case KEY_RIGHT:
+                if (data.command_cursor < data.command_length) {
+                    wmove(data.window, 0, (++data.command_cursor)+1);
+                    wrefresh(data.window);
+                }
+                break;
+
+            default:
+                // If we're here then the code is a simple character
+                insert_char((char) code);
+                print_command();
+                break;
+        }
     }
-
-    // If we're here then the code is a simple character
-    insert_char((char) code);
-    print_command();
-
-    return true;
 }

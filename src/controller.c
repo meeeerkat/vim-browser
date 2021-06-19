@@ -45,7 +45,7 @@ void controller_free()
 void controller_open_in_current_tab(char *url)
 {
     page_t *current_page = tabs_widget_get_displayed_page();
-    model_load_page_async(url, current_page, (void (*) (void*)) page_widget_display, current_page);
+    model_load_page_async(url, current_page, (void (*) (void*))page_widget_display, current_page);
 }
 
 void controller_open_in_new_tab(char *url)

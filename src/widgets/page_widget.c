@@ -6,6 +6,7 @@ void page_widget_init()
 {
     // Takes all but the first and last lines
     window = newwin(LINES-2, COLS, 1, 0);
+    keypad(window, TRUE);
 }
 
 void page_widget_free()
@@ -20,11 +21,7 @@ void page_widget_display(page_t *page)
     wrefresh(window);
 }
 
-void page_widget_prepare_input_handling()
+void page_widget_handle_input()
 {
 
-}
-bool page_widget_handle_input(int16_t c)
-{
-    return false;
 }
