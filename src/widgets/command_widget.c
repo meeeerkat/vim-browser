@@ -1,26 +1,33 @@
 #include <stdlib.h>
+#include <string.h>
 #include <ncurses.h>
 #include "widgets/command_widget.h"
 #include "command/handler.h"
 
 #define KEY_OTHER_ENTER 10
+#define HISTORY_MAX_NB 1000 // Quite high because once this limit is reached, the program just crashes
 
 
 
 typedef struct command_widget_data {
     WINDOW *window;
-    char current_command[COMMAND_MAX_LENGTH];
-    uint16_t command_cursor, command_length;
+    char current_command[COMMAND_MAX_LENGTH]; // Current command cache
+    int16_t command_cursor; // Cursor position in the current command
+    uint16_t command_length; // Current command's length
+    char history[HISTORY_MAX_NB][COMMAND_MAX_LENGTH]; // History cache
+    int16_t history_cursor; // Currently displayed history command
+    uint16_t history_nb; // Nb of commands in history
 } command_widget_data_t;
 
 static command_widget_data_t data;
 
 
 // Private declarations
-static void print_command();
+static void print_current_command();
 static void reset();
 static void insert_char(char c);
 static void delete_char(int16_t pos);
+static void set_command(char *command);
 
 
 
@@ -32,6 +39,7 @@ void command_widget_init()
     data.window = newwin(1, COLS, LINES-1, 0);
     keypad(data.window, TRUE);
 
+    data.history_nb = 0;
     reset();
 }
 void command_widget_free()
@@ -47,11 +55,12 @@ void reset()
 {
     data.command_cursor = 0;
     data.command_length = 0;
+    data.history_cursor = data.history_nb;
     wclear(data.window);
     wrefresh(data.window);
 }
 
-void print_command()
+void print_current_command()
 {
     wclear(data.window);
     data.current_command[data.command_length] = '\0';
@@ -84,6 +93,13 @@ void delete_char(int16_t pos)
     }
 }
 
+void set_command(char *command)
+{
+    strcpy(data.current_command, command);
+    data.command_length = strlen(command);
+    data.command_cursor = data.command_length;
+}
+
 void command_widget_handle_input()
 {
     waddch(data.window, ':');
@@ -94,18 +110,21 @@ void command_widget_handle_input()
         // TODO: handle ESC to leave command input forwarding
         // (or another key since ncurses seems to have problems with ESC)
         // TODO: handle backspace to delete char (cancel works but isn't enought)
-        // TODO: handle KEY_UP & KEY_BOTTOM + command history
+        // TODO: handle history_nb getting > to HISTORY_MAX_NB (cyclic structure ??)
+        // for now the program just crashes
 
         switch (code) {
             case KEY_ENTER:
             case KEY_OTHER_ENTER:
+                data.history_cursor = data.history_nb;
+                strcpy(data.history[data.history_nb++], data.current_command);
                 command_handler_exec(data.current_command);
                 reset();
                 return;
 
             case KEY_DC:
                 delete_char(data.command_cursor);
-                print_command();
+                print_current_command();
                 break;
 
             case KEY_LEFT:
@@ -122,10 +141,25 @@ void command_widget_handle_input()
                 }
                 break;
 
+            case KEY_UP:
+                if (data.history_cursor > 0) {
+                    set_command(data.history[--data.history_cursor]);
+                    print_current_command();
+                }
+                break;
+
+            case KEY_DOWN:
+                if (data.history_cursor < data.history_nb)
+                    set_command(data.history[++data.history_cursor]);
+                else if (data.history_cursor == data.history_nb)
+                    set_command("");
+                print_current_command();
+                break;
+
             default:
                 // If we're here then the code is a simple character
                 insert_char((char) code);
-                print_command();
+                print_current_command();
                 break;
         }
     }

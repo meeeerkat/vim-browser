@@ -3,6 +3,7 @@
 #include "command/handler.h"
 #include "command/quit.h"
 #include "command/open.h"
+#include "command/history.h"
 
 
 
@@ -17,6 +18,7 @@ static const command_t COMMANDS[] =
 {
     COMMAND(quit),
     COMMAND(open),
+    COMMAND(history),
 };
 static const uint16_t COMMANDS_NB = 2;
 
