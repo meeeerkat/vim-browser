@@ -5,10 +5,9 @@
 #include "model/loader.h"
 #include "model/page.h"
 
+// Mostly only initialisation
 void controller_init();
 void controller_free();
-void controller_open_in_current_tab(char *url);
-void controller_open_in_new_tab(char *url);
 
 
 #endif
