@@ -13,12 +13,12 @@ typedef struct command {
 
 
 #define COMMAND(NAME)  { #NAME, command_ ## NAME ## _exec }
-static const command_t commands[] = 
+static const command_t COMMANDS[] = 
 {
     COMMAND(quit),
     COMMAND(open),
 };
-static const uint16_t commands_nb = 2;
+static const uint16_t COMMANDS_NB = 2;
 
 
 void command_handler_exec(char *command)
@@ -30,8 +30,8 @@ void command_handler_exec(char *command)
     memcpy(name, command, i);
     strcpy(parameters, command+i); // Copies the rest of the string
 
-    for (i=0; i < commands_nb && strcmp(name, commands[i].name) != 0; i++);
+    for (i=0; i < COMMANDS_NB && strcmp(name, COMMANDS[i].name) != 0; i++);
 
-    if (i < commands_nb)
-        commands[i].exec(parameters);
+    if (i < COMMANDS_NB)
+        COMMANDS[i].exec(parameters);
 }

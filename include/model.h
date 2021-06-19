@@ -7,7 +7,7 @@
 
 
 void model_init();
-int8_t model_load_page(char* url, page_t *page);
+void model_load_page_async(char* url, page_t *page, void (*callback) (void*), void *callback_params);
 void model_free();
 
 

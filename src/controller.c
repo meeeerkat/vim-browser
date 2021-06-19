@@ -1,4 +1,5 @@
 #include <string.h>
+#include <pthread.h>
 #include "controller.h"
 #include "widgets/tabs_widget.h"
 #include "widgets/page_widget.h"
@@ -41,22 +42,15 @@ void controller_free()
     endwin();
 }
 
-int8_t controller_open_in_current_tab(char *url)
+void controller_open_in_current_tab(char *url)
 {
     page_t *current_page = tabs_widget_get_displayed_page();
-    if (model_load_page(url, current_page) < 0)
-        return -1;
-
-    page_widget_display(current_page);
-
-    return 0;
+    model_load_page_async(url, current_page, (void (*) (void*)) page_widget_display, current_page);
 }
 
-int8_t controller_open_in_new_tab(char *url)
+void controller_open_in_new_tab(char *url)
 {
     page_t *new_page = tabs_widget_add_tab();
-    if (model_load_page(url, new_page) < 0)
-        return -1;
-    return 0;
+    model_load_page_async(url, new_page, (void (*) (void*))page_widget_display, new_page);
 }
 

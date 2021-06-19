@@ -3,7 +3,7 @@ LD = gcc
 
 # -O0 option to activate optimisations
 CFLAGS = -Wall -Wextra -O0 -Iinclude
-LDFLAGS = -lcurl -llexbor -lncurses
+LDFLAGS = -lcurl -llexbor -lncurses -lpthread
 
 SRC_FILES := $(shell find src -regextype sed -regex ".*\.c" -type f)
 
