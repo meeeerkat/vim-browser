@@ -1,6 +1,6 @@
 #include "input_handler.h"
-#include "widgets/page_widget.h"
-#include "widgets/command_widget.h"
+#include "widgets/page.h"
+#include "widgets/command.h"
 
 #define ESC 27
 
@@ -39,9 +39,9 @@ void input_handler_wait_and_read()
         ** such as arrow keys to page_widget (to scroll)
         ** These should be set below after the current ifs */
         if (c == 'i')
-            page_widget_handle_input();
+            widgets_page_handle_input();
         else if (c == ':')
-            command_widget_handle_input();
+            widgets_command_handle_input();
         //else if (c in to_forward_to_page) ...
     }
 }

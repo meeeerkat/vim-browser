@@ -1,9 +1,9 @@
 #include <inttypes.h>
 #include <string.h>
-#include "command/handler.h"
-#include "command/quit.h"
-#include "command/open.h"
-#include "command/history.h"
+#include "commands/handler.h"
+#include "commands/quit.h"
+#include "commands/open.h"
+#include "commands/history.h"
 
 
 
@@ -13,7 +13,7 @@ typedef struct command {
 } command_t;
 
 
-#define COMMAND(NAME)  { #NAME, command_ ## NAME ## _exec }
+#define COMMAND(NAME)  { #NAME, commands_ ## NAME ## _exec }
 static const command_t COMMANDS[] = 
 {
     COMMAND(quit),
@@ -23,7 +23,7 @@ static const command_t COMMANDS[] =
 static const uint16_t COMMANDS_NB = 2;
 
 
-void command_handler_exec(char *command)
+void commands_handler_exec(char *command)
 {
     char name[COMMAND_NAME_MAX_LENGTH];
     char parameters[COMMAND_MAX_LENGTH];

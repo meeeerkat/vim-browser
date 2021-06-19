@@ -5,6 +5,8 @@ There are a lot of object like structures that are instanciated only once (contr
 To simplify, these structures have their only instantiation in the .c file and are unknown to any other file which allows user to call these functions without passing a structure as the first parameter.
 This is only for easier usage and these objects can be easily converted to normal object-like C structures
 
+## Naming pattern:
+Functions are prefixed in the same way as in lexbor (path\_to\_file\_function\_name)
 
 ## TODO
 ### Structure

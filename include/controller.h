@@ -2,8 +2,8 @@
 #define __CONTROLLER_H__
 
 #include <stdlib.h>
-#include "model.h"
-#include "page.h"
+#include "model/loader.h"
+#include "model/page.h"
 
 void controller_init();
 void controller_free();

@@ -1,15 +1,15 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ncurses.h>
-#include "widgets/command_widget.h"
-#include "command/handler.h"
+#include "widgets/command.h"
+#include "commands/handler.h"
 
 #define KEY_OTHER_ENTER 10
 #define HISTORY_MAX_NB 1000 // Quite high because once this limit is reached, the program just crashes
 
 
 
-typedef struct command_widget_data {
+typedef struct widgets_command_data {
     WINDOW *window;
     char current_command[COMMAND_MAX_LENGTH]; // Current command cache
     int16_t command_cursor; // Cursor position in the current command
@@ -17,9 +17,9 @@ typedef struct command_widget_data {
     char history[HISTORY_MAX_NB][COMMAND_MAX_LENGTH]; // History cache
     int16_t history_cursor; // Currently displayed history command
     uint16_t history_nb; // Nb of commands in history
-} command_widget_data_t;
+} widgets_command_data_t;
 
-static command_widget_data_t data;
+static widgets_command_data_t data;
 
 
 // Private declarations
@@ -33,7 +33,7 @@ static void set_command(char *command);
 
 
 
-void command_widget_init()
+void widgets_command_init()
 {
     // Takes only the last line
     data.window = newwin(1, COLS, LINES-1, 0);
@@ -42,7 +42,7 @@ void command_widget_init()
     data.history_nb = 0;
     reset();
 }
-void command_widget_free()
+void widgets_command_free()
 {
     delwin(data.window);
 }
@@ -100,7 +100,7 @@ void set_command(char *command)
     data.command_cursor = data.command_length;
 }
 
-void command_widget_handle_input()
+void widgets_command_handle_input()
 {
     waddch(data.window, ':');
     wrefresh(data.window);
@@ -118,7 +118,7 @@ void command_widget_handle_input()
             case KEY_OTHER_ENTER:
                 data.history_cursor = data.history_nb;
                 strcpy(data.history[data.history_nb++], data.current_command);
-                command_handler_exec(data.current_command);
+                commands_handler_exec(data.current_command);
                 reset();
                 return;
 

@@ -1,16 +1,16 @@
-#include "page.h"
+#include "model/page.h"
 
 
 
-page_t *page_init()
+model_page_t *model_page_init()
 {
-    page_t *page = malloc(sizeof(page_t));
+    model_page_t *page = malloc(sizeof(model_page_t));
     page->doc = lxb_html_document_create();
 
     return page;
 }
 
-void page_free(page_t *page)
+void model_page_free(model_page_t *page)
 {
     if (page->doc)
         lxb_html_document_destroy(page->doc);
