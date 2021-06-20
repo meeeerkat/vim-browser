@@ -15,5 +15,4 @@ Hence, components *are* (SHOULD BE) very abstract and (almost ?) unrelated, only
 
 ## TODO
 ### Structure
-- Better compartmentalisation by making widgets fully enclosed modules with event callbacks that are set in the controller
 - Maybe make the "page" module have it's own functions to load & stuff and the model (which still needs to be unique to keep the same curl session) is only known by the page module
