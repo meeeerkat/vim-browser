@@ -1,11 +1,24 @@
+#include <unistd.h>
 #include "commands/open.h"
 #include "widgets/page.h"
 #include "widgets/tabs.h"
 
 
-void commands_open_exec(char *parameters)
+void commands_open_exec(int argc, char **argv)
 {
-    commands_open_in_new_tab("https://www.duckduckgo.com");
+    char *url = "https://www.duckduckgo.com";
+
+    char option;
+    while((option = getopt(argc, argv, "t")) != -1) { //get option from the getopt() method
+        switch(option) {
+            case 't':
+                commands_open_in_new_tab(url);
+                return;
+            default:
+        }
+    }
+
+    commands_open_in_current_tab(url);
 }
 
 

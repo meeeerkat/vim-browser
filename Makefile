@@ -2,8 +2,8 @@ CC = gcc
 LD = gcc
 
 # -O0 option to activate optimisations
-CFLAGS = -Wall -Wextra -O0 -Iinclude
-LDFLAGS = -lcurl -llexbor -lncurses -lpthread
+CFLAGS = -Wall -Wextra -O0 -Iinclude `pkg-config --cflags glib-2.0`
+LDFLAGS = -lcurl -llexbor -lncurses -lpthread -lglib-2.0 `pkg-config --libs glib-2.0`
 
 SRC_FILES := $(shell find src -regextype sed -regex ".*\.c" -type f)
 

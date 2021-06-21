@@ -9,4 +9,7 @@ void widgets_command_free();
 // input handling
 void widgets_command_handle_input();
 
+// errors handling
+void widgets_command_print_message(char *message);
+
 #endif

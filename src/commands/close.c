@@ -3,7 +3,7 @@
 #include <ncurses.h>
 
 
-void commands_close_exec(char *parameters)
+void commands_close_exec(int argc, char **argv)
 {
     widgets_tabs_close_current_tab();
 }

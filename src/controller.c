@@ -18,6 +18,7 @@ void controller_init()
     // helpers init
     model_loader_init();
     input_handler_init();
+    commands_handler_init(widgets_command_print_message);
 
     // widgets init
     widgets_tabs_init(widgets_page_display);
@@ -34,6 +35,7 @@ void controller_init()
 void controller_free()
 {
     // helpers freeing
+    commands_handler_free();
     input_handler_free();
     model_loader_free();
 

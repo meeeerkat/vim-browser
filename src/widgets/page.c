@@ -5,7 +5,7 @@ static WINDOW *window = NULL;
 void widgets_page_init()
 {
     // Takes all but the first and last lines
-    window = newwin(LINES-2, COLS, 1, 0);
+    window = newwin(LINES-3, COLS, 1, 0);
     keypad(window, TRUE);
 }
 

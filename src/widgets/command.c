@@ -103,6 +103,7 @@ void set_command(char *command)
     data.command_cursor = data.command_length;
 }
 
+
 void widgets_command_handle_input()
 {
     waddch(data.window, ':');
@@ -119,10 +120,10 @@ void widgets_command_handle_input()
         switch (code) {
             case KEY_ENTER:
             case KEY_OTHER_ENTER:
+                reset();
                 data.history_cursor = data.history_nb;
                 strcpy(data.history[data.history_nb++], data.current_command);
                 data.exec_command_callback(data.current_command);
-                reset();
                 return;
 
             case KEY_DC:
@@ -166,4 +167,12 @@ void widgets_command_handle_input()
                 break;
         }
     }
+}
+
+
+void widgets_command_print_message(char *message)
+{
+    wclear(data.window);
+    wprintw(data.window, "%s", message);
+    wrefresh(data.window);
 }

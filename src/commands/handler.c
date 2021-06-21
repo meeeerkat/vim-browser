@@ -1,16 +1,19 @@
 #include <inttypes.h>
+#include <stdio.h>
 #include <string.h>
+#include <glib.h>
 #include "commands/handler.h"
 #include "commands/quit.h"
 #include "commands/open.h"
 #include "commands/history.h"
 #include "commands/close.h"
+#include "helpers.h"
 
 
 
 typedef struct command {
     char *name;
-    void (*exec) (char*);
+    void (*exec) (int, char**);
 } command_t;
 
 
@@ -25,17 +28,43 @@ static const command_t COMMANDS[] =
 static const uint16_t COMMANDS_NB = 4;
 
 
+typedef struct commands_handler_data {
+    void (*print_message_callback) (char*);
+} commands_handler_data_t;
+
+static commands_handler_data_t data;
+
+
+void commands_handler_init(void (*print_message_callback) (char*))
+{
+    data.print_message_callback = print_message_callback;
+}
+
+void commands_handler_free()
+{
+
+}
+
+
 void commands_handler_exec(char *command)
 {
-    char name[COMMAND_NAME_MAX_LENGTH];
-    char parameters[COMMAND_MAX_LENGTH];
-    uint16_t i;
-    for (i=0; i < COMMAND_NAME_MAX_LENGTH && command[i] != ' '; i++);
-    memcpy(name, command, i);
-    strcpy(parameters, command+i); // Copies the rest of the string
+    int argc = 0;
+    char **argv;
+    GError *error = NULL;
+    g_shell_parse_argv (command, &argc, &argv, &error);
 
-    for (i=0; i < COMMANDS_NB && strcmp(name, COMMANDS[i].name) != 0; i++);
+    if (error) {
+        data.print_message_callback(error->message);
+        g_clear_error(&error);
+        return;
+    }
+
+    uint16_t i = 0;
+    while (i < COMMANDS_NB && strcmp(argv[0], COMMANDS[i].name) != 0)
+        i++;
 
     if (i < COMMANDS_NB)
-        COMMANDS[i].exec(parameters);
+        COMMANDS[i].exec(argc, argv);
+    else
+        data.print_message_callback("Unknown command.");
 }

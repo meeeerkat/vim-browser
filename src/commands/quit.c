@@ -3,7 +3,7 @@
 
 
 
-void commands_quit_exec(char *parameters)
+void commands_quit_exec(int argc, char **argv)
 {
     // Actually freeing memory before exiting
     controller_free();
