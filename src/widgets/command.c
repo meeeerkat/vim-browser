@@ -106,6 +106,7 @@ void set_command(char *command)
 
 void widgets_command_handle_input()
 {
+    wclear(data.window); // Necessary to clear messages
     waddch(data.window, ':');
     wrefresh(data.window);
     

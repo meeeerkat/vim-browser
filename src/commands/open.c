@@ -2,6 +2,7 @@
 #include "commands/open.h"
 #include "widgets/page.h"
 #include "widgets/tabs.h"
+#include "helpers.h"
 
 
 static void on_page_loaded(uint8_t *tab_index);
@@ -23,12 +24,16 @@ void commands_open_exec(int argc, char **argv)
     }
     if (optind >= argc)
         return;
-    char *url = argv[optind];
+    char *url = helpers_url_fix(argv[optind]);
+    mvprintw(2,2,"%s", url);
+    refresh();
 
     if (new_tab)
         commands_open_in_new_tab(url);
     else
         commands_open_in_current_tab(url);
+
+    free(url);
 }
 
 
