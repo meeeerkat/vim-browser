@@ -1,4 +1,5 @@
 #include <inttypes.h>
+#include <ncurses.h>
 #include <stdio.h>
 #include <string.h>
 #include <glib.h>
@@ -48,12 +49,11 @@ void commands_handler_free()
 
 void commands_handler_exec(char *command)
 {
-    int argc = 0;
+    int argc;
     char **argv;
     GError *error = NULL;
-    g_shell_parse_argv (command, &argc, &argv, &error);
 
-    if (error) {
+    if (!g_shell_parse_argv (command, &argc, &argv, &error)) {
         data.print_message_callback(error->message);
         g_clear_error(&error);
         return;
@@ -67,4 +67,6 @@ void commands_handler_exec(char *command)
         COMMANDS[i].exec(argc, argv);
     else
         data.print_message_callback("Unknown command.");
+
+    g_strfreev(argv);
 }

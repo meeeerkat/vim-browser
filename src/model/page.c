@@ -34,3 +34,7 @@ void model_page_set_url_and_load(model_page_t *page, char *url, void (*callback)
 }
 
 
+const char *model_page_get_title(model_page_t *page)
+{
+    return (const char*) lxb_html_document_title(page->doc, NULL);
+}

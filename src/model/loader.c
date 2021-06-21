@@ -52,7 +52,7 @@ uint write_page_data(lxb_char_t *chunck, uint size, uint nmemb, lxb_html_documen
 
 void* load_page(load_page_params_t *params)
 {
-    lxb_status_t status = lxb_html_document_parse_chunk_begin(params->page->doc);
+    lxb_html_document_parse_chunk_begin(params->page->doc);
 
     curl_easy_setopt(model_loader.curl, CURLOPT_URL, params->page->url);
     curl_easy_setopt(model_loader.curl, CURLOPT_WRITEDATA, params->page->doc);
@@ -61,7 +61,7 @@ void* load_page(load_page_params_t *params)
         //fprintf(stderr, "%s\n", model_loader.curl_errbuf);
         return NULL;
     }
-    status = lxb_html_document_parse_chunk_end(params->page->doc);
+    lxb_html_document_parse_chunk_end(params->page->doc);
 
     params->callback(params->callback_params);
     free(params);
