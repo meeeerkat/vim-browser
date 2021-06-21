@@ -54,7 +54,7 @@ void* load_page(load_page_params_t *params)
 {
     lxb_status_t status = lxb_html_document_parse_chunk_begin(params->page->doc);
 
-    curl_easy_setopt(model_loader.curl, CURLOPT_URL, params->url);
+    curl_easy_setopt(model_loader.curl, CURLOPT_URL, params->page->url);
     curl_easy_setopt(model_loader.curl, CURLOPT_WRITEDATA, params->page->doc);
     int err = curl_easy_perform(model_loader.curl);
     if (err) {
@@ -68,10 +68,9 @@ void* load_page(load_page_params_t *params)
     return NULL;
 }
 
-void model_loader_load_page_async(char *url, model_page_t *page, void (*callback) (void*), void *callback_params)
+void model_loader_load_page_async(model_page_t *page, void (*callback) (void*), void *callback_params)
 {
     load_page_params_t *params = malloc(sizeof(load_page_params_t));
-    params->url = url;
     params->page = page;
     params->callback = callback;
     params->callback_params = callback_params;

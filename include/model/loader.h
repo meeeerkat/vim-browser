@@ -7,7 +7,7 @@
 
 
 void model_loader_init();
-void model_loader_load_page_async(char* url, model_page_t *page, void (*callback) (void*), void *callback_params);
+void model_loader_load_page_async(model_page_t *page, void (*callback) (void*), void *callback_params);
 void model_loader_free();
 
 

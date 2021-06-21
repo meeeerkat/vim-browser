@@ -1,6 +1,7 @@
 #include <string.h>
 #include <pthread.h>
 #include "controller.h"
+#include "model/loader.h"
 #include "widgets/tabs.h"
 #include "widgets/page.h"
 #include "widgets/command.h"
