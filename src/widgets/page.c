@@ -1,24 +1,27 @@
 #include "widgets/page.h"
 
-static WINDOW *window = NULL;
+
+typedef struct widgets_page_data {
+    WINDOW *pad;
+} widgets_page_data_t;
+
+static widgets_page_data_t data;
 
 void widgets_page_init()
 {
-    // Takes all but the first and last lines
-    window = newwin(LINES-3, COLS, 1, 0);
-    keypad(window, TRUE);
+    data.pad = subpad(stdscr, LINES-3, COLS, 0, 0);
+    keypad(data.pad, TRUE);
 }
 
 void widgets_page_free()
 {
-    delwin(window);
-    window = NULL;
+    delwin(data.pad);
+    data.pad = NULL;
 }
 
 void widgets_page_display(model_page_t *page)
 {
     // TODO: make the page here
-    wrefresh(window);
 }
 
 void widgets_page_handle_input()

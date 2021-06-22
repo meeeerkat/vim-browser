@@ -14,3 +14,6 @@ Even if these functions are only used by the program and never actually used by 
 Hence, components *are* (SHOULD BE) very abstract and (almost ?) unrelated, only linked by external functions
 
 ## TODO
+- When page is loaded, automatically print it's outpout in a page_widget and keep it there  
+Hence, the tabs are kept loaded (no parsing of the html every time)  
+Pros: Not necessary to parse the html every time, Cons: There is a bigger memory usage

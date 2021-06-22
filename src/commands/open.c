@@ -25,8 +25,6 @@ void commands_open_exec(int argc, char **argv)
     if (optind >= argc)
         return;
     char *url = helpers_url_fix(argv[optind]);
-    mvprintw(2,2,"%s", url);
-    refresh();
 
     if (new_tab)
         commands_open_in_new_tab(url);
