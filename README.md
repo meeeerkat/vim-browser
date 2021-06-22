@@ -14,5 +14,3 @@ Even if these functions are only used by the program and never actually used by 
 Hence, components *are* (SHOULD BE) very abstract and (almost ?) unrelated, only linked by external functions
 
 ## TODO
-### Structure
-- Maybe make the "page" module have it's own functions to load & stuff and the model (which still needs to be unique to keep the same curl session) is only known by the page module
