@@ -1,20 +1,20 @@
-CC = gcc
-LD = gcc
+CC = g++
+LD = g++
 
 # -O0 option to activate optimisations
 CFLAGS = -Wall -Wextra -O0 -Iinclude `pkg-config --cflags glib-2.0`
 LDFLAGS = -lcurl -llexbor -lncurses -lpthread -lglib-2.0 `pkg-config --libs glib-2.0`
 
-SRC_FILES := $(shell find src -regextype sed -regex ".*\.c" -type f)
+SRC_FILES := $(shell find src -regextype sed -regex ".*\.cpp" -type f)
 
-OBJ_FILES=$(patsubst src/%.c,obj/%.o,$(SRC_FILES))
+OBJ_FILES=$(patsubst src/%.cpp,obj/%.o,$(SRC_FILES))
 
 all: main
 
 main: $(OBJ_FILES)
 	$(LD) $(OBJ_FILES) $(LDFLAGS) -o $@
 
-obj/%.o: src/%.c
+obj/%.o: src/%.cpp
 	$(CC) -c $(CFLAGS) $< -o $@
 
 .PHONY: clean

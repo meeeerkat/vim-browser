@@ -2,11 +2,8 @@
 
 ## Single object model
 There are a lot of object like structures that are instanciated only once (controler, model, widgets, ...)
-To simplify, these structures have their only instantiation in the .c file and are unknown to any other file which allows user to call these functions without passing a structure as the first parameter.
-This is only for easier usage and these objects can be easily converted to normal object-like C structures
-
-## Naming pattern:
-Functions are prefixed in the same way as in lexbor (path\_to\_file\_function\_name)  
+These classes have a static getter function (that returns a static attribute of the only instanciated object)
+Trying to instanciate 2 launches an assert
 
 ## Widgets (& other components') connection
 Widgets & other components are used together to attain a goal in functions under the commands/ directory.  
@@ -14,6 +11,3 @@ Even if these functions are only used by the program and never actually used by 
 Hence, components *are* (SHOULD BE) very abstract and (almost ?) unrelated, only linked by external functions
 
 ## TODO
-- When page is loaded, automatically print it's outpout in a page_widget and keep it there  
-Hence, the tabs are kept loaded (no parsing of the html every time)  
-Pros: Not necessary to parse the html every time, Cons: There is a bigger memory usage

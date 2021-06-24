@@ -1,13 +1,14 @@
 #include <stdio.h>
 #include <curl/curl.h>
 #include <unistd.h>
-#include "controller.h"
+#include "controller.hpp"
 
 
 int main()
 {
-    controller_init();
-    controller_free();
+    Controller::init();
+    sleep(2);
+    Controller::free();
     
     return 0;
 }
