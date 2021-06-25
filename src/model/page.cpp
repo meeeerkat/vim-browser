@@ -1,12 +1,15 @@
 #include "model/page.hpp"
+#include <ncurses.h>
 
 
 Page::Page()
 {
+    doc = lxb_html_document_create();
 }
 
 Page::~Page()
 {
+    lxb_html_document_destroy(doc);
 }
 
 
@@ -14,20 +17,14 @@ void Page::set_url(std::string url)
 {
     this->url = url;
 }
-/*
-void model_page_load(model_page_t *page, void (*callback) (void*), void *callback_params)
+const std::string *Page::get_url()
 {
-    model_loader_load_page_async(page, callback, callback_params);
+    return &url;
 }
-void model_page_set_url_and_load(model_page_t *page, char *url, void (*callback) (void*), void *callback_params)
-{
-    model_page_set_url(page, url);
-    model_page_load(page, callback, callback_params);
-}
-*/
 
-std::string *Page::get_title()
+char *Page::get_title()
 {
-    return NULL;
+    size_t title_len;
+    return (char *) lxb_html_document_title(doc, &title_len);
 }
 

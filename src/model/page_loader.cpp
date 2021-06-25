@@ -1,4 +1,7 @@
 #include <pthread.h>
+#include <ncurses.h>
+#include <unistd.h>
+#include <lexbor/html/html.h>
 #include "model/page_loader.hpp"
 
 
@@ -7,17 +10,9 @@ namespace PageLoader {
     namespace {
         CURL *curl;
         char curl_errbuf[CURL_ERROR_SIZE];
-
-        void load_page(load_page_params *params);
-        //uint write_page_data(lxb_char_t *chunck, uint size, uint nmemb, lxb_html_document_t *doc);
     }
-
-    typedef struct load_page_params {
-        Page *page;
-        void (*callback)(void*);
-        void *callback_params;
-    };
-
+    uint write_page_data(lxb_char_t *chunck, uint size, uint nmemb, lxb_html_document_t *doc);
+    void* load_page(void *args);
 
     void init()
     {
@@ -25,7 +20,7 @@ namespace PageLoader {
         curl_easy_setopt(curl, CURLOPT_ERRORBUFFER, curl_errbuf);
         curl_easy_setopt(curl, CURLOPT_NOPROGRESS, 1L);
         curl_easy_setopt(curl, CURLOPT_VERBOSE, 0L);
-        //curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_page_data);
+        curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_page_data);
     }
 
     void free()
@@ -34,34 +29,41 @@ namespace PageLoader {
     }
 
 
-    /*
+    struct load_page_params {
+        Page *page;
+        void (*callback)(void*);
+        void *callback_params;
+    };
+    
     uint write_page_data(lxb_char_t *chunck, uint size, uint nmemb, lxb_html_document_t *doc)
     {
         size_t n = size*nmemb;
         lxb_html_document_parse_chunk(doc, chunck, n);
         return n;
     }
-    */
 
 
-    void load_page(load_page_params *params)
+    void* load_page(void *args)
     {
-        /*
+        load_page_params *params = (load_page_params*) args;
         lxb_html_document_parse_chunk_begin(params->page->doc);
 
-        curl_easy_setopt(curl, CURLOPT_URL, params->page->url);
+        curl_easy_setopt(curl, CURLOPT_URL, params->page->get_url()->c_str());
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, params->page->doc);
         int err = curl_easy_perform(curl);
         if (err) {
             //fprintf(stderr, "%s\n", curl_errbuf);
+            lxb_html_document_parse_chunk_end(params->page->doc);
+            std::free(params);
             return NULL;
         }
         lxb_html_document_parse_chunk_end(params->page->doc);
-        */
 
         params->callback(params->callback_params);
         std::free(params);
+        return NULL;
     }
+   
 
     void load_async(Page *page, void (*callback) (void*), void *callback_params)
     {
@@ -71,6 +73,6 @@ namespace PageLoader {
             callback_params
         };
         pthread_t thread_id;
-        pthread_create(&thread_id, NULL, (void* (*) (void*))PageLoader::load_page, (void*)params);
+        pthread_create(&thread_id, NULL, PageLoader::load_page, (void*) params);
     }
 }

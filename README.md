@@ -11,3 +11,8 @@ Even if these functions are only used by the program and never actually used by 
 Hence, components *are* (SHOULD BE) very abstract and (almost ?) unrelated, only linked by external functions
 
 ## TODO
+- Change page title to url when loading a page
+- Opening a page then another on the same tab before the first one was loaded cancels the first page's downloading
+- Add command to change of tab (and maybe keyboard shortcuts later)
+- Think of a system to print & modify the page (objects for each supported tag, inheritance & stuff and no changes to the parsed lexbor doc ??)
+- PageLoader should instanciate a parsor and use it for each page to be parsed

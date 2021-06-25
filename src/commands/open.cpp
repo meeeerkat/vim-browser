@@ -1,14 +1,13 @@
 #include <unistd.h>
 #include "commands/open.hpp"
+#include "model/page_loader.hpp"
 #include "widgets/page.hpp"
 #include "widgets/tabs.hpp"
 #include "helpers.hpp"
 
 
 namespace Commands {
-    namespace {
-        void on_page_loaded(uint8_t *tab_index);
-    }
+    void on_page_loaded(uint8_t *tab_index);
 
     void open_exec(int argc, char **argv)
     {
@@ -44,14 +43,16 @@ namespace Commands {
     {
         uint8_t current_page_tab_index = TabsWidget::get_current_tab_index();
         Page *current_page = TabsWidget::get_displayed_page();
-        //Page::set_url_and_load(current_page, url, (void (*) (void*))on_page_loaded, &current_page_tab_index);
+        current_page->set_url(url);
+        PageLoader::load_async(current_page, (void (*) (void*)) on_page_loaded, &current_page_tab_index);
     }
     void open_in_new_tab(std::string url)
     {
         uint8_t new_page_tab_index = TabsWidget::add_tab();
         TabsWidget::set_current_tab_index(new_page_tab_index);
         Page *new_page = TabsWidget::get_displayed_page();
-        //Page::set_url_and_load(new_page, url, (void (*) (void*))on_page_loaded, &new_page_tab_index);
+        new_page->set_url(url);
+        PageLoader::load_async(new_page, (void (*) (void*)) on_page_loaded, &new_page_tab_index);
     }
 
     void on_page_loaded(uint8_t *tab_index)
