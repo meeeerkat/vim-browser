@@ -13,6 +13,7 @@ namespace TabsWidget {
     Page *get_tab_page(uint8_t tab_index);
     Page *get_displayed_page();
     int8_t add_tab(Page *new_page);
+    bool can_add_tab();
     int8_t set_current_tab_index(uint8_t new_tab_index);
     uint8_t get_current_tab_index();
     uint8_t get_pages_nb();

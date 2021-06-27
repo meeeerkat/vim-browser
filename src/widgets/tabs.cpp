@@ -14,7 +14,7 @@ namespace TabsWidget {
     {
         // Takes only the first line
         window = newwin(1, COLS, 0, 0);
-        current_tab_index = 0;
+        current_tab_index = -1;
         update_page_display_callback = update_page_display_callback_p;
     }
     void free()
@@ -36,13 +36,18 @@ namespace TabsWidget {
 
     int8_t add_tab(Page *new_page)
     {
-        if (get_pages_nb() == TABS_MAX_NB)
+        if (!can_add_tab())
             return -1;
 
         pages.push_back(new_page);
         update_view();
         return get_pages_nb()-1;
     }
+    bool can_add_tab()
+    {
+        return get_pages_nb() < TABS_MAX_NB;
+    }
+
     int8_t set_current_tab_index(uint8_t new_tab_index)
     {
         if (new_tab_index >= get_pages_nb())
@@ -71,11 +76,11 @@ namespace TabsWidget {
 
         const uint16_t tab_size = COLS/get_pages_nb();
         for (uint32_t i=0; i < get_pages_nb(); i++) {
-            char *title = pages[i]->get_title();
-            if (title == NULL)
-                mvwprintw(window, 0, i*tab_size, "%hhu: %s", i, pages[i]->get_url()->c_str());
+            Document *doc = pages[i]->get_document();
+            if (doc)
+                mvwprintw(window, 0, i*tab_size, "%hhu: %s", i, doc->get_title()->c_str());
             else
-                mvwprintw(window, 0, i*tab_size, "%hhu: %s", i, title);
+                mvwprintw(window, 0, i*tab_size, "%hhu: %s", i, pages[i]->get_url()->c_str());
         }
 
         wrefresh(window);

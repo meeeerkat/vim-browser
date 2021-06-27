@@ -1,7 +1,7 @@
 #include <string.h>
 #include <pthread.h>
 #include "controller.hpp"
-#include "model/page_loader.hpp"
+#include "model/document_loader.hpp"
 #include "widgets/tabs.hpp"
 #include "widgets/page.hpp"
 #include "widgets/command.hpp"
@@ -17,7 +17,7 @@ namespace Controller {
         initscr();
 
         // helpers init
-        PageLoader::init();
+        DocumentLoader::init();
         InputHandler::init();
         CommandsHandler::init(CommandWidget::print_message);
 
@@ -36,7 +36,7 @@ namespace Controller {
     void free()
     {
         // helpers freeing
-        PageLoader::free();
+        DocumentLoader::free();
         InputHandler::free();
         CommandsHandler::free();
 

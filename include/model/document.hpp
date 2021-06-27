@@ -5,8 +5,10 @@
 
 class Document {
     public:
-        Document();
+        Document(const std::string *source);
         ~Document();
+
+        const std::string *get_title() const;
     private:
         std::string title;
         Element *body;

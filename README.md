@@ -16,3 +16,5 @@ Hence, components *are* (SHOULD BE) very abstract and (almost ?) unrelated, only
 - Add command to change of tab (and maybe keyboard shortcuts later)
 - Think of a system to print & modify the page (objects for each supported tag, inheritance & stuff and no changes to the parsed lexbor doc ??)
 - PageLoader should instanciate a parsor and use it for each page to be parsed
+- Empty command gives a segfault ?
+- A single libcurl easy\_handle shouldn't be used in multiple threads at once (currently the program crashes it 2 documents are loading at once)

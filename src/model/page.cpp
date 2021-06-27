@@ -1,17 +1,18 @@
-#include "model/page.hpp"
-#include "model/page_loader.hpp"
 #include <ncurses.h>
+#include "model/page.hpp"
+#include "model/document_loader.hpp"
 
 
 Page::Page()
 {
-    doc = lxb_html_document_create();
-    state = State::Empty;
+    doc = NULL;
+    state = Empty;
 }
 
 Page::~Page()
 {
-    lxb_html_document_destroy(doc);
+    if (doc)
+        delete doc;
 }
 
 
@@ -19,14 +20,19 @@ void Page::load(std::string url_p, void (*on_page_loaded_callback_p) (void*), vo
 {
     url = url_p;
     state = State::Loading;
+    if (doc) {
+        delete doc;
+        doc = NULL;
+    }
     on_page_loaded_callback = on_page_loaded_callback_p;
     on_page_loaded_callback_args = on_page_loaded_callback_args_p;
 
-    PageLoader::load_async(doc, url, (void (*) (void*)) on_page_loaded, this);
+    DocumentLoader::load_async(url, (void (*) (Document*, void*)) on_page_loaded, this);
 }
 
-void Page::on_page_loaded(Page *page)
+void Page::on_page_loaded(Document *doc, Page *page)
 {
+    page->doc = doc;
     page->state = State::Loaded;
     page->on_page_loaded_callback(page->on_page_loaded_callback_args);
     page->on_page_loaded_callback = NULL;
@@ -38,9 +44,7 @@ const std::string *Page::get_url()
     return &url;
 }
 
-char *Page::get_title()
+Document *Page::get_document()
 {
-    size_t title_len;
-    return (char *) lxb_html_document_title(doc, &title_len);
+    return doc;
 }
-

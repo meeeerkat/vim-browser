@@ -1,8 +1,8 @@
 #ifndef __MODEL_PAGE_HPP__
 #define __MODEL_PAGE_HPP__
 
-#include <lexbor/html/html.h>
 #include <string>
+#include "model/document.hpp"
 
 
 class Page {
@@ -14,14 +14,15 @@ class Page {
         void load(std::string url, void (*on_page_loaded_callback) (void*), void *on_page_loaded_callback_args);
         const std::string *get_url();
         char *get_title();
+        Document *get_document();
 
     private:
         State state;
         std::string url;
-        lxb_html_document_t *doc;
+        Document *doc;
 
         // To change the state & call custom callback
-        static void on_page_loaded(Page *page);
+        static void on_page_loaded(Document *doc, Page *page);
         void (*on_page_loaded_callback) (void*);
         void *on_page_loaded_callback_args;
 };

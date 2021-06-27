@@ -56,6 +56,7 @@ namespace Commands {
         }
         new_page->load(url, (void (*) (void*)) on_page_loaded, &new_page_tab_index);
         TabsWidget::set_current_tab_index(new_page_tab_index);
+        //TabsWidget::update_view();
     }
 
     void on_page_loaded(uint8_t *tab_index)
