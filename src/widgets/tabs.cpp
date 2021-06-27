@@ -16,8 +16,6 @@ namespace TabsWidget {
         window = newwin(1, COLS, 0, 0);
         current_tab_index = 0;
         update_page_display_callback = update_page_display_callback_p;
-
-        add_tab();
     }
     void free()
     {
@@ -36,12 +34,12 @@ namespace TabsWidget {
         return get_tab_page(current_tab_index);
     }
 
-    int8_t add_tab()
+    int8_t add_tab(Page *new_page)
     {
         if (get_pages_nb() == TABS_MAX_NB)
             return -1;
 
-        pages.push_back(new Page());
+        pages.push_back(new_page);
         update_view();
         return get_pages_nb()-1;
     }
@@ -75,7 +73,7 @@ namespace TabsWidget {
         for (uint32_t i=0; i < get_pages_nb(); i++) {
             char *title = pages[i]->get_title();
             if (title == NULL)
-                mvwprintw(window, 0, i*tab_size, "%hhu: Loading...", i);
+                mvwprintw(window, 0, i*tab_size, "%hhu: %s", i, pages[i]->get_url()->c_str());
             else
                 mvwprintw(window, 0, i*tab_size, "%hhu: %s", i, title);
         }

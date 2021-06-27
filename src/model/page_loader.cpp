@@ -2,6 +2,7 @@
 #include <ncurses.h>
 #include <unistd.h>
 #include <lexbor/html/html.h>
+#include <curl/curl.h>
 #include "model/page_loader.hpp"
 
 
@@ -30,7 +31,8 @@ namespace PageLoader {
 
 
     struct load_page_params {
-        Page *page;
+        lxb_html_document_t *doc;
+        std::string url;
         void (*callback)(void*);
         void *callback_params;
     };
@@ -46,29 +48,29 @@ namespace PageLoader {
     void* load_page(void *args)
     {
         load_page_params *params = (load_page_params*) args;
-        lxb_html_document_parse_chunk_begin(params->page->doc);
+        lxb_html_document_parse_chunk_begin(params->doc);
 
-        curl_easy_setopt(curl, CURLOPT_URL, params->page->get_url()->c_str());
-        curl_easy_setopt(curl, CURLOPT_WRITEDATA, params->page->doc);
+        curl_easy_setopt(curl, CURLOPT_URL, params->url.c_str());
+        curl_easy_setopt(curl, CURLOPT_WRITEDATA, params->doc);
         int err = curl_easy_perform(curl);
         if (err) {
             //fprintf(stderr, "%s\n", curl_errbuf);
-            lxb_html_document_parse_chunk_end(params->page->doc);
+            lxb_html_document_parse_chunk_end(params->doc);
             std::free(params);
             return NULL;
         }
-        lxb_html_document_parse_chunk_end(params->page->doc);
+        lxb_html_document_parse_chunk_end(params->doc);
 
         params->callback(params->callback_params);
         std::free(params);
         return NULL;
     }
    
-
-    void load_async(Page *page, void (*callback) (void*), void *callback_params)
+    void load_async(lxb_html_document_t *doc, std::string url, void (*callback) (void*), void *callback_params)
     {
         load_page_params *params = new load_page_params {
-            page,
+            doc,
+            url,
             callback,
             callback_params
         };

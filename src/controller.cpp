@@ -27,7 +27,7 @@ namespace Controller {
         TabsWidget::init(PageWidget::display);
 
         // Opening base window
-        Commands::open_in_current_tab("https://duckduckgo.com");
+        Commands::open_in_new_tab("https://duckduckgo.com");
 
         // Setup complete, now everything is done after an user command
         InputHandler::wait_and_read();
