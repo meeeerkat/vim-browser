@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <string>
 #include <glib.h>
+#include <unistd.h>
 #include "commands/handler.hpp"
 #include "helpers.hpp"
 #include "commands/quit.hpp"
@@ -57,7 +58,6 @@ namespace CommandsHandler {
             std::string error_message(error->message);
             print_message_callback(error_message);
             g_clear_error(&error);
-            g_strfreev(argv);
             return -1;
         }
 
