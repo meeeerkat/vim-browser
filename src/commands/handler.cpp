@@ -17,7 +17,7 @@ namespace CommandsHandler {
     // Private static const structures (Here so there is no need to include all commands into the .hpp)
     typedef struct command {
         std::string name;
-        void (*exec) (int, char**);
+        int (*exec) (int, char**, std::string*);
     } command_t;
 
 
@@ -65,12 +65,17 @@ namespace CommandsHandler {
         while (i < COMMANDS_NB && COMMANDS[i].name != argv[0])
             i++;
 
-        if (i < COMMANDS_NB)
-            COMMANDS[i].exec(argc, argv);
-        else {
+        if (i >= COMMANDS_NB) {
             print_message_callback("Unknown command.");
             g_strfreev(argv);
             return -1;
+        }
+
+        std::string error_message;
+        if (COMMANDS[i].exec(argc, argv, &error_message) < 0) {
+            print_message_callback(error_message);
+            g_strfreev(argv);
+            return -2;
         }
 
         g_strfreev(argv);

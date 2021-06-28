@@ -4,7 +4,7 @@
 #include <string>
 
 namespace Commands {
-    void open_exec(int argc, char **argv);
+    int open_exec(int argc, char **argv, std::string *error_message);
     void open_in_current_tab(std::string url);
     void open_in_new_tab(std::string url);
 }

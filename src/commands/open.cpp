@@ -9,7 +9,7 @@
 namespace Commands {
     void on_page_loaded(uint8_t *tab_index);
 
-    void open_exec(int argc, char **argv)
+    int open_exec(int argc, char **argv, std::string *error_message)
     {
         bool new_tab = false;
         char opt;
@@ -25,8 +25,10 @@ namespace Commands {
                     break;
             }
         }
-        if (optind >= argc)
-            return;
+        if (optind >= argc) {
+            *error_message = "Usage: open [-t] URL";
+            return -1;
+        }
 
         std::string url(argv[optind]);
         Helpers::fix_url(&url);

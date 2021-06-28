@@ -2,20 +2,24 @@
 #include "widgets/tabs.hpp"
 
 namespace Commands {
-    void tab_move_exec(int argc, char **argv)
+    int tab_move_exec(int argc, char **argv, std::string *error_message)
     {
-        if (argc != 2)
-            return;
+        if (argc != 2) {
+            *error_message = "Usage: tab_move index";
+            return -1;
+        }
         const uint8_t new_index = std::stoi(argv[1]);
         tab_move(new_index);
     }
-    void tab_next_exec(int argc, char **argv)
+    int tab_next_exec(int argc, char **argv, std::string *error_message)
     {
         tab_next();
+        return 0;
     }
-    void tab_prev_exec(int argc, char **argv)
+    int tab_prev_exec(int argc, char **argv, std::string *error_message)
     {
         tab_prev();
+        return 0;
     }
     void tab_move(uint8_t new_index)
     {

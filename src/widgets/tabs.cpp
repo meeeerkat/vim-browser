@@ -93,16 +93,16 @@ namespace TabsWidget {
         wrefresh(window);
     }
 
-    void close_current_tab()
+    int close_current_tab()
     {
-        close_tab(current_tab_index);
+        return close_tab(current_tab_index);
     }
 
-    void close_tab(uint8_t tab_index)
+    int close_tab(uint8_t tab_index)
     {
         // Always keep one tab opened
         if (get_tabs_nb() == 1 || get_tabs_nb() <= tab_index)
-            return;
+            return -1;
 
         tabs.erase(tabs.begin() + tab_index);
 
@@ -117,5 +117,6 @@ namespace TabsWidget {
         }
         
         update_view();
+        return 0;
     }
 }

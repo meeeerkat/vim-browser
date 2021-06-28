@@ -18,8 +18,8 @@ namespace TabsWidget {
     uint8_t get_current_tab_index();
     uint8_t get_tabs_nb();
 
-    void close_current_tab();
-    void close_tab(uint8_t tab_index);
+    int close_current_tab();
+    int close_tab(uint8_t tab_index);
 
     void update_view();
 };

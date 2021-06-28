@@ -5,10 +5,11 @@
 
 
 namespace Commands {
-    void quit_exec(int argc, char **argv)
+    int quit_exec(int argc, char **argv, std::string *error_message)
     {
         // Actually freeing memory before exiting
         Controller::free();
         exit(0);
+        return 0;
     }
 }
