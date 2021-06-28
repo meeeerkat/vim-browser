@@ -11,6 +11,6 @@ Even if these functions are only used by the program and never actually used by 
 Hence, components *are* (SHOULD BE) very abstract and (almost ?) unrelated, only linked by external functions
 
 ## TODO
+- DOCUMENT DISPLAY (Document & Element parsing + PageWidget::diplay)
 - Opening a page then another on the same tab before the first one was loaded cancels the first page's downloading
 - A single libcurl easy\_handle shouldn't be used in multiple threads at once (currently the program crashes it 2 documents are loading at once)
-- Commands::\_exec functions should return an error code and have one last std::string\* parameter to give an error message
