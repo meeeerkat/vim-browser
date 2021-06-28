@@ -8,6 +8,7 @@
 #include "commands/open.hpp"
 #include "commands/history.hpp"
 #include "commands/close.hpp"
+#include "commands/tab.hpp"
 
 
 namespace CommandsHandler {
@@ -21,15 +22,17 @@ namespace CommandsHandler {
 
     namespace {
         void (*print_message_callback) (std::string);
-        const uint16_t COMMANDS_NB = 4;
+        const uint16_t COMMANDS_NB = 7;
         #define COMMAND(NAME)  { #NAME, Commands::NAME ## _exec }
-        #define doublecolon ::
         const command_t COMMANDS[] = 
         {
             COMMAND(quit),
             COMMAND(open),
             COMMAND(history),
             COMMAND(close),
+            COMMAND(tab_move),
+            COMMAND(tab_next),
+            COMMAND(tab_prev),
         };
     }
 

@@ -16,7 +16,7 @@ namespace PageWidget {
         delwin(window);
     }
 
-    void display(Page *page)
+    void display(Document *doc)
     {
         // TODO: make the page here
     }

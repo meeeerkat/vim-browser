@@ -1,6 +1,6 @@
 #include <unistd.h>
 #include "commands/open.hpp"
-#include "model/page.hpp"
+#include "model/tab.hpp"
 #include "widgets/page.hpp"
 #include "widgets/tabs.hpp"
 #include "helpers.hpp"
@@ -41,27 +41,27 @@ namespace Commands {
 
     void open_in_current_tab(std::string url)
     {
-        uint8_t current_page_tab_index = TabsWidget::get_current_tab_index();
-        Page *current_page = TabsWidget::get_displayed_page();
-        current_page->load(url, (void (*) (void*)) on_page_loaded, &current_page_tab_index);
+        uint8_t current_tab_index = TabsWidget::get_current_tab_index();
+        Tab *current_tab = TabsWidget::get_displayed_tab();
+        current_tab->load(url, (void (*) (void*)) on_page_loaded, &current_tab_index);
         TabsWidget::update_view();
     }
     void open_in_new_tab(std::string url)
     {
-        Page *new_page = new Page();
-        int8_t new_page_tab_index = TabsWidget::add_tab(new_page);
-        if (new_page_tab_index < 0) {
-            delete new_page;
+        Tab *new_tab = new Tab();
+        int8_t new_tab_index = TabsWidget::add_tab(new_tab);
+        if (new_tab_index < 0) {
+            delete new_tab;
             return;
         }
-        new_page->load(url, (void (*) (void*)) on_page_loaded, &new_page_tab_index);
-        TabsWidget::set_current_tab_index(new_page_tab_index);
+        new_tab->load(url, (void (*) (void*)) on_page_loaded, &new_tab_index);
+        TabsWidget::set_current_tab_index(new_tab_index);
         //TabsWidget::update_view();
     }
 
     void on_page_loaded(uint8_t *tab_index)
     {
-        PageWidget::display(TabsWidget::get_tab_page(*tab_index));
+        PageWidget::display(TabsWidget::get_tab(*tab_index)->get_document());
         // Updating tabs because the page's title is now set
         TabsWidget::update_view();
     }
