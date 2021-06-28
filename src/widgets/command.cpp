@@ -134,11 +134,14 @@ namespace CommandWidget {
                     break;
 
                 case KEY_DOWN:
-                    if (history_cursor < history.size())
-                        set_command(history[++history_cursor]);
-                    else if (history_cursor == history.size())
-                        set_command("");
-                    print_current_command();
+                    if (history_cursor < history.size()) {
+                        history_cursor++;
+                        if (history_cursor < history.size())
+                            set_command(history[history_cursor]);
+                        else
+                            set_command("");
+                        print_current_command();
+                    }
                     break;
 
                 default:

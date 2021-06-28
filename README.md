@@ -18,4 +18,3 @@ Hence, components *are* (SHOULD BE) very abstract and (almost ?) unrelated, only
 - Empty command gives a segfault ?
 - A single libcurl easy\_handle shouldn't be used in multiple threads at once (currently the program crashes it 2 documents are loading at once)
 - Commands::\_exec functions should return an error code and have one last std::string\* parameter to give an error message
-- Commands history has some problems (segfault)
