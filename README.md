@@ -1,4 +1,7 @@
 
+## Config
+Configuration files are under ~/.vim-browser directory
+Example of a valid set of config files can be found under the config\_example directory
 
 ## Single object model
 There are a lot of object like structures that are instanciated only once (controler, model, widgets, ...)
