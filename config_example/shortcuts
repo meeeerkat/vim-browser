@@ -1,0 +1,4 @@
+: write_command
+o write_command "open "
+O write_command "open -t "
+d close
