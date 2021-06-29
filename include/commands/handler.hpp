@@ -7,7 +7,7 @@
 namespace CommandsHandler {
     void init(void (*print_message_callback) (std::string));
     void free();
-    int exec(std::string command);
+    int exec(const std::string *command);
  };
 
 #endif

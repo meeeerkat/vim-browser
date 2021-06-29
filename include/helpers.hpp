@@ -5,6 +5,7 @@
 
 namespace Helpers {
     void fix_url(std::string *url);
+    const char *get_home_dir_path();
 }
 
 #endif

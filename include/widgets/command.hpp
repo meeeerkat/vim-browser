@@ -7,9 +7,9 @@
 
 
 namespace CommandWidget {
-    void init(int (*exec_command_callback) (std::string));
+    void init(int (*exec_command_callback) (const std::string*));
     void free();
-    void handle_input();
+    void handle_input(const std::string *base_command);
     void print_message(std::string message);
 };
 

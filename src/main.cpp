@@ -7,7 +7,6 @@
 int main()
 {
     Controller::init();
-    sleep(2);
     Controller::free();
     
     return 0;

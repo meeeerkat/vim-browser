@@ -2,6 +2,8 @@
 #include <regex>
 #include <ncurses.h>
 #include <unistd.h>
+#include <sys/types.h>
+#include <pwd.h>
 #include "helpers.hpp"
 
 namespace Helpers {
@@ -15,5 +17,11 @@ namespace Helpers {
             return;
         }
         url->insert(0, "https://duckduckgo.com/?q=");
+    }
+
+    const char *get_home_dir_path()
+    {
+        struct passwd *pw = getpwuid(getuid());
+        return pw->pw_dir;
     }
 }

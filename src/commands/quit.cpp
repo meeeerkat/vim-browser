@@ -9,7 +9,7 @@ namespace Commands {
     {
         // Actually freeing memory before exiting
         Controller::free();
-        exit(0);
+        exit(EXIT_SUCCESS);
         return 0;
     }
 }

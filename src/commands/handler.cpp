@@ -10,6 +10,7 @@
 #include "commands/history.hpp"
 #include "commands/close.hpp"
 #include "commands/tab.hpp"
+#include "commands/write_command.hpp"
 
 
 namespace CommandsHandler {
@@ -23,7 +24,7 @@ namespace CommandsHandler {
 
     namespace {
         void (*print_message_callback) (std::string);
-        const uint16_t COMMANDS_NB = 7;
+        const uint16_t COMMANDS_NB = 8;
         #define COMMAND(NAME)  { #NAME, Commands::NAME ## _exec }
         const command_t COMMANDS[] = 
         {
@@ -34,6 +35,7 @@ namespace CommandsHandler {
             COMMAND(tab_move),
             COMMAND(tab_next),
             COMMAND(tab_prev),
+            COMMAND(write_command),
         };
     }
 
@@ -48,13 +50,13 @@ namespace CommandsHandler {
 
     }
 
-    int exec(std::string command)
+    int exec(const std::string *command)
     {
         int argc;
         char **argv;
         GError *error = NULL;
 
-        if (!g_shell_parse_argv (command.c_str(), &argc, &argv, &error)) {
+        if (!g_shell_parse_argv (command->c_str(), &argc, &argv, &error)) {
             std::string error_message(error->message);
             print_message_callback(error_message);
             g_clear_error(&error);

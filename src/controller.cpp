@@ -8,11 +8,14 @@
 #include "input_handler.hpp"
 #include "commands/open.hpp"
 #include "commands/handler.hpp"
+#include "config/main.hpp"
 
 
 namespace Controller {
     void init()
     {
+        Config::init();
+
         // ncurses init
         initscr();
 
@@ -47,6 +50,8 @@ namespace Controller {
 
         // ncurses closing
         endwin();
+
+        Config::free();
     }
 
 

@@ -11,7 +11,7 @@ namespace CommandWidget {
         uint16_t command_cursor; // Cursor position in the current command
         std::vector<std::string> history; // History cache
         uint16_t history_cursor; // Currently displayed history command
-        int (*exec_command_callback) (std::string);
+        int (*exec_command_callback) (const std::string*);
     }
     void print_current_command();
     void reset();
@@ -20,7 +20,7 @@ namespace CommandWidget {
     void set_command(std::string command);
 
 
-    void init(int (*exec_command_callback_p) (std::string))
+    void init(int (*exec_command_callback_p) (const std::string*))
     {
         exec_command_callback = exec_command_callback_p;
 
@@ -84,10 +84,15 @@ namespace CommandWidget {
     }
 
 
-    void handle_input()
+    void handle_input(const std::string *base_command)
     {
         wclear(window); // Necessary to clear messages
-        waddch(window, ':');
+        if (base_command) {
+            set_command(std::string(*base_command));
+            print_current_command();
+        }
+        else
+            waddch(window, ':');
         wrefresh(window);
         
         while (TRUE) {
@@ -101,9 +106,14 @@ namespace CommandWidget {
             switch (code) {
                 case KEY_ENTER:
                 case KEY_OTHER_ENTER:
+                    if (current_command.empty()) {
+                        clear();
+                        reset();
+                        return;
+                    }
                     history.push_back(current_command);
                     clear();
-                    exec_command_callback(current_command);
+                    exec_command_callback(&current_command);
                     reset();
                     return;
 
