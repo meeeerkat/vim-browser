@@ -6,7 +6,9 @@ class Document;
 namespace DocumentLoader {
     void init();
     void free();
-    void load_async(Document* doc);
+    void load_async(Document *doc);
+    void cancel_async_loading(Document *doc);
+    bool is_loading(const Document *doc);
 };
 
 

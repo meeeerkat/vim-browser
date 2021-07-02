@@ -14,5 +14,3 @@ Hence, components *are* (SHOULD BE) very abstract and (almost ?) unrelated, only
 
 ## TODO
 - DOCUMENT DISPLAY (Document & Element parsing + PageWidget::diplay)
-- Opening a page then another on the same tab before the first one was loaded cancels the first page's downloading
-- A single libcurl easy\_handle shouldn't be used in multiple threads at once (currently the program crashes it 2 documents are loading at once)

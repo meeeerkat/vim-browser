@@ -1,5 +1,6 @@
 #include "model/document.hpp"
 #include "model/document_loader.hpp"
+#include <ncurses.h>
 
 
 Document::Document(const std::string *url)
@@ -15,6 +16,9 @@ Document::Document(const std::string *url, Helpers::Callback *on_loaded_callback
 
 Document::~Document()
 {
+    if (is_loading())
+        DocumentLoader::cancel_async_loading(this);
+
     if (on_loaded_callback)
         delete on_loaded_callback;
 }
@@ -35,7 +39,12 @@ const std::string *Document::get_url() const
 
 const std::string *Document::get_title() const
 {
-    if (!title.empty())
+    if (!is_loading())
         return &title;
     return get_url();
+}
+
+bool Document::is_loading() const
+{
+    return DocumentLoader::is_loading(this);
 }
