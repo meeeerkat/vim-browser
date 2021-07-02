@@ -1,5 +1,5 @@
 #include "config/main.hpp"
-#include "helpers.hpp"
+#include "helpers/system.hpp"
 #include "config/shortcuts.hpp"
 
 
@@ -10,7 +10,7 @@ namespace Config {
 
     void init()
     {
-        dir_path = std::string(Helpers::get_home_dir_path()) + "/.vim-browser/";
+        dir_path = std::string(Helpers::System::get_home_dir_path()) + "/.vim-browser/";
         Shortcuts::init(&dir_path);
     }
     

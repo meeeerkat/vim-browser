@@ -4,7 +4,6 @@
 #include <glib.h>
 #include <unistd.h>
 #include "commands/handler.hpp"
-#include "helpers.hpp"
 #include "commands/quit.hpp"
 #include "commands/open.hpp"
 #include "commands/history.hpp"

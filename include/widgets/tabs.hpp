@@ -2,7 +2,7 @@
 #define __WIDGETS_TABS_HPP__
 
 #include <ncurses.h>
-#include "model/tab.hpp"
+#include "model/document.hpp"
 
 #define TABS_MAX_NB 10
 
@@ -10,12 +10,13 @@ namespace TabsWidget {
     void init(void (*display_document_callback) (Document*));
     void free();
 
-    Tab *get_tab(uint8_t tab_index);
-    Tab *get_displayed_tab();
-    int8_t add_tab(Tab *new_tab);
+    Document *get_document(uint8_t tab_index);
+    Document *get_displayed_document();
+    int8_t add_tab(Document *new_tab, uint8_t tab_index);
     bool can_add_tab();
+    void replace_document(Document *new_doc, uint8_t tab_index);
     int8_t set_current_tab_index(uint8_t new_tab_index);
-    uint8_t get_current_tab_index();
+    int8_t get_current_tab_index();
     uint8_t get_tabs_nb();
 
     int close_current_tab();

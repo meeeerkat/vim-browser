@@ -5,8 +5,8 @@ namespace TabsWidget {
     namespace {
         WINDOW *window;
         // Pointers to control their life cycle (or they get destroyed right away)
-        std::vector<Tab*> tabs;
-        uint8_t current_tab_index;
+        std::vector<Document*> docs;
+        int8_t current_tab_index;
         void (*display_document_callback) (Document*);
     }
 
@@ -19,33 +19,49 @@ namespace TabsWidget {
     }
     void free()
     {
-        for (size_t i=0; i < tabs.size(); i++)
-            free(tabs[i]);
+        for (size_t i=0; i < docs.size(); i++)
+            free(docs[i]);
         delwin(window);
     }
 
-    Tab *get_tab(uint8_t tab_index)
+    Document *get_document(uint8_t tab_index)
     {
-        return tabs[tab_index];
+        return docs[tab_index];
     }
 
-    Tab *get_displayed_tab()
+    Document *get_displayed_document()
     {
-        return get_tab(current_tab_index);
+        return get_document(current_tab_index);
     }
 
-    int8_t add_tab(Tab *new_tab)
+    int8_t add_tab(Document *new_doc, uint8_t tab_index)
     {
-        if (!can_add_tab())
+        if (!can_add_tab() || tab_index > get_tabs_nb())
             return -1;
 
-        tabs.push_back(new_tab);
+        if (tab_index == get_tabs_nb())
+            docs.push_back(new_doc);
+        else
+            docs.insert(docs.begin() + tab_index, new_doc);
+
+        if (current_tab_index < 0)
+            current_tab_index = 0;
+
         update_view();
         return get_tabs_nb()-1;
     }
     bool can_add_tab()
     {
         return get_tabs_nb() < TABS_MAX_NB;
+    }
+
+    void replace_document(Document *new_doc, uint8_t tab_index)
+    {
+        if (tab_index >= get_tabs_nb())
+            return;
+        delete docs[tab_index];
+        docs[tab_index] = new_doc;
+        update_view();
     }
 
     int8_t set_current_tab_index(uint8_t new_tab_index)
@@ -55,19 +71,18 @@ namespace TabsWidget {
         if (new_tab_index == current_tab_index)
             return 0;
 
-        current_tab_index = new_tab_index;
+        current_tab_index = (int8_t) new_tab_index;
         update_view();
-        display_document_callback(tabs[current_tab_index]->get_document());
 
         return 0;
     }
-    uint8_t get_current_tab_index()
+    int8_t get_current_tab_index()
     {
         return current_tab_index;
     }
     uint8_t get_tabs_nb()
     {
-        return (uint8_t) tabs.size();
+        return (uint8_t) docs.size();
     }
 
     void update_view()
@@ -76,16 +91,10 @@ namespace TabsWidget {
 
         const uint16_t tab_size = COLS/get_tabs_nb();
         for (uint32_t i=0; i < get_tabs_nb(); i++) {
-            Document *doc = tabs[i]->get_document();
-            const char *title;
-            if (doc)
-                title = doc->get_title()->c_str();
-            else
-                title = tabs[i]->get_url()->c_str();
             const bool is_current_tab = get_current_tab_index() == i;
             if (is_current_tab)
                 wattron(window, A_BOLD);
-            mvwprintw(window, 0, i*tab_size, "%hhu: %s", i, title);
+            mvwprintw(window, 0, i*tab_size, "%hhu: %s", i, docs[i]->get_title()->c_str());
             if (is_current_tab)
                 wattroff(window, A_BOLD);
         }
@@ -104,7 +113,7 @@ namespace TabsWidget {
         if (get_tabs_nb() == 1 || get_tabs_nb() <= tab_index)
             return -1;
 
-        tabs.erase(tabs.begin() + tab_index);
+        docs.erase(docs.begin() + tab_index);
 
         // Not changing the current tab's tab if it's not the one deleted
         if (current_tab_index > tab_index)
@@ -113,7 +122,7 @@ namespace TabsWidget {
         else if(current_tab_index == tab_index) {
             if (current_tab_index == get_tabs_nb())
                 current_tab_index--;
-            display_document_callback(tabs[current_tab_index]->get_document());
+            display_document_callback(docs[current_tab_index]);
         }
         
         update_view();

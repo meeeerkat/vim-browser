@@ -5,6 +5,7 @@
 #include <gumbo.h>
 #include <string>
 #include "model/document_loader.hpp"
+#include "model/document.hpp"
 
 
 namespace DocumentLoader {
@@ -33,12 +34,6 @@ namespace DocumentLoader {
     }
 
 
-    struct load_document_params {
-        std::string url;
-        void (*callback) (Document*, void*);
-        void *callback_params;
-    };
-    
     uint append_to_buffer(char *chunck, uint size, uint nmemb, std::string *buffer)
     {
         const size_t n = size*nmemb;
@@ -48,35 +43,29 @@ namespace DocumentLoader {
         return n;
     }
 
-    void* load_doc(void *args)
+    void* load_doc(void *arg)
     {
-        load_document_params *params = (load_document_params*) args;
+        Document *doc = (Document*) arg;
         std::string buffer;
 
-        curl_easy_setopt(curl, CURLOPT_URL, params->url.c_str());
+        curl_easy_setopt(curl, CURLOPT_URL, doc->get_url()->c_str());
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, &buffer);
         int err = curl_easy_perform(curl);
         if (err) {
             //fprintf(stderr, "%s\n", curl_errbuf);
-            mvprintw(4,4,"%s", curl_errbuf);
-            refresh();
-            std::free(params);
             return NULL;
         }
 
-        params->callback(new Document(&buffer), params->callback_params);
-        std::free(params);
+        GumboOutput *parsed_output = gumbo_parse(buffer.c_str());
+        doc->on_loaded(parsed_output);
+        gumbo_destroy_output(&kGumboDefaultOptions, parsed_output);
+
         return NULL;
     }
    
-    void load_async(std::string url, void (*callback) (Document*, void*), void *callback_params)
+    void load_async(Document *doc)
     {
-        load_document_params *params = new load_document_params {
-            url,
-            callback,
-            callback_params
-        };
-        pthread_t thread_id;
-        pthread_create(&thread_id, NULL, DocumentLoader::load_doc, (void*) params);
+        pthread_t id;
+        pthread_create(&id, NULL, load_doc, doc);
     }
 }
