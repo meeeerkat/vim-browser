@@ -2,14 +2,15 @@
 #define __WIDGETS_PAGE_HPP__
 
 #include <ncurses.h>
-#include "model/document.hpp"
 
+class Document;
 
 namespace PageWidget {
     void init();
     void free();
-    void display(Document *page);
+    void display(Document *doc);
     void handle_input();
+    Document *get_displayed_document();
 };
 
 #endif

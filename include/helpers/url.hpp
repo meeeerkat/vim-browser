@@ -4,7 +4,7 @@
 #include <string>
 
 namespace Helpers::Url {
-    void fix_url(std::string *url);
+    void fix(std::string *url);
 }
 
 #endif

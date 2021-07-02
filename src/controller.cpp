@@ -27,7 +27,7 @@ namespace Controller {
         // widgets init
         PageWidget::init();
         CommandWidget::init(CommandsHandler::exec);
-        TabsWidget::init(PageWidget::display);
+        TabsWidget::init();
 
         // Opening base window
         Commands::open_in_new_tab("https://duckduckgo.com");

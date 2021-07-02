@@ -7,15 +7,13 @@ namespace TabsWidget {
         // Pointers to control their life cycle (or they get destroyed right away)
         std::vector<Document*> docs;
         int8_t current_tab_index;
-        void (*display_document_callback) (Document*);
     }
 
-    void init(void (*display_document_callback_p) (Document*))
+    void init()
     {
         // Takes only the first line
         window = newwin(1, COLS, 0, 0);
         current_tab_index = -1;
-        display_document_callback = display_document_callback_p;
     }
     void free()
     {
@@ -122,7 +120,6 @@ namespace TabsWidget {
         else if(current_tab_index == tab_index) {
             if (current_tab_index == get_tabs_nb())
                 current_tab_index--;
-            display_document_callback(docs[current_tab_index]);
         }
         
         update_view();

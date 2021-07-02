@@ -31,7 +31,7 @@ namespace Commands {
         }
 
         std::string url(argv[optind]);
-        Helpers::Url::fix_url(&url);
+        Helpers::Url::fix(&url);
 
         if (new_tab)
             open_in_new_tab(url);
@@ -58,6 +58,7 @@ namespace Commands {
         uint8_t *next_tab_index = new uint8_t(TabsWidget::get_current_tab_index() + 1);
         Document *new_doc = new Document(&url, new Helpers::Callback(on_doc_loaded, next_tab_index));
         TabsWidget::add_tab(new_doc, *next_tab_index);
+        TabsWidget::set_current_tab_index(*next_tab_index);
     }
 
     void on_doc_loaded(void *arg)
@@ -65,7 +66,8 @@ namespace Commands {
         uint8_t *tab_index = (uint8_t*) arg;
         // Updating tabs because the page's title is now set
         TabsWidget::update_view();
-        TabsWidget::set_current_tab_index(*tab_index);
+
+        // Displaying it
         PageWidget::display(TabsWidget::get_document(*tab_index));
 
         delete tab_index;

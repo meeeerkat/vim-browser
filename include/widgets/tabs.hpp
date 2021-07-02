@@ -7,7 +7,7 @@
 #define TABS_MAX_NB 10
 
 namespace TabsWidget {
-    void init(void (*display_document_callback) (Document*));
+    void init();
     void free();
 
     Document *get_document(uint8_t tab_index);

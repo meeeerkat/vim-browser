@@ -2,7 +2,7 @@
 #include "helpers/url.hpp"
 
 namespace Helpers::Url {
-    void fix_url(std::string *url)
+    void fix(std::string *url)
     {
         if (std::regex_match(*url, std::regex("^(https://|http://).*")))
             return;
