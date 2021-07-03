@@ -1,6 +1,7 @@
 #include <ncurses.h>
 #include <stdio.h>
 #include <string>
+#include <map>
 #include <glib.h>
 #include <unistd.h>
 #include "commands/handler.hpp"
@@ -14,18 +15,10 @@
 
 namespace CommandsHandler {
 
-    // Private static const structures (Here so there is no need to include all commands into the .hpp)
-    typedef struct command {
-        std::string name;
-        int (*exec) (int, char**, std::string*);
-    } command_t;
-
-
     namespace {
         void (*print_message_callback) (std::string);
-        const uint16_t COMMANDS_NB = 8;
         #define COMMAND(NAME)  { #NAME, Commands::NAME ## _exec }
-        const command_t COMMANDS[] = 
+        std::map<std::string, int (*) (int, char**, std::string*)> COMMANDS = 
         {
             COMMAND(quit),
             COMMAND(open),
@@ -62,18 +55,15 @@ namespace CommandsHandler {
             return -1;
         }
 
-        uint16_t i = 0;
-        while (i < COMMANDS_NB && COMMANDS[i].name != argv[0])
-            i++;
-
-        if (i >= COMMANDS_NB) {
+        const std::string command_name(argv[0]);
+        if (COMMANDS.count(command_name) == 0) {
             print_message_callback("Unknown command.");
             g_strfreev(argv);
             return -1;
         }
 
         std::string error_message;
-        if (COMMANDS[i].exec(argc, argv, &error_message) < 0) {
+        if (COMMANDS[command_name](argc, argv, &error_message) < 0) {
             print_message_callback(error_message);
             g_strfreev(argv);
             return -2;
