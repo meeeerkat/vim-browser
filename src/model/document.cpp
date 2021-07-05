@@ -75,7 +75,7 @@ void Document::on_loaded(GumboOutput *gdoc)
     parse_head(gumbo_head);
 
     // Building body
-    //body = new Nodes::Body(gumbo_body);
+    body = new Nodes::Body(gumbo_body);
 
     // Calling external callback
     on_loaded_callback->exec();
@@ -96,4 +96,9 @@ const std::string *Document::get_title() const
 bool Document::is_loading() const
 {
     return DocumentLoader::is_loading(this);
+}
+
+void Document::printw(WINDOW *window) const
+{
+    body->printw(window);
 }

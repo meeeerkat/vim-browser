@@ -1,5 +1,6 @@
 #include "commands/tab.hpp"
 #include "widgets/tabs.hpp"
+#include "widgets/page.hpp"
 
 namespace Commands {
     int tab_move_exec(int argc, char **argv, std::string *error_message)
@@ -24,6 +25,7 @@ namespace Commands {
     void tab_move(uint8_t new_index)
     {
         TabsWidget::set_current_tab_index(new_index);
+        PageWidget::display(TabsWidget::get_current_document());
     }
     void tab_prev()
     {

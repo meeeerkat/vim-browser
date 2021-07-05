@@ -9,7 +9,7 @@ namespace Nodes {
         public:
             Node();
             virtual ~Node();
-            virtual void printw(WINDOW *window, uint16_t *lines_nb) = 0;
+            virtual void printw(WINDOW *window) const = 0;
     };
 }
 

@@ -27,7 +27,7 @@ namespace TabsWidget {
         return docs[tab_index];
     }
 
-    Document *get_displayed_document()
+    Document *get_current_document()
     {
         return get_document(current_tab_index);
     }

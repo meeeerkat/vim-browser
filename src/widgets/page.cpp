@@ -10,7 +10,7 @@ namespace PageWidget {
 
     void init()
     {
-        window = subpad(stdscr, LINES-3, COLS, 0, 0);
+        window = newwin(LINES-2, COLS, 1, 0);
         keypad(window, TRUE);
 
         displayed_document = NULL;
@@ -24,7 +24,11 @@ namespace PageWidget {
     void display(Document *doc)
     {
         displayed_document = doc;
-        // TODO: make the page here
+
+        // Printing doc
+        wclear(window);
+        displayed_document->printw(window);
+        wrefresh(window);
     }
 
     void handle_input()

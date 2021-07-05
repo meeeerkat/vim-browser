@@ -10,6 +10,7 @@ namespace Nodes {
         public:
             Element(const GumboElement *element);
             virtual ~Element();
+            virtual void printw(WINDOW *window) const;
 
         protected:
             std::vector<Node*> children;

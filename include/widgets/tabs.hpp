@@ -11,7 +11,7 @@ namespace TabsWidget {
     void free();
 
     Document *get_document(uint8_t tab_index);
-    Document *get_displayed_document();
+    Document *get_current_document();
     int8_t add_tab(Document *new_tab, uint8_t tab_index);
     bool can_add_tab();
     void replace_document(Document *new_doc, uint8_t tab_index);

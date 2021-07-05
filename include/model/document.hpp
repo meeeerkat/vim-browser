@@ -18,6 +18,8 @@ class Document {
         
         void on_loaded(GumboOutput* output);
 
+        void printw(WINDOW *window) const;
+
     private:
         std::string url;
         Helpers::Callback *on_loaded_callback;

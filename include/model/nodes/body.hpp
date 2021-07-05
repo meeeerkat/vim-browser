@@ -7,7 +7,6 @@ namespace Nodes {
     class Body : public Element {
         public:
             Body(const GumboElement *el);
-            virtual void printw(WINDOW *window, uint16_t *lines_nb);
     };
 }
 

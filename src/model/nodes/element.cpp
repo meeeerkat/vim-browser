@@ -7,10 +7,11 @@ namespace Nodes {
     {
         // Setting up children
         const GumboVector* gumbo_children = &el->children;
-        children.resize(gumbo_children->length);
         for (uint16_t i=0; i < gumbo_children->length; i++) {
             GumboNode *child = static_cast<GumboNode*>(gumbo_children->data[i]);
-            children[i] = Nodes::load(child);
+            Node *child_node = Nodes::load(child);
+            if (child_node)
+                children.push_back(child_node);
         }
     }
 
@@ -18,5 +19,11 @@ namespace Nodes {
     {
         for (auto child : children)
             delete child;
+    }
+    
+    void Element::printw(WINDOW *window) const
+    {
+        for (Node *child : children)
+            child->printw(window);
     }
 }
