@@ -2,7 +2,7 @@
 #define __MODEL_DOCUMENT_H__
 #include <string>
 #include <gumbo.h>
-#include "model/element.hpp"
+#include "model/nodes/body.hpp"
 #include "helpers/callback.hpp"
 
 class Document {
@@ -23,7 +23,10 @@ class Document {
         Helpers::Callback *on_loaded_callback;
 
         std::string title;
-        Element *body;
+        Nodes::Body *body;
+
+        void parse_head(GumboElement *head);
+        void parse_title(GumboElement *title_element);
 };
 
 #endif

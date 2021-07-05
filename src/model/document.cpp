@@ -1,6 +1,7 @@
+#include <cassert>
+#include <ncurses.h>
 #include "model/document.hpp"
 #include "model/document_loader.hpp"
-#include <ncurses.h>
 
 
 Document::Document(const std::string *url)
@@ -23,10 +24,58 @@ Document::~Document()
         delete on_loaded_callback;
 }
 
+void Document::parse_title(GumboElement *title_element)
+{
+    title = "";
+    if (title_element->children.length != 1)
+        return;
+    GumboNode *title_text = static_cast<GumboNode*>(title_element->children.data[0]);
+    if (title_text->type != GUMBO_NODE_TEXT && title_text->type != GUMBO_NODE_WHITESPACE)
+        return;
+    title = title_text->v.text.text;
+}
+
+void Document::parse_head(GumboElement *head)
+{
+    GumboVector* head_children = &head->children;
+    for (size_t i=0; i < head_children->length; ++i) {
+        GumboNode* child = static_cast<GumboNode*>(head_children->data[i]);
+        if (child->type == GUMBO_NODE_ELEMENT) {
+            if (child->v.element.tag == GUMBO_TAG_TITLE)
+                parse_title(&child->v.element);
+            // else if(...)
+        }
+    }
+}
+
 void Document::on_loaded(GumboOutput *gdoc)
 {
-    // Building doc
-    title = "Test title";
+    // Reading header to build doc data
+    GumboNode *root = gdoc->root;
+    assert(root->type == GUMBO_NODE_ELEMENT);
+    assert(root->v.element.children.length >= 2);
+
+    // Getting head and body GumboNode(s)
+    GumboElement *gumbo_head = NULL;
+    GumboElement *gumbo_body = NULL;
+    const GumboVector* root_children = &root->v.element.children;
+    for (size_t i=0; i < root_children->length; ++i) {
+        GumboNode* child = static_cast<GumboNode*>(root_children->data[i]);
+        if (child->type == GUMBO_NODE_ELEMENT) {
+            if (child->v.element.tag == GUMBO_TAG_HEAD)
+                gumbo_head = &child->v.element;
+            else if (child->v.element.tag == GUMBO_TAG_BODY)
+                gumbo_body = &child->v.element;
+        }
+    }
+    assert(gumbo_head != NULL);
+    assert(gumbo_body != NULL);
+
+    // Parsing head
+    parse_head(gumbo_head);
+
+    // Building body
+    //body = new Nodes::Body(gumbo_body);
 
     // Calling external callback
     on_loaded_callback->exec();
