@@ -1,6 +1,7 @@
 #include <map>
 #include "model/nodes/loader.hpp"
 #include "model/nodes/body.hpp"
+#include "model/nodes/a.hpp"
 #include "model/nodes/text.hpp"
 
 
@@ -15,6 +16,7 @@ namespace Nodes {
     namespace {
         std::map<int, Node* (*) (const GumboElement*)> elements_creators = {
             { GUMBO_TAG_BODY, create<Body> },
+            { GUMBO_TAG_A, create<A> },
         };
     }
 
