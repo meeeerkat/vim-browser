@@ -7,7 +7,7 @@
 
 namespace Nodes {
     // Finds the right constructor to call & builds the right Element
-    Node *load(const GumboNode *node);
+    void load(std::vector<Node*> *nodes, const GumboNode *node);
 
     std::string load_attribute(const GumboElement *el, const std::string name);
 }

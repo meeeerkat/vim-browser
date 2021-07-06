@@ -11,6 +11,6 @@ namespace Helpers::Url {
             url->insert(0, "https://www.");
             return;
         }
-        url->insert(0, "https://duckduckgo.com/?q=");
+        url->insert(0, "https://lite.duckduckgo.com/lite/?q=");
     }
 }

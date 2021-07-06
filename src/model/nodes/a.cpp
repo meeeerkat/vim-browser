@@ -12,6 +12,5 @@ namespace Nodes {
         wattron(window, A_UNDERLINE);
         Element::printw(window);
         wattroff(window, A_UNDERLINE);
-        wprintw(window, " ");
     }
 }

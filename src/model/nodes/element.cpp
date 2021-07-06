@@ -6,12 +6,10 @@ namespace Nodes {
     Element::Element(const GumboElement* el)
     {
         // Setting up children
-        const GumboVector* gumbo_children = &el->children;
-        for (uint16_t i=0; i < gumbo_children->length; i++) {
-            GumboNode *child = static_cast<GumboNode*>(gumbo_children->data[i]);
-            Node *child_node = Nodes::load(child);
-            if (child_node)
-                children.push_back(child_node);
+        const GumboVector* gchildren = &el->children;
+        for (uint16_t i=0; i < gchildren->length; i++) {
+            GumboNode *gchild = static_cast<GumboNode*>(gchildren->data[i]);
+            Nodes::load(&children, gchild);
         }
     }
 
