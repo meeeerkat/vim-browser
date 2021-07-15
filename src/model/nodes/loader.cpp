@@ -3,6 +3,7 @@
 #include "model/nodes/body.hpp"
 #include "model/nodes/a.hpp"
 #include "model/nodes/p.hpp"
+#include "model/nodes/form.hpp"
 #include "model/nodes/input.hpp"
 #include "model/nodes/img.hpp"
 #include "model/nodes/h1.hpp"
@@ -30,6 +31,7 @@ namespace Nodes {
             { GUMBO_TAG_BODY, create<Body> },
             { GUMBO_TAG_A, create<A> },
             { GUMBO_TAG_P, create<P> },
+            { GUMBO_TAG_FORM, create<Form> },
             { GUMBO_TAG_INPUT, create<Input> },
             { GUMBO_TAG_IMG, create<Img> },
             { GUMBO_TAG_H1, create<H1> },

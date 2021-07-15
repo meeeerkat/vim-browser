@@ -9,6 +9,6 @@ namespace Nodes {
 
     void Input::printw(WINDOW *window) const
     {
-
+        wprintw(window, "________________\n");
     }
 }
