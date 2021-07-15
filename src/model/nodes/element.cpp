@@ -15,7 +15,7 @@ namespace Nodes {
 
     Element::~Element()
     {
-        for (auto child : children)
+        for (Node *child : children)
             delete child;
     }
     

@@ -9,6 +9,6 @@ namespace Nodes {
 
     void Form::printw(WINDOW *window) const
     {
-
+        Element::printw(window);
     }
 }
