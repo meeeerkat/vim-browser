@@ -14,4 +14,3 @@ it will only print in a way that is both functionnal & easy to read
 
 ## TODO
 - DOCUMENT DISPLAY (Document & Element parsing + PageWidget::diplay)
-- BUG: multiple loading and changing of tab while they load mess up (the PageWidget shows pages when they finish to load even though the user changed of tab since loading started)

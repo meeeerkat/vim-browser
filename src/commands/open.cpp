@@ -68,7 +68,8 @@ namespace Commands {
         TabsWidget::update_view();
 
         // Displaying it
-        PageWidget::display(TabsWidget::get_document(*tab_index));
+        if (*tab_index == TabsWidget::get_current_tab_index())
+            PageWidget::display(TabsWidget::get_document(*tab_index));
 
         delete tab_index;
     }
