@@ -12,7 +12,7 @@ namespace Nodes {
 
         protected:
             std::string alt;
-            //std::string src;
+            std::string src;
     };
 }
 

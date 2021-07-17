@@ -6,14 +6,14 @@ namespace Nodes {
         : Element(el)
     {
         alt = load_attribute(el, "alt");
-        //src = load_attribute(el, "src");
+        src = load_attribute(el, "src");
     }
 
     void Img::printw(WINDOW *window) const
     {
-        //if (alt.empty())
-        //    wprintw(window, "*%s* ", src.c_str());
-        //else
+        if (alt.empty())
+            wprintw(window, "*%s* ", src.c_str());
+        else
             wprintw(window, "*%s* ", alt.c_str());
     }
 }

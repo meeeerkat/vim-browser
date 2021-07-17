@@ -10,6 +10,7 @@ namespace Nodes {
     void H2::printw(WINDOW *window) const
     {
         wattron(window, A_BOLD);
+        wprintw(window, "\n");
         Element::printw(window);
         wattroff(window, A_BOLD);
     }
