@@ -59,6 +59,7 @@ namespace Nodes {
 
         std::map<int, bool> stop_elements {
             { GUMBO_TAG_SCRIPT, true },
+            { GUMBO_TAG_STYLE, true },
         };
     }
 

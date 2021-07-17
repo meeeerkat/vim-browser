@@ -1,6 +1,7 @@
 #ifndef __MODEL_NODES_IMG_H__
 #define __MODEL_NODES_IMG_H__
 
+#include <string>
 #include "model/nodes/element.hpp"
 
 namespace Nodes {
@@ -8,6 +9,10 @@ namespace Nodes {
         public:
             Img(const GumboElement *el);
             virtual void printw(WINDOW *window) const;
+
+        protected:
+            std::string alt;
+            //std::string src;
     };
 }
 

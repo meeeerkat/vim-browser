@@ -9,6 +9,10 @@ namespace Nodes {
 
     void P::printw(WINDOW *window) const
     {
+        if (children.size() == 0)
+            return;
 
+        wprintw(window, "\n");
+        Element::printw(window);
     }
 }

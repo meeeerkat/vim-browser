@@ -16,6 +16,6 @@ namespace Nodes {
 
     void Text::printw(WINDOW *window) const
     {
-        wprintw(window, "%s", text.c_str());
+        wprintw(window, "%s ", text.c_str());
     }
 }
