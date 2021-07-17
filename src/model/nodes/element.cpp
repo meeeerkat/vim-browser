@@ -3,6 +3,11 @@
 
 
 namespace Nodes {
+    Element::Element()
+    {
+
+    }
+
     Element::Element(const GumboElement* el)
     {
         // Setting up children
@@ -12,7 +17,7 @@ namespace Nodes {
             Nodes::load(&children, gchild);
         }
     }
-
+   
     Element::~Element()
     {
         for (Node *child : children)

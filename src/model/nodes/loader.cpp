@@ -15,6 +15,12 @@
 #include "model/nodes/ul.hpp"
 #include "model/nodes/ol.hpp"
 #include "model/nodes/li.hpp"
+#include "model/nodes/select.hpp"
+#include "model/nodes/div.hpp"
+#include "model/nodes/br.hpp"
+#include "model/nodes/table.hpp"
+#include "model/nodes/tr.hpp"
+#include "model/nodes/td.hpp"
 #include "model/nodes/text.hpp"
 
 
@@ -43,6 +49,12 @@ namespace Nodes {
             { GUMBO_TAG_UL, create<Ul> },
             { GUMBO_TAG_OL, create<Ol> },
             { GUMBO_TAG_LI, create<Li> },
+            { GUMBO_TAG_SELECT, create<Select> },
+            { GUMBO_TAG_DIV, create<Div> },
+            { GUMBO_TAG_BR, create<Br> },
+            { GUMBO_TAG_TABLE, create<Table> },
+            { GUMBO_TAG_TR, create<Tr> },
+            { GUMBO_TAG_TD, create<Td> },
         };
 
         std::map<int, bool> stop_elements {

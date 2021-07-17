@@ -8,6 +8,7 @@
 namespace Nodes {
     class Element : public Node {
         public:
+            Element();
             Element(const GumboElement *element);
             virtual ~Element();
             virtual void printw(WINDOW *window) const;

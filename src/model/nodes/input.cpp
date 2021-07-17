@@ -13,7 +13,7 @@ namespace Nodes {
     void Input::printw(WINDOW *window) const
     {
         if (type == "text")
-            wprintw(window, "%s________________\n", value.c_str());
+            wprintw(window, "%s________________ ", value.c_str());
         else if (type == "submit") {
             wattron(window, A_BOLD);
             wprintw(window, "%s", value.c_str());
