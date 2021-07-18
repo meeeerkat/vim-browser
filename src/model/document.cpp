@@ -4,6 +4,7 @@
 #include "model/document_loader.hpp"
 
 
+
 Document::Document(const std::string *url)
     :url(*url), on_loaded_callback(NULL), body(NULL)
 {
@@ -75,7 +76,7 @@ void Document::on_loaded(GumboOutput *gdoc)
     parse_head(gumbo_head);
 
     // Building body
-    body = new Nodes::Body(gumbo_body);
+    body = new Nodes::Body(gumbo_body, &build_data);
 
     // Calling external callback
     on_loaded_callback->exec();
@@ -98,9 +99,10 @@ bool Document::is_loading() const
     return DocumentLoader::is_loading(this);
 }
 
-void Document::printw(WINDOW *window) const
+void Document::printw(WINDOW *window, Nodes::PrintingOptions printing_options) const
 {
     if (is_loading())
         return;
-    body->printw(window);
+    body->printw(window, &printing_options);
 }
+

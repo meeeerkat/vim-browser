@@ -6,8 +6,8 @@
 namespace Nodes {
     class Table : public Element {
         public:
-            Table(const GumboElement *el);
-            virtual void printw(WINDOW *window) const;
+            Table(const GumboElement *el, BuildData *build_data);
+            virtual void printw(WINDOW *window, PrintingOptions *printing_options) const;
     };
 }
 

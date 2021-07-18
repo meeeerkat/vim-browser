@@ -2,14 +2,14 @@
 
 
 namespace Nodes {
-    Td::Td(const GumboElement *el)
-        : Element(el)
+    Td::Td(const GumboElement *el, BuildData *build_data)
+        : Element(el, build_data)
     {
 
     }
 
-    void Td::printw(WINDOW *window) const
+    void Td::printw(WINDOW *window, PrintingOptions *printing_options) const
     {
-        Element::printw(window);
+        Element::printw(window, printing_options);
     }
 }

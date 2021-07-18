@@ -6,7 +6,7 @@
 namespace Nodes {
     class Body : public Element {
         public:
-            Body(const GumboElement *el);
+            Body(const GumboElement *el, BuildData *build_data);
     };
 }
 

@@ -2,14 +2,14 @@
 
 
 namespace Nodes {
-    Br::Br(const GumboElement *el)
-        : Element()
+    Br::Br(const GumboElement *el, BuildData *build_data)
+        : Element(build_data)
     {
         (void) el;
 
     }
 
-    void Br::printw(WINDOW *window) const
+    void Br::printw(WINDOW *window, PrintingOptions *printing_options) const
     {
         wprintw(window, "\n");
     }

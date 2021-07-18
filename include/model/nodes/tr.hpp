@@ -6,8 +6,8 @@
 namespace Nodes {
     class Tr : public Element {
         public:
-            Tr(const GumboElement *el);
-            virtual void printw(WINDOW *window) const;
+            Tr(const GumboElement *el, BuildData *build_data);
+            virtual void printw(WINDOW *window, PrintingOptions *printing_options) const;
     };
 }
 

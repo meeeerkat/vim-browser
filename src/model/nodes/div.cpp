@@ -2,19 +2,19 @@
 
 
 namespace Nodes {
-    Div::Div(const GumboElement *el)
-        : Element(el)
+    Div::Div(const GumboElement *el, BuildData *build_data)
+        : Element(el, build_data)
     {
 
     }
 
-    void Div::printw(WINDOW *window) const
+    void Div::printw(WINDOW *window, PrintingOptions *printing_options) const
     {
         if (children.size() == 0)
             return;
 
         wprintw(window, "\n");
-        Element::printw(window);
+        Element::printw(window, printing_options);
     }
 }
 

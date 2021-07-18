@@ -2,6 +2,7 @@
 #define __WIDGETS_PAGE_HPP__
 
 #include <stdint.h>
+#include "model/nodes/interactive_element.hpp"
 
 class Document;
 
@@ -13,6 +14,8 @@ namespace PageWidget {
     Document *get_displayed_document();
     void scroll_to(uint32_t start_line);
     uint32_t get_start_line();
+
+    Nodes::InteractiveElement *choose_interactive_element();
 };
 
 #endif

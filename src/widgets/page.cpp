@@ -58,4 +58,15 @@ namespace PageWidget {
     {
         return start_line;
     }
+    
+    Nodes::InteractiveElement *choose_interactive_element()
+    {
+        // Printing doc showing interactions
+        wclear(pad);
+        displayed_document->printw(pad, Nodes::PrintingOptions{true});
+        scroll_to(start_line);
+
+        // Handling input to choose the element
+
+    }
 }

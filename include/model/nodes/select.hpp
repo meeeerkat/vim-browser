@@ -9,8 +9,8 @@
 namespace Nodes {
     class Select : public Element {
         public:
-            Select(const GumboElement *el);
-            virtual void printw(WINDOW *window) const;
+            Select(const GumboElement *el, BuildData *build_data);
+            virtual void printw(WINDOW *window, PrintingOptions *printing_options) const;
 
         protected:
             bool is_value_set() const;

@@ -2,14 +2,14 @@
 #include "model/nodes/loader.hpp"
 
 namespace Nodes {
-    Img::Img(const GumboElement *el)
-        : Element(el)
+    Img::Img(const GumboElement *el, BuildData *build_data)
+        : Element(el, build_data)
     {
         alt = load_attribute(el, "alt");
         src = load_attribute(el, "src");
     }
 
-    void Img::printw(WINDOW *window) const
+    void Img::printw(WINDOW *window, PrintingOptions *printing_options) const
     {
         if (alt.empty())
             wprintw(window, "*%s* ", src.c_str());

@@ -1,14 +1,14 @@
 #include "model/nodes/form.hpp"
 
 namespace Nodes {
-    Form::Form(const GumboElement *el)
-        : Element(el)
+    Form::Form(const GumboElement *el, BuildData *build_data)
+        : Element(el, build_data)
     {
 
     }
 
-    void Form::printw(WINDOW *window) const
+    void Form::printw(WINDOW *window, PrintingOptions *printing_options) const
     {
-        Element::printw(window);
+        Element::printw(window, printing_options);
     }
 }

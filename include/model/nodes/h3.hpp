@@ -6,8 +6,8 @@
 namespace Nodes {
     class H3 : public Element {
         public:
-            H3(const GumboElement *el);
-            virtual void printw(WINDOW *window) const;
+            H3(const GumboElement *el, BuildData *build_data);
+            virtual void printw(WINDOW *window, PrintingOptions *printing_options) const;
     };
 }
 

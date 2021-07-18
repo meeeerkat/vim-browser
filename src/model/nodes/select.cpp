@@ -3,8 +3,8 @@
 
 
 namespace Nodes {
-    Select::Select(const GumboElement *el)
-        : Element()
+    Select::Select(const GumboElement *el, BuildData *build_data)
+        : Element(build_data)
     {
         // Setting up options
         const GumboVector* gchildren = &el->children;
@@ -26,7 +26,7 @@ namespace Nodes {
             value = "";
     }
 
-    void Select::printw(WINDOW *window) const
+    void Select::printw(WINDOW *window, PrintingOptions *printing_options) const
     {
         if (is_value_set()) {
             const std::string label = option_labels.at(value);

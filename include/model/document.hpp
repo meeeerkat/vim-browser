@@ -15,10 +15,9 @@ class Document {
         const std::string *get_url() const;
         // just a public shortcut for DocumentLoader::is_loading(Document*)
         bool is_loading() const;
-        
         void on_loaded(GumboOutput* output);
 
-        void printw(WINDOW *window) const;
+        void printw(WINDOW *window, Nodes::PrintingOptions printing_options = Nodes::PrintingOptions()) const;
 
     private:
         std::string url;
@@ -26,9 +25,11 @@ class Document {
 
         std::string title;
         Nodes::Body *body;
+        Nodes::BuildData build_data;
 
         void parse_head(GumboElement *head);
         void parse_title(GumboElement *title_element);
+
 };
 
 #endif

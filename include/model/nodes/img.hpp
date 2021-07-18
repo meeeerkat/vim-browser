@@ -7,8 +7,8 @@
 namespace Nodes {
     class Img : public Element {
         public:
-            Img(const GumboElement *el);
-            virtual void printw(WINDOW *window) const;
+            Img(const GumboElement *el, BuildData *build_data);
+            virtual void printw(WINDOW *window, PrintingOptions *printing_options) const;
 
         protected:
             std::string alt;

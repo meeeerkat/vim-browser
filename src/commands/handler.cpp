@@ -12,6 +12,7 @@
 #include "commands/tab.hpp"
 #include "commands/write_command.hpp"
 #include "commands/scroll.hpp"
+#include "commands/interact.hpp"
 
 
 namespace CommandsHandler {
@@ -30,6 +31,7 @@ namespace CommandsHandler {
             COMMAND(tab_prev),
             COMMAND(write_command),
             COMMAND(scroll),
+            COMMAND(interact),
         };
     }
 

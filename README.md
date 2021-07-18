@@ -15,3 +15,5 @@ it will only print in a way that is both functionnal & easy to read
 ## TODO
 - DOCUMENT DISPLAY (Document & Element parsing + PageWidget::diplay)
 - Images url don't have the "https:", need to add it if necessary
+- Need to add color & check for support of each attribute
+- Link clinking & inputs handling

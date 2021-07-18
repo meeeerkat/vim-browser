@@ -7,9 +7,9 @@
 namespace Nodes {
     class Text : public Node {
         public:
-            Text(const GumboText *text);
+            Text(const GumboText *text, BuildData *build_data);
             ~Text();
-            virtual void printw(WINDOW *window) const;
+            virtual void printw(WINDOW *window, PrintingOptions *printing_options) const;
 
         protected:
             std::string text;

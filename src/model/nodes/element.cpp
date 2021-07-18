@@ -3,18 +3,20 @@
 
 
 namespace Nodes {
-    Element::Element()
+    Element::Element(BuildData *build_data)
+        : Node(build_data)
     {
 
     }
 
-    Element::Element(const GumboElement* el)
+    Element::Element(const GumboElement* el, BuildData *build_data)
+        : Node(build_data)
     {
         // Setting up children
         const GumboVector* gchildren = &el->children;
         for (uint16_t i=0; i < gchildren->length; i++) {
             GumboNode *gchild = static_cast<GumboNode*>(gchildren->data[i]);
-            Nodes::load(&children, gchild);
+            Nodes::load(&children, gchild, build_data);
         }
     }
    
@@ -24,9 +26,9 @@ namespace Nodes {
             delete child;
     }
     
-    void Element::printw(WINDOW *window) const
+    void Element::printw(WINDOW *window, PrintingOptions *printing_options) const
     {
         for (Node *child : children)
-            child->printw(window);
+            child->printw(window, printing_options);
     }
 }
