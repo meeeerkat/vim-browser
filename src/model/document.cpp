@@ -100,5 +100,7 @@ bool Document::is_loading() const
 
 void Document::printw(WINDOW *window) const
 {
+    if (is_loading())
+        return;
     body->printw(window);
 }

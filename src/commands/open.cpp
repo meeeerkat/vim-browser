@@ -49,6 +49,7 @@ namespace Commands {
         uint8_t *current_tab_index = new uint8_t(TabsWidget::get_current_tab_index());
         Document *new_doc = new Document(&url, new Helpers::Callback(on_doc_loaded, current_tab_index));
         TabsWidget::replace_document(new_doc, *current_tab_index);
+        PageWidget::display(new_doc);
     }
     void open_in_new_tab(std::string url)
     {
@@ -59,6 +60,7 @@ namespace Commands {
         Document *new_doc = new Document(&url, new Helpers::Callback(on_doc_loaded, next_tab_index));
         TabsWidget::add_tab(new_doc, *next_tab_index);
         TabsWidget::set_current_tab_index(*next_tab_index);
+        PageWidget::display(new_doc);
     }
 
     void on_doc_loaded(void *arg)
