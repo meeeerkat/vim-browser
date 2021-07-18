@@ -14,3 +14,4 @@ it will only print in a way that is both functionnal & easy to read
 
 ## TODO
 - DOCUMENT DISPLAY (Document & Element parsing + PageWidget::diplay)
+- Some bugs still persist with loading & tabs

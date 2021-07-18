@@ -1,34 +1,38 @@
+#include <ncurses.h>
 #include "widgets/page.hpp"
 #include "model/document.hpp"
 
 namespace PageWidget {
     namespace {
-        WINDOW *window;
+        WINDOW *pad;
         // displayed_document isn't owned by PageWidget
         Document *displayed_document;
+        uint32_t start_line;
+
+        const uint32_t MAX_LINES_NB = 5000;
     }
 
     void init()
     {
-        window = newwin(LINES-2, COLS, 1, 0);
-        keypad(window, TRUE);
+        pad = newpad(MAX_LINES_NB, COLS);
+        keypad(pad, TRUE);
 
         displayed_document = NULL;
     }
 
     void free()
     {
-        delwin(window);
+        delwin(pad);
     }
 
-    void display(Document *doc)
+    void display(Document *doc, uint32_t start_line_p)
     {
         displayed_document = doc;
 
         // Printing doc
-        wclear(window);
-        displayed_document->printw(window);
-        wrefresh(window);
+        wclear(pad);
+        displayed_document->printw(pad);
+        scroll_to(start_line_p);
     }
 
     void handle_input()
@@ -39,5 +43,19 @@ namespace PageWidget {
     Document *get_displayed_document()
     {
         return displayed_document;
+    }
+
+    void scroll_to(uint32_t start_line_p)
+    {
+        if (start_line_p > MAX_LINES_NB)
+            return;
+
+        start_line = start_line_p;
+        prefresh(pad, start_line, 0, 1, 0, LINES-2, COLS);
+    }
+
+    uint32_t get_start_line()
+    {
+        return start_line;
     }
 }
