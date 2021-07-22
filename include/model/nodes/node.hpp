@@ -4,16 +4,20 @@
 #include <gumbo.h>
 #include <ncurses.h>
 #include <vector>
+#include <string>
 
 
 namespace Nodes {
     
-    class Element;
+    class InteractiveElement;
+
     struct BuildData {
-        std::vector<Element*> interactive_elements;
+        std::vector<InteractiveElement*> interactive_elements;
+        std::string base_url;
     };
     struct PrintingOptions {
-        bool show_interactions;
+        bool show_interactions = false;
+        std::string interaction_current_id;
     };
 
     class Node {

@@ -8,7 +8,7 @@ namespace Commands {
     {
         const int err_code = TabsWidget::close_current_tab();
         if (err_code < 0)
-            *error_message = "Cannot close this tab";
+            *error_message = "Cannot close this tab.";
 
         if (PageWidget::get_displayed_document() != TabsWidget::get_current_document())
             PageWidget::display(TabsWidget::get_current_document());

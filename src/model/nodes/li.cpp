@@ -9,6 +9,7 @@ namespace Nodes {
 
     void Li::printw(WINDOW *window, PrintingOptions *printing_options) const
     {
-
+        wprintw(window, "\n");
+        Element::printw(window, printing_options);
     }
 }

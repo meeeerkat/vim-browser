@@ -9,6 +9,6 @@ namespace Nodes {
 
     void Ol::printw(WINDOW *window, PrintingOptions *printing_options) const
     {
-
+        Element::printw(window, printing_options);
     }
 }

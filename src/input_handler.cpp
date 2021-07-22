@@ -22,9 +22,14 @@ namespace InputHandler {
         delwin(fake_window);
     }
 
+    uint16_t get_char()
+    {
+        return wgetch(fake_window);
+    }
+
     void wait_and_read()
     {
-        while (TRUE) {
+        while (true) {
             // Here we only handle shortcuts (some redirect to the widgets)
             const uint16_t c = wgetch(fake_window);
             const std::string *command = Config::Shortcuts::get_command(c);

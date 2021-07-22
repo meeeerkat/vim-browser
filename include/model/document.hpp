@@ -3,7 +3,9 @@
 #include <string>
 #include <gumbo.h>
 #include "model/nodes/body.hpp"
+#include "model/nodes/interactive_element.hpp"
 #include "helpers/callback.hpp"
+
 
 class Document {
     public:
@@ -17,7 +19,9 @@ class Document {
         bool is_loading() const;
         void on_loaded(GumboOutput* output);
 
-        void printw(WINDOW *window, Nodes::PrintingOptions printing_options = Nodes::PrintingOptions()) const;
+        void printw(WINDOW *window, Nodes::PrintingOptions printing_options = Nodes::PrintingOptions{}) const;
+
+        Nodes::InteractiveElement *get_interactive_element(const std::string &id);
 
     private:
         std::string url;

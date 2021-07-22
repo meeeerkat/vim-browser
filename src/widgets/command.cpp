@@ -1,7 +1,6 @@
 #include <vector>
 #include "widgets/command.hpp"
 
-#define KEY_OTHER_ENTER 10
 
 
 namespace CommandWidget {
@@ -104,8 +103,8 @@ namespace CommandWidget {
             // for now the program just crashes
 
             switch (code) {
+                case '\n':
                 case KEY_ENTER:
-                case KEY_OTHER_ENTER:
                     if (current_command.empty()) {
                         clear();
                         reset();

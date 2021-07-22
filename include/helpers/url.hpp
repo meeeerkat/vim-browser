@@ -4,7 +4,8 @@
 #include <string>
 
 namespace Helpers::Url {
-    void fix(std::string *url);
+    void fix(std::string *url, std::string base = "");
+    std::string get_base(const std::string &url);
 }
 
 #endif

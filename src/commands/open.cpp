@@ -1,4 +1,5 @@
 #include <unistd.h>
+#include <iostream>
 #include "commands/open.hpp"
 #include "widgets/page.hpp"
 #include "widgets/tabs.hpp"
@@ -55,6 +56,8 @@ namespace Commands {
     {
         if (!TabsWidget::can_add_tab())
             return;
+
+        std::cerr << url << "\n";
         
         uint8_t *next_tab_index = new uint8_t(TabsWidget::get_current_tab_index() + 1);
         Document *new_doc = new Document(&url, new Helpers::Callback(on_doc_loaded, next_tab_index));

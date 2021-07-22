@@ -92,7 +92,7 @@ namespace Nodes {
     std::string load_attribute(const GumboElement *el, const std::string name)
     {
         GumboAttribute *attr = gumbo_get_attribute(&el->attributes, name.c_str());
-        if (attr)
+        if (attr && attr->value)
             return std::string(attr->value);
         return "";
     }

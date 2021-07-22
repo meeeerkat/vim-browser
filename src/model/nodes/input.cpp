@@ -22,4 +22,9 @@ namespace Nodes {
         
         InteractiveElement::printw(window, printing_options);
     }
+    
+    void Input::interact(uint8_t type)
+    {
+
+    }
 }

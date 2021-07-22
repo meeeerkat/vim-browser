@@ -1,18 +1,23 @@
 #include <cassert>
+#include <iostream>
+#include <string>
 #include <ncurses.h>
 #include "model/document.hpp"
 #include "model/document_loader.hpp"
+#include "helpers/url.hpp"
 
 
 
 Document::Document(const std::string *url)
     :url(*url), on_loaded_callback(NULL), body(NULL)
 {
+    build_data.base_url = Helpers::Url::get_base(*url);
     DocumentLoader::load_async(this);
 }
 Document::Document(const std::string *url, Helpers::Callback *on_loaded_callback)
     :url(*url), on_loaded_callback(on_loaded_callback), body(NULL)
 {
+    build_data.base_url = Helpers::Url::get_base(*url);
     DocumentLoader::load_async(this);
 }
 
@@ -23,6 +28,9 @@ Document::~Document()
 
     if (on_loaded_callback)
         delete on_loaded_callback;
+
+    if (body)
+        delete body;
 }
 
 void Document::parse_title(GumboElement *title_element)
@@ -106,3 +114,10 @@ void Document::printw(WINDOW *window, Nodes::PrintingOptions printing_options) c
     body->printw(window, &printing_options);
 }
 
+Nodes::InteractiveElement *Document::get_interactive_element(const std::string &id)
+{
+    uint32_t el_index = std::stoi(id);
+    if (el_index < build_data.interactive_elements.size())
+        return build_data.interactive_elements[el_index];
+    return NULL;
+}

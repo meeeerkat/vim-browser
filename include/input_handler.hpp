@@ -9,6 +9,7 @@
 namespace InputHandler {
     void init();
     void free();
+    uint16_t get_char();
     void wait_and_read();
 };
 

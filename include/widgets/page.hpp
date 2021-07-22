@@ -10,12 +10,13 @@ namespace PageWidget {
     void init();
     void free();
     void display(Document *doc, uint32_t start_line = 0);
-    void handle_input();
     Document *get_displayed_document();
     void scroll_to(uint32_t start_line);
+    void refresh_display();
+    void refresh_display(Nodes::PrintingOptions new_options);
     uint32_t get_start_line();
-
-    Nodes::InteractiveElement *choose_interactive_element();
+    
+    int interact(uint8_t type, std::string *error_message);
 };
 
 #endif

@@ -5,7 +5,11 @@
 namespace Commands {
     int interact_exec(int argc, char **argv, std::string *error_message)
     {
-        Nodes::InteractiveElement *el = PageWidget::choose_interactive_element();
+        uint8_t type = 0;
+        if (argc > 1)
+            type = stoi(std::string(argv[1]));
+
+        return PageWidget::interact(type, error_message);
     }
 }
 
