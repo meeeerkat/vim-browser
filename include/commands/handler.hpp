@@ -5,9 +5,9 @@
 
 
 namespace CommandsHandler {
-    void init(void (*print_message_callback) (std::string));
+    void init(void (*print_message_callback) (const std::string&));
     void free();
-    int exec(const std::string *command);
+    int exec(const std::string &command);
  };
 
 #endif

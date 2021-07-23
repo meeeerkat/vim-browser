@@ -7,8 +7,8 @@
 namespace Nodes {
     class Input : public InteractiveElement {
         public:
-            Input(const GumboElement *el, BuildData *build_data);
-            virtual void printw(WINDOW *window, PrintingOptions *printing_options) const;
+            Input(const GumboElement *el, BuildData &build_data);
+            virtual void printw(WINDOW *window, PrintingOptions &printing_options) const;
             
             virtual void interact(uint8_t type = 0);
 

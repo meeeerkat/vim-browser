@@ -11,7 +11,7 @@ namespace Config {
     void init()
     {
         dir_path = std::string(Helpers::System::get_home_dir_path()) + "/.vim-browser/";
-        Shortcuts::init(&dir_path);
+        Shortcuts::init(dir_path);
     }
     
     void free()

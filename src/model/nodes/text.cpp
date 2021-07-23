@@ -3,7 +3,7 @@
 
 
 namespace Nodes {
-    Text::Text(const GumboText *gumbo_text, BuildData *build_data)
+    Text::Text(const GumboText *gumbo_text, BuildData &build_data)
         : Node(build_data)
     {
         text = std::string(gumbo_text->text);
@@ -15,7 +15,7 @@ namespace Nodes {
 
     }
 
-    void Text::printw(WINDOW *window, PrintingOptions *printing_options) const
+    void Text::printw(WINDOW *window, PrintingOptions &printing_options) const
     {
         wprintw(window, "%s ", text.c_str());
     }

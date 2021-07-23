@@ -9,12 +9,12 @@
 
 class Document {
     public:
-        Document(const std::string *url);
-        Document(const std::string *url, Helpers::Callback *on_loaded_callback);
+        Document(const std::string &url);
+        Document(const std::string &url, Helpers::Callback *on_loaded_callback);
         ~Document();
 
-        const std::string *get_title() const;
-        const std::string *get_url() const;
+        const std::string &get_title() const;
+        const std::string &get_url() const;
         // just a public shortcut for DocumentLoader::is_loading(Document*)
         bool is_loading() const;
         void on_loaded(GumboOutput* output);

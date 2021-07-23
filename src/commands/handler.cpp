@@ -18,7 +18,7 @@
 namespace CommandsHandler {
 
     namespace {
-        void (*print_message_callback) (std::string);
+        void (*print_message_callback) (const std::string&);
         #define COMMAND(NAME)  { #NAME, Commands::NAME ## _exec }
         std::map<std::string, int (*) (int, char**, std::string*)> COMMANDS = 
         {
@@ -36,7 +36,7 @@ namespace CommandsHandler {
     }
 
 
-    void init(void (*print_message_callback_p) (std::string))
+    void init(void (*print_message_callback_p) (const std::string&))
     {
         print_message_callback = print_message_callback_p;
     }
@@ -46,13 +46,13 @@ namespace CommandsHandler {
 
     }
 
-    int exec(const std::string *command)
+    int exec(const std::string &command)
     {
         int argc;
         char **argv;
         GError *error = NULL;
 
-        if (!g_shell_parse_argv (command->c_str(), &argc, &argv, &error)) {
+        if (!g_shell_parse_argv (command.c_str(), &argc, &argv, &error)) {
             std::string error_message(error->message);
             print_message_callback(error_message);
             g_clear_error(&error);

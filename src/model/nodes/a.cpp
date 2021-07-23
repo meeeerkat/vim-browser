@@ -4,17 +4,17 @@
 #include "helpers/url.hpp"
 
 namespace Nodes {
-    A::A(const GumboElement *el, BuildData *build_data)
+    A::A(const GumboElement *el, BuildData &build_data)
         : InteractiveElement(el, build_data)
     {
-        base_url = build_data->base_url;
+        base_url = build_data.base_url;
         href = load_attribute(el, "href");
 
         if (!href.empty())
-            Helpers::Url::fix(&href, base_url);
+            Helpers::Url::fix(href, base_url);
     }
 
-    void A::printw(WINDOW *window, PrintingOptions *printing_options) const
+    void A::printw(WINDOW *window, PrintingOptions &printing_options) const
     {
         wattron(window, A_UNDERLINE);
         Element::printw(window, printing_options);

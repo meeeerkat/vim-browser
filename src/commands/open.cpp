@@ -32,7 +32,7 @@ namespace Commands {
         }
 
         std::string url(argv[optind]);
-        Helpers::Url::fix(&url);
+        Helpers::Url::fix(url);
 
         if (new_tab)
             open_in_new_tab(url);
@@ -48,7 +48,7 @@ namespace Commands {
     {
         // Current_tab_index is supposed to be deleted in on_doc_loaded
         uint8_t *current_tab_index = new uint8_t(TabsWidget::get_current_tab_index());
-        Document *new_doc = new Document(&url, new Helpers::Callback(on_doc_loaded, current_tab_index));
+        Document *new_doc = new Document(url, new Helpers::Callback(on_doc_loaded, current_tab_index));
         TabsWidget::replace_document(new_doc, *current_tab_index);
         PageWidget::display(new_doc);
     }
@@ -60,7 +60,7 @@ namespace Commands {
         std::cerr << url << "\n";
         
         uint8_t *next_tab_index = new uint8_t(TabsWidget::get_current_tab_index() + 1);
-        Document *new_doc = new Document(&url, new Helpers::Callback(on_doc_loaded, next_tab_index));
+        Document *new_doc = new Document(url, new Helpers::Callback(on_doc_loaded, next_tab_index));
         TabsWidget::add_tab(new_doc, *next_tab_index);
         TabsWidget::set_current_tab_index(*next_tab_index);
         PageWidget::display(new_doc);

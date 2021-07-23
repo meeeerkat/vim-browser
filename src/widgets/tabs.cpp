@@ -92,7 +92,7 @@ namespace TabsWidget {
             const bool is_current_tab = get_current_tab_index() == i;
             if (is_current_tab)
                 wattron(window, A_BOLD);
-            mvwprintw(window, 0, i*tab_size, "%hhu: %s", i, docs[i]->get_title()->c_str());
+            mvwprintw(window, 0, i*tab_size, "%hhu: %s", i, docs[i]->get_title().c_str());
             if (is_current_tab)
                 wattroff(window, A_BOLD);
         }

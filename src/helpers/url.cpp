@@ -2,22 +2,22 @@
 #include "helpers/url.hpp"
 
 namespace Helpers::Url {
-    void fix(std::string *url, std::string base)
+    void fix(std::string &url, const std::string &base)
     {
-        if (std::regex_match(*url, std::regex("^(https://|http://).*")))
+        if (std::regex_match(url, std::regex("^(https://|http://).*")))
             return;
 
-        if (std::regex_match(*url, std::regex("\\w\+\\.\\w\+$"))) {
-            url->insert(0, "https://www.");
+        if (std::regex_match(url, std::regex("\\w\+\\.\\w\+$"))) {
+            url.insert(0, "https://www.");
             return;
         }
 
         if (base.empty()) {
-            url->insert(0, "https://lite.duckduckgo.com/lite/?q=");
+            url.insert(0, "https://lite.duckduckgo.com/lite/?q=");
             return;
         }
 
-        url->insert(0, base);
+        url.insert(0, base);
     }
     
     std::string get_base(const std::string &url)

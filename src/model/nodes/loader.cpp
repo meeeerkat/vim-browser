@@ -27,13 +27,13 @@
 namespace Nodes {
 
     template <typename T>
-    inline Node* create(const GumboElement *el, BuildData *build_data)
+    inline Node* create(const GumboElement *el, BuildData &build_data)
     {
         return new T(el, build_data);
     }
 
     namespace {
-        std::map<int, Node* (*) (const GumboElement*, BuildData*)> elements_creators = {
+        std::map<int, Node* (*) (const GumboElement*, BuildData&)> elements_creators = {
             { GUMBO_TAG_BODY, create<Body> },
             { GUMBO_TAG_A, create<A> },
             { GUMBO_TAG_P, create<P> },
@@ -63,7 +63,7 @@ namespace Nodes {
         };
     }
 
-    void load(std::vector<Node*> *nodes, const GumboNode *gnode, BuildData *build_data)
+    void load(std::vector<Node*> *nodes, const GumboNode *gnode, BuildData &build_data)
     {
         if(gnode->type == GUMBO_NODE_TEXT) {
             nodes->push_back(new Text(&gnode->v.text, build_data));

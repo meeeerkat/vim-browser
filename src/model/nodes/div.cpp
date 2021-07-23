@@ -2,13 +2,13 @@
 
 
 namespace Nodes {
-    Div::Div(const GumboElement *el, BuildData *build_data)
+    Div::Div(const GumboElement *el, BuildData &build_data)
         : Element(el, build_data)
     {
 
     }
 
-    void Div::printw(WINDOW *window, PrintingOptions *printing_options) const
+    void Div::printw(WINDOW *window, PrintingOptions &printing_options) const
     {
         if (children.size() == 0)
             return;

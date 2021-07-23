@@ -20,3 +20,4 @@ it will only print in a way that is both functionnal & easy to read
 - Replace pointers with references where possible AND MORE GENERALY FOLLOW C++ GUIDELINES
 - Remove the namespace singleton thing to use only objects
 - Use exceptions
+- Duckduckgo search doesnt work, maybe the base\_url is added even though it should not here (see Helpers::Url::fix)

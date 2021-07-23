@@ -3,14 +3,14 @@
 
 
 namespace Nodes {
-    Input::Input(const GumboElement *el, BuildData *build_data)
+    Input::Input(const GumboElement *el, BuildData &build_data)
         : InteractiveElement(el, build_data)
     {
         type = Nodes::load_attribute(el, "type");
         value = Nodes::load_attribute(el, "value");
     }
 
-    void Input::printw(WINDOW *window, PrintingOptions *printing_options) const
+    void Input::printw(WINDOW *window, PrintingOptions &printing_options) const
     {
         if (type == "text")
             wprintw(window, "%s________________ ", value.c_str());

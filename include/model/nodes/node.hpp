@@ -22,9 +22,9 @@ namespace Nodes {
 
     class Node {
         public:
-            Node(BuildData *build_data);
+            Node(BuildData &build_data);
             virtual ~Node();
-            virtual void printw(WINDOW *window, PrintingOptions *printing_options) const = 0;
+            virtual void printw(WINDOW *window, PrintingOptions &printing_options) const = 0;
     };
 }
 

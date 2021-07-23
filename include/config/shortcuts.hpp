@@ -4,7 +4,7 @@
 #include <string>
 
 namespace Config::Shortcuts {
-    void init(const std::string *config_dir);
+    void init(const std::string &config_dir);
     const std::string *get_command(uint16_t shortcut);
 }
 

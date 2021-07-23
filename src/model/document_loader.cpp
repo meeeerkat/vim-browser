@@ -59,7 +59,7 @@ namespace DocumentLoader {
         curl_easy_setopt(handle, CURLOPT_NOPROGRESS, 1L);
         curl_easy_setopt(handle, CURLOPT_VERBOSE, 0L);
         curl_easy_setopt(handle, CURLOPT_WRITEFUNCTION, append_to_buffer);
-        curl_easy_setopt(handle, CURLOPT_URL, doc->get_url()->c_str());
+        curl_easy_setopt(handle, CURLOPT_URL, doc->get_url().c_str());
         curl_easy_setopt(handle, CURLOPT_WRITEDATA, &(requests[doc].buffer));
         curl_easy_setopt(handle, CURLOPT_PRIVATE, doc);
 

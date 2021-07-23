@@ -3,13 +3,13 @@
 
 
 namespace Nodes {
-    Element::Element(BuildData *build_data)
+    Element::Element(BuildData &build_data)
         : Node(build_data)
     {
 
     }
 
-    Element::Element(const GumboElement* el, BuildData *build_data)
+    Element::Element(const GumboElement* el, BuildData &build_data)
         : Node(build_data)
     {
         // Setting up children
@@ -26,7 +26,7 @@ namespace Nodes {
             delete child;
     }
     
-    void Element::printw(WINDOW *window, PrintingOptions *printing_options) const
+    void Element::printw(WINDOW *window, PrintingOptions &printing_options) const
     {
         for (Node *child : children)
             child->printw(window, printing_options);

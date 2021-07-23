@@ -34,7 +34,7 @@ namespace InputHandler {
             const uint16_t c = wgetch(fake_window);
             const std::string *command = Config::Shortcuts::get_command(c);
             if (command)
-                CommandsHandler::exec(command);
+                CommandsHandler::exec(*command);
         }
     }
 }

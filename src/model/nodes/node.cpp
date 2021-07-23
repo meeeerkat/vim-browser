@@ -2,7 +2,7 @@
 
 
 namespace Nodes {
-    Node::Node(BuildData *build_data)
+    Node::Node(BuildData &build_data)
     {
 
     }

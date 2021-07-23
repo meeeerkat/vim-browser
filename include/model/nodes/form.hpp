@@ -6,8 +6,8 @@
 namespace Nodes {
     class Form : public Element {
         public:
-            Form(const GumboElement *el, BuildData *build_data);
-            virtual void printw(WINDOW *window, PrintingOptions *printing_options) const;
+            Form(const GumboElement *el, BuildData &build_data);
+            virtual void printw(WINDOW *window, PrintingOptions &printing_options) const;
     };
 }
 

@@ -7,9 +7,9 @@ namespace Config::Shortcuts {
         std::map<uint16_t, std::string> shortcut_to_command;
     }
 
-    void init(const std::string *config_dir)
+    void init(const std::string &config_dir)
     {
-        std::string path = *config_dir + "shortcuts";
+        std::string path = config_dir + "shortcuts";
         std::ifstream file(path);
         if(!file.is_open()) {
             perror("Cannot open shortcuts' config file.");

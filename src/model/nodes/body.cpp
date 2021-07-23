@@ -2,7 +2,7 @@
 
 
 namespace Nodes {
-    Body::Body(const GumboElement* el, BuildData *build_data)
+    Body::Body(const GumboElement* el, BuildData &build_data)
         : Element(el, build_data)
     {}
 }

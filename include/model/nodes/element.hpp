@@ -8,10 +8,10 @@
 namespace Nodes {
     class Element : public Node {
         public:
-            Element(BuildData *build_data);
-            Element(const GumboElement *el, BuildData *build_data);
+            Element(BuildData &build_data);
+            Element(const GumboElement *el, BuildData &build_data);
             virtual ~Element();
-            virtual void printw(WINDOW *window, PrintingOptions *printing_options) const;
+            virtual void printw(WINDOW *window, PrintingOptions &printing_options) const;
 
         protected:
             std::vector<Node*> children;

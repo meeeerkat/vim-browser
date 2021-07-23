@@ -8,16 +8,16 @@
 
 
 
-Document::Document(const std::string *url)
-    :url(*url), on_loaded_callback(NULL), body(NULL)
+Document::Document(const std::string &url)
+    :url(url), on_loaded_callback(NULL), body(NULL)
 {
-    build_data.base_url = Helpers::Url::get_base(*url);
+    build_data.base_url = Helpers::Url::get_base(url);
     DocumentLoader::load_async(this);
 }
-Document::Document(const std::string *url, Helpers::Callback *on_loaded_callback)
-    :url(*url), on_loaded_callback(on_loaded_callback), body(NULL)
+Document::Document(const std::string &url, Helpers::Callback *on_loaded_callback)
+    :url(url), on_loaded_callback(on_loaded_callback), body(NULL)
 {
-    build_data.base_url = Helpers::Url::get_base(*url);
+    build_data.base_url = Helpers::Url::get_base(url);
     DocumentLoader::load_async(this);
 }
 
@@ -84,21 +84,21 @@ void Document::on_loaded(GumboOutput *gdoc)
     parse_head(gumbo_head);
 
     // Building body
-    body = new Nodes::Body(gumbo_body, &build_data);
+    body = new Nodes::Body(gumbo_body, build_data);
 
     // Calling external callback
     on_loaded_callback->exec();
 }
 
-const std::string *Document::get_url() const
+const std::string &Document::get_url() const
 {
-    return &url;
+    return url;
 }
 
-const std::string *Document::get_title() const
+const std::string &Document::get_title() const
 {
     if (!is_loading())
-        return &title;
+        return title;
     return get_url();
 }
 
@@ -111,7 +111,7 @@ void Document::printw(WINDOW *window, Nodes::PrintingOptions printing_options) c
 {
     if (is_loading())
         return;
-    body->printw(window, &printing_options);
+    body->printw(window, printing_options);
 }
 
 Nodes::InteractiveElement *Document::get_interactive_element(const std::string &id)
