@@ -14,6 +14,9 @@ it will only print in a way that is both functionnal & easy to read
 
 ## TODO
 - DOCUMENT DISPLAY (Document & Element parsing + PageWidget::diplay)
-- Images url don't have the "https:", need to add it if necessary
+- Images url don't have the "https:", need to add it if necessary (like they were added for links)
 - Need to add color & check for support of each attribute
-- Link clinking & inputs handling
+- Inputs handling
+- Replace pointers with references where possible AND MORE GENERALY FOLLOW C++ GUIDELINES
+- Remove the namespace singleton thing to use only objects
+- Use exceptions
