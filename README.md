@@ -17,7 +17,6 @@ it will only print in a way that is both functionnal & easy to read
 - Images url don't have the "https:", need to add it if necessary (like they were added for links)
 - Need to add color & check for support of each attribute
 - Inputs handling
-- Replace pointers with references where possible AND MORE GENERALY FOLLOW C++ GUIDELINES
 - Remove the namespace singleton thing to use only objects
 - Use exceptions
-- Duckduckgo search doesnt work, maybe the base\_url is added even though it should not here (see Helpers::Url::fix)
+- Duckduckgo lite search doesnt work because urls are weird (example: "//duckduckgo.com/l/?uddg=https%3A%2F%2Fgooglesearch.me%2F&amp;rut=4e680418cbfffa14d4e836ec8c198df3eb2782b756b0a18d8c5272d7b839d334") -> needs fixing

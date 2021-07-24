@@ -1,4 +1,5 @@
 #include <pthread.h>
+#include <iostream>
 #include <cassert>
 #include <ncurses.h>
 #include <unistd.h>
@@ -90,6 +91,7 @@ namespace DocumentLoader {
                     Document *doc;
                     curl_easy_getinfo(easy_handle, CURLINFO_PRIVATE, &doc);
                     // Parsing output
+                    std::cerr << requests[doc].buffer << "\n ------------- \n";
                     GumboOutput *parsed_output = gumbo_parse(requests[doc].buffer.c_str());
                     // Deleting the request
                     remove_request(doc);
