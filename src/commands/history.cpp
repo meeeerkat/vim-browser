@@ -1,5 +1,6 @@
 #include "commands/history.hpp"
 #include "widgets/command.hpp"
+#include "controller.hpp"
 
 namespace Commands {
     int history_exec(int argc, char **argv, std::string *error_message)

@@ -5,6 +5,7 @@
 #include "widgets/tabs.hpp"
 #include "helpers/url.hpp"
 #include "helpers/callback.hpp"
+#include "controller.hpp"
 
 
 namespace Commands {
@@ -44,35 +45,35 @@ namespace Commands {
 
 
 
-    void open_in_current_tab(std::string url)
+    void open_in_current_tab(const std::string &url)
     {
         // Current_tab_index is supposed to be deleted in on_doc_loaded
-        uint8_t *current_tab_index = new uint8_t(TabsWidget::get_current_tab_index());
-        Document *new_doc = new Document(url, new Helpers::Callback(on_doc_loaded, current_tab_index));
-        TabsWidget::replace_document(new_doc, *current_tab_index);
-        PageWidget::display(new_doc);
+        uint8_t *current_tab_index = new uint8_t(Controller::tabs_widget->get_current_tab_index());
+        Document *new_doc = new Document(url, Controller::document_loader, new Helpers::Callback(on_doc_loaded, current_tab_index));
+        Controller::tabs_widget->replace_document(new_doc, *current_tab_index);
+        Controller::page_widget->display(new_doc);
     }
-    void open_in_new_tab(std::string url)
+    void open_in_new_tab(const std::string &url)
     {
-        if (!TabsWidget::can_add_tab())
+        if (!Controller::tabs_widget->can_add_tab())
             return;
 
-        uint8_t *next_tab_index = new uint8_t(TabsWidget::get_current_tab_index() + 1);
-        Document *new_doc = new Document(url, new Helpers::Callback(on_doc_loaded, next_tab_index));
-        TabsWidget::add_tab(new_doc, *next_tab_index);
-        TabsWidget::set_current_tab_index(*next_tab_index);
-        PageWidget::display(new_doc);
+        uint8_t *next_tab_index = new uint8_t(Controller::tabs_widget->get_current_tab_index() + 1);
+        Document *new_doc = new Document(url, Controller::document_loader, new Helpers::Callback(on_doc_loaded, next_tab_index));
+        Controller::tabs_widget->add_tab(new_doc, *next_tab_index);
+        Controller::tabs_widget->set_current_tab_index(*next_tab_index);
+        Controller::page_widget->display(new_doc);
     }
 
     void on_doc_loaded(void *arg)
     {
         uint8_t *tab_index = (uint8_t*) arg;
         // Updating tabs because the page's title is now set
-        TabsWidget::update_view();
+        Controller::tabs_widget->update_view();
 
         // Displaying it
-        if (*tab_index == TabsWidget::get_current_tab_index())
-            PageWidget::display(TabsWidget::get_document(*tab_index));
+        if (*tab_index == Controller::tabs_widget->get_current_tab_index())
+            Controller::page_widget->display(Controller::tabs_widget->get_document(*tab_index));
 
         delete tab_index;
     }

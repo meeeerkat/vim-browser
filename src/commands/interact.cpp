@@ -1,6 +1,7 @@
 #include "commands/interact.hpp"
 #include "model/nodes/element.hpp"
 #include "widgets/page.hpp"
+#include "controller.hpp"
 
 namespace Commands {
     int interact_exec(int argc, char **argv, std::string *error_message)
@@ -9,7 +10,7 @@ namespace Commands {
         if (argc > 1)
             type = stoi(std::string(argv[1]));
 
-        return PageWidget::interact(type, error_message);
+        return Controller::page_widget->interact(type, error_message);
     }
 }
 

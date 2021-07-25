@@ -1,6 +1,7 @@
 #include <unistd.h>
 #include "commands/scroll.hpp"
 #include "widgets/page.hpp"
+#include "controller.hpp"
 
 
 namespace Commands {
@@ -34,9 +35,9 @@ namespace Commands {
         if (is_negative)
             line = -line;
         if (!is_absolute)
-            line += PageWidget::get_start_line();
+            line += Controller::page_widget->get_start_line();
 
-        PageWidget::scroll_to(line);
+        Controller::page_widget->scroll_to(line);
 
         return 0;
     }

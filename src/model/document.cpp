@@ -1,30 +1,28 @@
 #include <cassert>
 #include <iostream>
-#include <string>
-#include <ncurses.h>
 #include "model/document.hpp"
 #include "model/document_loader.hpp"
 #include "helpers/url.hpp"
 
 
 
-Document::Document(const std::string &url)
-    :url(url), on_loaded_callback(NULL), body(NULL)
+Document::Document(const std::string &url, DocumentLoader *loader)
+    :url(url), loader(loader), on_loaded_callback(NULL), body(NULL)
 {
     build_data.base_url = Helpers::Url::get_base(url);
-    DocumentLoader::load_async(this);
+    loader->load_async(this);
 }
-Document::Document(const std::string &url, Helpers::Callback *on_loaded_callback)
-    :url(url), on_loaded_callback(on_loaded_callback), body(NULL)
+Document::Document(const std::string &url, DocumentLoader *loader, Helpers::Callback *on_loaded_callback)
+    :url(url), loader(loader), on_loaded_callback(on_loaded_callback), body(NULL)
 {
     build_data.base_url = Helpers::Url::get_base(url);
-    DocumentLoader::load_async(this);
+    loader->load_async(this);
 }
 
 Document::~Document()
 {
     if (is_loading())
-        DocumentLoader::cancel_async_loading(this);
+        loader->cancel_async_loading(this);
 
     if (on_loaded_callback)
         delete on_loaded_callback;
@@ -104,7 +102,7 @@ const std::string &Document::get_title() const
 
 bool Document::is_loading() const
 {
-    return DocumentLoader::is_loading(this);
+    return loader->is_loading(this);
 }
 
 void Document::printw(WINDOW *window, Nodes::PrintingOptions printing_options) const

@@ -2,12 +2,8 @@
 #include <fstream>
 #include "config/shortcuts.hpp"
 
-namespace Config::Shortcuts {
-    namespace {
-        std::map<uint16_t, std::string> shortcut_to_command;
-    }
-
-    void init(const std::string &config_dir)
+namespace Config {
+    Shortcuts::Shortcuts(const std::string &config_dir)
     {
         std::string path = config_dir + "shortcuts";
         std::ifstream file(path);
@@ -27,10 +23,10 @@ namespace Config::Shortcuts {
         }
     }
 
-    const std::string *get_command(uint16_t shortcut)
+    const std::string *Shortcuts::get_command(uint16_t shortcut) const
     {
         if (shortcut_to_command.count(shortcut) == 0)
             return NULL;
-        return &shortcut_to_command[shortcut];
+        return &shortcut_to_command.at(shortcut);
     }
 }

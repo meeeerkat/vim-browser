@@ -1,5 +1,4 @@
-#include <string.h>
-#include <pthread.h>
+#include <cassert>
 #include "controller.hpp"
 #include "model/document_loader.hpp"
 #include "widgets/tabs.hpp"
@@ -8,51 +7,74 @@
 #include "input_handler.hpp"
 #include "commands/open.hpp"
 #include "commands/handler.hpp"
-#include "config/main.hpp"
+#include "config/manager.hpp"
+
+Controller *Controller::instance = nullptr;
+Config::Manager *Controller::config_manager = nullptr;
+// helpers
+DocumentLoader *Controller::document_loader = nullptr;
+InputHandler *Controller::input_handler = nullptr;
+Commands::Handler *Controller::commands_handler = nullptr;
+// widgets
+Widgets::Page *Controller::page_widget = nullptr;
+Widgets::Command *Controller::command_widget = nullptr;
+Widgets::Tabs *Controller::tabs_widget = nullptr;
 
 
-namespace Controller {
-    void init()
-    {
-        Config::init();
 
-        // ncurses init
-        initscr();
+Controller::Controller()
+{
+    // Controller is a Singleton (the only one)
+    assert(!instance);
+    instance = this;
 
-        // helpers init
-        DocumentLoader::init();
-        InputHandler::init();
-        CommandsHandler::init(CommandWidget::print_message);
+    config_manager = new Config::Manager();
 
-        // widgets init
-        PageWidget::init();
-        CommandWidget::init(CommandsHandler::exec);
-        TabsWidget::init();
+    // ncurses init
+    initscr();
 
-        // Opening base window
-        Commands::open_in_new_tab("https://lite.duckduckgo.com/lite");
+    // helpers init
+    document_loader = new DocumentLoader();
+    input_handler = new InputHandler();
+    commands_handler = new Commands::Handler(print_message);
 
-        // Setup complete, now everything is done after an user command
-        InputHandler::wait_and_read();
-    }
+    // widgets init
+    page_widget = new Widgets::Page();
+    command_widget = new Widgets::Command(exec);
+    tabs_widget = new Widgets::Tabs();
 
-    void free()
-    {
-        // helpers freeing
-        DocumentLoader::free();
-        InputHandler::free();
-        CommandsHandler::free();
+    // Opening base window
+    Commands::open_in_new_tab("https://lite.duckduckgo.com/lite");
 
-        // widgets freeing
-        PageWidget::free();
-        CommandWidget::free();
-        TabsWidget::free();
+    // Setup complete, now everything is done after an user command
+    input_handler->wait_and_read(exec, *config_manager->shortcuts);
+}
 
-        // ncurses closing
-        endwin();
+Controller::~Controller()
+{
+    // helpers freeing
+    delete document_loader;
+    delete input_handler;
+    delete commands_handler;
 
-        Config::free();
-    }
+    // widgets freeing
+    delete page_widget;
+    delete command_widget;
+    delete tabs_widget;
+
+    // ncurses closing
+    endwin();
+
+    delete config_manager;
+}
 
 
+void Controller::print_message(const std::string &message)
+{
+    command_widget->print_message(message);
+}
+
+int Controller::exec(const std::string &command)
+{
+    return commands_handler->exec(command);
 }

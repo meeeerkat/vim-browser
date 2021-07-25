@@ -1,13 +1,10 @@
-#include <stdio.h>
-#include <curl/curl.h>
-#include <unistd.h>
 #include "controller.hpp"
 
 
 int main()
 {
-    Controller::init();
-    Controller::free();
-    
+    Controller *controller = new Controller();
+    delete controller;
+
     return 0;
 }

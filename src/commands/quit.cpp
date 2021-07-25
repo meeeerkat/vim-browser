@@ -7,8 +7,7 @@
 namespace Commands {
     int quit_exec(int argc, char **argv, std::string *error_message)
     {
-        // Actually freeing memory before exiting
-        Controller::free();
+        delete Controller::instance;
         exit(EXIT_SUCCESS);
         return 0;
     }

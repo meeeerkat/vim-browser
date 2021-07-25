@@ -1,5 +1,6 @@
 #include "commands/write_command.hpp"
 #include "widgets/command.hpp"
+#include "controller.hpp"
 
 
 namespace Commands {
@@ -7,9 +8,9 @@ namespace Commands {
     {
         if (argc == 2) {
             const std::string base_command(argv[1]);
-            CommandWidget::handle_input(&base_command);
+            Controller::command_widget->handle_input(&base_command);
         }
         else
-            CommandWidget::handle_input(NULL);
+            Controller::command_widget->handle_input(NULL);
     }
 }
