@@ -15,7 +15,7 @@ class DocumentLoader {
         ~DocumentLoader();
         void load_async(Document *doc);
         void cancel_async_loading(Document *doc);
-        bool is_loading(const Document *doc);
+        bool is_loading(const Document *doc) const;
 
     private:
         struct curl_easy_request {

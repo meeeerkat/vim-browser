@@ -43,7 +43,7 @@ int8_t Tabs::add_tab(Document *new_doc, uint8_t tab_index)
     update_view();
     return get_tabs_nb()-1;
 }
-bool Tabs::can_add_tab()
+bool Tabs::can_add_tab() const
 {
     return get_tabs_nb() < TABS_MAX_NB;
 }
@@ -69,11 +69,11 @@ int8_t Tabs::set_current_tab_index(uint8_t new_tab_index)
 
     return 0;
 }
-int8_t Tabs::get_current_tab_index()
+int8_t Tabs::get_current_tab_index() const
 {
     return current_tab_index;
 }
-uint8_t Tabs::get_tabs_nb()
+uint8_t Tabs::get_tabs_nb() const
 {
     return (uint8_t) docs.size();
 }

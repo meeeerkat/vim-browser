@@ -54,7 +54,7 @@ void Page::refresh_display(Nodes::PrintingOptions new_options)
     refresh_display();
 }
 
-uint32_t Page::get_start_line()
+uint32_t Page::get_start_line() const
 {
     return start_line;
 }

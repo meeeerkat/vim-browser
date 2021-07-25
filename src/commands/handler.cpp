@@ -26,7 +26,7 @@ Handler::~Handler()
 
 }
 
-int Handler::exec(const std::string &command)
+int Handler::exec(const std::string &command) const
 {
     int argc;
     char **argv;
@@ -47,7 +47,7 @@ int Handler::exec(const std::string &command)
     }
 
     std::string error_message;
-    if (COMMANDS[command_name](argc, argv, &error_message) < 0) {
+    if (COMMANDS.at(command_name)(argc, argv, &error_message) < 0) {
         print_message_callback(error_message);
         g_strfreev(argv);
         return -2;

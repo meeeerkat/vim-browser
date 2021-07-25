@@ -106,7 +106,7 @@ void DocumentLoader::cancel_async_loading(Document *doc)
     remove_request(doc);
 }
 
-bool DocumentLoader::is_loading(const Document *doc)
+bool DocumentLoader::is_loading(const Document *doc) const
 {
     // TODO: pretty ugly cast but can't seem to make it work any another way
     return requests.count((Document*) doc) > 0;

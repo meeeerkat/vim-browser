@@ -16,7 +16,7 @@ namespace Widgets {
             void scroll_to(uint32_t start_line);
             void refresh_display();
             void refresh_display(Nodes::PrintingOptions new_options);
-            uint32_t get_start_line();
+            uint32_t get_start_line() const;
             
             int interact(uint8_t type, std::string *error_message);
 

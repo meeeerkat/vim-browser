@@ -24,7 +24,7 @@ namespace Commands {
         public:
             Handler(void (*print_message_callback) (const std::string&));
             ~Handler();
-            int exec(const std::string &command);
+            int exec(const std::string &command) const;
 
         private:
             void (*print_message_callback) (const std::string&);

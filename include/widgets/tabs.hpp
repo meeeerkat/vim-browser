@@ -16,11 +16,11 @@ namespace Widgets {
             Document *get_document(uint8_t tab_index);
             Document *get_current_document();
             int8_t add_tab(Document *new_tab, uint8_t tab_index);
-            bool can_add_tab();
+            bool can_add_tab() const;
             void replace_document(Document *new_doc, uint8_t tab_index);
             int8_t set_current_tab_index(uint8_t new_tab_index);
-            int8_t get_current_tab_index();
-            uint8_t get_tabs_nb();
+            int8_t get_current_tab_index() const;
+            uint8_t get_tabs_nb() const;
 
             int close_current_tab();
             int close_tab(uint8_t tab_index);
