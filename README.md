@@ -20,3 +20,5 @@ it will only print in a way that is both functionnal & easy to read
 - Remove the namespace singleton thing to use only objects
 - Use exceptions
 - Duckduckgo lite search doesnt work because urls are weird (example: "//duckduckgo.com/l/?uddg=https%3A%2F%2Fgooglesearch.me%2F&amp;rut=4e680418cbfffa14d4e836ec8c198df3eb2782b756b0a18d8c5272d7b839d334") -> needs fixing
+- Content interactive element like system: Can choose content (images, videos or audio) & open it with the command of the user's choice (set in config)
+- yy Yank current url command
