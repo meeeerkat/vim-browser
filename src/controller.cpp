@@ -8,6 +8,7 @@
 #include "commands/open.hpp"
 #include "commands/handler.hpp"
 #include "config/manager.hpp"
+#include "config/general.hpp"
 
 Controller *Controller::instance = nullptr;
 Config::Manager *Controller::config_manager = nullptr;
@@ -44,10 +45,10 @@ Controller::Controller()
     tabs_widget = new Widgets::Tabs();
 
     // Opening base window
-    Commands::open_in_new_tab("https://lite.duckduckgo.com/lite");
+    Commands::open_in_new_tab(Config::Manager::general->get_welcome_url());
 
     // Setup complete, now everything is done after an user command
-    input_handler->wait_and_read(exec, *config_manager->shortcuts);
+    input_handler->wait_and_read(exec);
 }
 
 Controller::~Controller()

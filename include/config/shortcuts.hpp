@@ -1,8 +1,9 @@
 #ifndef __CONFIG_SHORTCUTS_H__
 #define __CONFIG_SHORTCUTS_H__
 
-#include <string>
 #include <map>
+#include <string>
+
 
 namespace Config {
     class Shortcuts {

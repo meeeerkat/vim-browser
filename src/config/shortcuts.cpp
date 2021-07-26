@@ -1,16 +1,11 @@
-#include <map>
-#include <fstream>
 #include "config/shortcuts.hpp"
+#include "helpers/config.hpp"
+
 
 namespace Config {
     Shortcuts::Shortcuts(const std::string &config_dir)
     {
-        std::string path = config_dir + "shortcuts";
-        std::ifstream file(path);
-        if(!file.is_open()) {
-            perror("Cannot open shortcuts' config file.");
-            exit(EXIT_FAILURE);
-        }
+        std::ifstream file = Helpers::Config::open_file(config_dir, "shortcuts");
 
         char shortcut;
         std::string command;
@@ -21,6 +16,8 @@ namespace Config {
             std::getline(file, command);
             shortcut_to_command[shortcut] = command;
         }
+
+        file.close();
     }
 
     const std::string *Shortcuts::get_command(uint16_t shortcut) const

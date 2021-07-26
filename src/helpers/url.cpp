@@ -1,6 +1,7 @@
-#include <regex>
 #include "helpers/url.hpp"
-#include <iostream>
+#include <regex>
+#include "config/manager.hpp"
+#include "config/general.hpp"
 
 namespace Helpers::Url {
     void fix(std::string &url, const std::string &base)
@@ -19,7 +20,7 @@ namespace Helpers::Url {
         }
 
         if (base.empty()) {
-            url.insert(0, "https://lite.duckduckgo.com/lite/?q=");
+            url.insert(0, Config::Manager::general->get_search_url());
             return;
         }
 

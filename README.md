@@ -1,6 +1,6 @@
 
 ## Current state
-It's usable but there will be a lot of bugs and one needs to find another search engine (duckduckgo lite isn't supported yet due to weird url links) and hard code it (directly set into the code right now)  
+It's usable but there will be a lot of bugs and one needs to find another search engine (duckduckgo lite isn't supported yet due to weird url links)  
 Currently working on the document printing, user interactions & config setup  
 
 ## Config
@@ -19,7 +19,7 @@ it will only print in a way that is both functionnal & easy to read
 - Content interactive element like system (to finish): Can choose content (images, videos or audio) & open it with the command of the user's choice (set in config)  
 - yy Yank current url command  
 - Add help to all commands (-h prints help in the page\_widget & can be exited with 'q')  
-- Config to choose welcome page & default search engine  
+- Config files in yalm or json ?  
 
 ## TODO in a long time
 - Bookmarks  
