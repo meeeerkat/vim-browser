@@ -52,15 +52,15 @@ Controller::Controller()
 
 Controller::~Controller()
 {
-    // helpers freeing
-    delete document_loader;
-    delete input_handler;
-    delete commands_handler;
-
     // widgets freeing
     delete page_widget;
     delete command_widget;
     delete tabs_widget;
+
+    // helpers freeing
+    delete document_loader;
+    delete input_handler;
+    delete commands_handler;
 
     // ncurses closing
     endwin();

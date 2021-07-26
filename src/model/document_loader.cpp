@@ -12,12 +12,12 @@ DocumentLoader::DocumentLoader()
     curl_global_init(CURL_GLOBAL_ALL);
     curl = curl_multi_init();
     
-    pthread_t id;
-    pthread_create(&id, NULL, load_documents, this);
+    pthread_create(&thread_id, NULL, load_documents, this);
 }
 
 DocumentLoader::~DocumentLoader()
 {
+    pthread_cancel(thread_id);
     curl_multi_cleanup(curl);
     curl_global_cleanup();
 }

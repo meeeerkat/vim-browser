@@ -20,11 +20,13 @@ namespace Nodes {
             wattroff(window, A_BOLD);
         }
         
-        InteractiveElement::printw(window, printing_options);
+        if (printing_options.interaction_type == PrintingOptions::InteractionType::Input)
+            InteractiveElement::printw(window, printing_options);
     }
     
-    void Input::interact(uint8_t type)
+    void Input::interact(PrintingOptions::InteractionType type)
     {
-
+        if (type != PrintingOptions::InteractionType::Input)
+            return;
     }
 }

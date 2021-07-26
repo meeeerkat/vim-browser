@@ -20,17 +20,19 @@ namespace Nodes {
         Element::printw(window, printing_options);
         wattroff(window, A_UNDERLINE);
 
-        InteractiveElement::printw(window, printing_options);
+        if (printing_options.interaction_type == PrintingOptions::InteractionType::Link
+                || printing_options.interaction_type == PrintingOptions::InteractionType::LinkNewTab)
+            InteractiveElement::printw(window, printing_options);
     }
     
-    void A::interact(uint8_t type)
+    void A::interact(PrintingOptions::InteractionType type)
     {
         if (href.empty())
             return;
 
-        if (type == 0)
+        if (type == PrintingOptions::InteractionType::Link)
             Commands::open_in_current_tab(href);
-        else
+        else if (type == PrintingOptions::InteractionType::LinkNewTab)
             Commands::open_in_new_tab(href);
     }
 }

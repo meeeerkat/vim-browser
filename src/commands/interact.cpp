@@ -10,7 +10,7 @@ namespace Commands {
         if (argc > 1)
             type = stoi(std::string(argv[1]));
 
-        return Controller::page_widget->interact(type, error_message);
+        return Controller::page_widget->interact(static_cast<Nodes::PrintingOptions::InteractionType>(type), error_message);
     }
 }
 

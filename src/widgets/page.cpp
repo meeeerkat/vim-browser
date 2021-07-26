@@ -59,10 +59,10 @@ uint32_t Page::get_start_line() const
     return start_line;
 }
 
-int Page::interact(uint8_t type, std::string *error_message)
+int Page::interact(Nodes::PrintingOptions::InteractionType type, std::string *error_message)
 {
     // Printing doc showing interactions
-    printing_options = Nodes::PrintingOptions{true, ""};
+    printing_options = Nodes::PrintingOptions{type, ""};
     refresh_display();
 
     // Handling input to choose the element
@@ -82,7 +82,6 @@ int Page::interact(uint8_t type, std::string *error_message)
             *error_message = "Id not found.";
             return -1;
         }
-
     }
 
     refresh_display(Nodes::PrintingOptions{});

@@ -13,7 +13,7 @@ Tabs::Tabs()
 Tabs::~Tabs()
 {
     for (size_t i=0; i < docs.size(); i++)
-        free(docs[i]);
+        delete docs[i];
     delwin(window);
 }
 

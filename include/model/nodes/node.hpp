@@ -16,7 +16,8 @@ namespace Nodes {
         std::string base_url;
     };
     struct PrintingOptions {
-        bool show_interactions = false;
+        enum InteractionType { None, Link, LinkNewTab, Content, Input };
+        InteractionType interaction_type = InteractionType::None;
         std::string interaction_current_id;
     };
 

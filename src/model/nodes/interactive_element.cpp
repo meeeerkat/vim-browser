@@ -11,9 +11,6 @@ namespace Nodes {
 
     void InteractiveElement::printw(WINDOW *window, PrintingOptions &printing_options) const
     {
-        if (!printing_options.show_interactions)
-            return;
-
         attron(A_ITALIC);
         wprintw(window, "{%d}", id);
         attroff(A_ITALIC);

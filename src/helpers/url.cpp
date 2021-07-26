@@ -8,7 +8,12 @@ namespace Helpers::Url {
         if (std::regex_match(url, std::regex("^https?:\\/\\/.*")))
             return;
 
-        if (std::regex_match(url, std::regex("^\\w+([\\.\\/]\\w+)+$"))) {
+        if (std::regex_match(url, std::regex("^\\/\\/\\w+([\\.\\/]\\w+)+.*$"))) {
+            url.insert(0, "https:");
+            return;
+        }
+
+        if (std::regex_match(url, std::regex("^\\w+([\\.\\/]\\w+)+.*$"))) {
             url.insert(0, "https://");
             return;
         }

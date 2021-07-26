@@ -10,7 +10,7 @@ namespace Nodes {
             InteractiveElement(const GumboElement *el, BuildData &build_data);
             virtual void printw(WINDOW *window, PrintingOptions &printing_options) const;
 
-            virtual void interact(uint8_t type = 0) = 0;
+            virtual void interact(PrintingOptions::InteractionType type) = 0;
 
         protected:
             uint32_t id;
