@@ -15,6 +15,8 @@ namespace Config {
         private:
             std::map<uint16_t, std::string> shortcut_to_command;
     };
+
+    extern Shortcuts *shortcuts;
 }
 
 #endif

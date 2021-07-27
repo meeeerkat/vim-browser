@@ -3,7 +3,6 @@
 #include "config/shortcuts.hpp"
 #include "widgets/page.hpp"
 #include "widgets/command.hpp"
-#include "config/manager.hpp"
 #include "config/shortcuts.hpp"
 
 InputHandler::InputHandler()
@@ -30,7 +29,7 @@ void InputHandler::wait_and_read(int (*exec) (const std::string&))
     while (true) {
         // Here we only handle shortcuts (some redirect to the widgets)
         const uint16_t c = wgetch(fake_window);
-        const std::string *command = Config::Manager::shortcuts->get_command(c);
+        const std::string *command = Config::shortcuts->get_command(c);
         if (command)
             exec(*command);
     }

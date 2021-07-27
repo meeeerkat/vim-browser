@@ -16,6 +16,8 @@ namespace Config {
             std::string welcome_url;
             std::string search_url;
     };
+    
+    extern General *general;
 }
 
 #endif

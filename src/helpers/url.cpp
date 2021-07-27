@@ -1,6 +1,5 @@
 #include "helpers/url.hpp"
 #include <regex>
-#include "config/manager.hpp"
 #include "config/general.hpp"
 
 namespace Helpers::Url {
@@ -20,7 +19,7 @@ namespace Helpers::Url {
         }
 
         if (base.empty()) {
-            url.insert(0, Config::Manager::general->get_search_url());
+            url.insert(0, Config::general->get_search_url());
             return;
         }
 

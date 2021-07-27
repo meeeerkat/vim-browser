@@ -1,8 +1,11 @@
 #include "config/general.hpp"
+#include <cassert>
 #include "helpers/config.hpp"
 
 
 namespace Config {
+    
+    General *general = nullptr;
 
     General::General(const std::string &config_dir)
     {

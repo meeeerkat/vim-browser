@@ -22,7 +22,6 @@ class Controller {
 
         static Controller *instance;
     
-        static Config::Manager *config_manager;
         // helpers
         static DocumentLoader *document_loader;
         static InputHandler *input_handler;

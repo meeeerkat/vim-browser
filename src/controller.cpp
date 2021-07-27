@@ -11,7 +11,6 @@
 #include "config/general.hpp"
 
 Controller *Controller::instance = nullptr;
-Config::Manager *Controller::config_manager = nullptr;
 // helpers
 DocumentLoader *Controller::document_loader = nullptr;
 InputHandler *Controller::input_handler = nullptr;
@@ -29,7 +28,7 @@ Controller::Controller()
     assert(!instance);
     instance = this;
 
-    config_manager = new Config::Manager();
+    Config::load();
 
     // ncurses init
     initscr();
@@ -45,7 +44,7 @@ Controller::Controller()
     tabs_widget = new Widgets::Tabs();
 
     // Opening base window
-    Commands::open_in_new_tab(Config::Manager::general->get_welcome_url());
+    Commands::open_in_new_tab(Config::general->get_welcome_url());
 
     // Setup complete, now everything is done after an user command
     input_handler->wait_and_read(exec);
@@ -66,7 +65,7 @@ Controller::~Controller()
     // ncurses closing
     endwin();
 
-    delete config_manager;
+    Config::free();
 }
 
 

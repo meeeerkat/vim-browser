@@ -3,6 +3,9 @@
 
 
 namespace Config {
+
+    Shortcuts *shortcuts = nullptr;
+
     Shortcuts::Shortcuts(const std::string &config_dir)
     {
         std::ifstream file = Helpers::Config::open_file(config_dir, "shortcuts");
