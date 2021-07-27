@@ -9,7 +9,9 @@ namespace Config {
 
     General::General(const std::string &config_dir)
     {
-        YAML::Node config = YAML::LoadFile(config_dir + "general");
+        assert(!general);
+
+        YAML::Node config = YAML::LoadFile(config_dir + "general.yaml");
 
         welcome_url = config["welcome_url"].as<std::string>();
         search_url = config["search_url"].as<std::string>();

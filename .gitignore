@@ -6,4 +6,4 @@ gmon.out
 vgcore*
 
 logs
-log.core.*
+logs.core.*

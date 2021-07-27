@@ -1,4 +1,5 @@
 #include "config/shortcuts.hpp"
+#include <cassert>
 #include <yaml-cpp/yaml.h>
 
 
@@ -8,7 +9,9 @@ namespace Config {
 
     Shortcuts::Shortcuts(const std::string &config_dir)
     {
-        YAML::Node config = YAML::LoadFile(config_dir + "shortcuts");
+        assert(!shortcuts);
+
+        YAML::Node config = YAML::LoadFile(config_dir + "shortcuts.yaml");
 
         char shortcut;
         for (YAML::const_iterator it=config.begin(); it != config.end(); it++) {

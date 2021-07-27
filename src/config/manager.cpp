@@ -4,6 +4,7 @@
 #include "helpers/system.hpp"
 #include "config/general.hpp"
 #include "config/shortcuts.hpp"
+#include "config/media.hpp"
 
 
 namespace Config {
@@ -14,12 +15,14 @@ namespace Config {
 
         general = new General(dir_path);
         shortcuts = new Shortcuts(dir_path);
+        media = new Media(dir_path);
     }
 
     void free()
     {
         delete general;
         delete shortcuts;
+        delete media;
     }
 
 }

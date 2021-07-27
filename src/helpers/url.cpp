@@ -19,7 +19,7 @@ namespace Helpers::Url {
         }
 
         if (base.empty()) {
-            url.insert(0, Config::general->get_search_url());
+            url = std::regex_replace(Config::general->get_search_url(), std::regex("\\$SEARCH_STRING"), url);
             return;
         }
 
