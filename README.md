@@ -19,7 +19,6 @@ it will only print in a way that is both functionnal & easy to read
 - Content interactive element like system (to finish): Can choose content (images, videos or audio) & open it with the command of the user's choice (set in config)  
 - yy Yank current url command  
 - Add help to all commands (-h prints help in the page\_widget & can be exited with 'q')  
-- Config files in yalm or json ?  
 
 ## TODO in a long time
 - Bookmarks  

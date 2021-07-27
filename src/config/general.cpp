@@ -1,6 +1,6 @@
 #include "config/general.hpp"
 #include <cassert>
-#include "helpers/config.hpp"
+#include <yaml-cpp/yaml.h>
 
 
 namespace Config {
@@ -9,17 +9,10 @@ namespace Config {
 
     General::General(const std::string &config_dir)
     {
-        std::ifstream file = Helpers::Config::open_file(config_dir, "general");
+        YAML::Node config = YAML::LoadFile(config_dir + "general");
 
-        std::string comments;
-
-        std::getline(file, comments);
-        std::getline(file, welcome_url);
-
-        std::getline(file, comments);
-        std::getline(file, search_url);
-
-        file.close();
+        welcome_url = config["welcome_url"].as<std::string>();
+        search_url = config["search_url"].as<std::string>();
     }
 
     const std::string& General::get_welcome_url() const
