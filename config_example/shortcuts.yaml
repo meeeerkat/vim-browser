@@ -8,3 +8,4 @@ i: interact
 I: interact 1
 n: tab_next
 p: tab_prev
+y: "!echo $CURRENT_URL | xclip"

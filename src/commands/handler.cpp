@@ -1,6 +1,9 @@
 #include <ncurses.h>
 #include <stdio.h>
+#include <iostream>
+#include <stdlib.h>
 #include <string>
+#include <string.h>
 #include <glib.h>
 #include <unistd.h>
 #include "commands/handler.hpp"
@@ -39,7 +42,20 @@ int Handler::exec(const std::string &command) const
         return -1;
     }
 
+    set_global_variables(argv, argc);
     const std::string command_name(argv[0]);
+    if (command_name[0] == '!') {
+        // Shell command
+        std::string modified_command;
+        for (int i=0; i < argc; i++) {
+            modified_command += argv[i];
+            modified_command += " ";
+        }
+        system(modified_command.c_str() + 1);
+        g_strfreev(argv);
+        return 0;
+    }
+
     if (COMMANDS.count(command_name) == 0) {
         print_message_callback("Unknown command.");
         g_strfreev(argv);
@@ -55,6 +71,18 @@ int Handler::exec(const std::string &command) const
 
     g_strfreev(argv);
     return 0;
+}
+
+void Handler::set_global_variables(char **argv, int argc) const
+{
+    for (int i=0; i < argc; i++) {
+        std::string arg(argv[i]);
+        if (global_vars_getters.count(arg) > 0) {
+            const std::string replacement = global_vars_getters.at(arg)();
+            free(argv[i]);
+            argv[i] = strdup(replacement.c_str());
+        }
+    }
 }
 
 }

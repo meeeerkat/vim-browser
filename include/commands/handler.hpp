@@ -3,6 +3,7 @@
 
 #include <string>
 #include <map>
+#include "global.hpp"
 
 
 namespace Commands {
@@ -41,6 +42,12 @@ namespace Commands {
                 COMMAND(write_command),
                 COMMAND(scroll),
                 COMMAND(interact),
+            };
+
+            void set_global_variables(char **argv, int argc) const;
+            std::map<std::string, const std::string& (*) ()> global_vars_getters = 
+            {
+                { "$CURRENT_URL", Global::get_current_url },
             };
     };
 
