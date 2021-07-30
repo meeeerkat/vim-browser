@@ -69,7 +69,7 @@ namespace Commands {
     {
         uint8_t *tab_index = (uint8_t*) arg;
         // Updating tabs because the page's title is now set
-        Controller::tabs_widget->update_view();
+        Controller::tabs_widget->refresh_display();
 
         // Displaying it
         if (*tab_index == Controller::tabs_widget->get_current_tab_index())

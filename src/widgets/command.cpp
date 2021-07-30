@@ -4,6 +4,7 @@
 namespace Widgets {
 
 Command::Command(int (*exec_command_callback_p) (const std::string&))
+    : Widget()
 {
     exec_command_callback = exec_command_callback_p;
 
@@ -26,13 +27,16 @@ void Command::reset()
     current_command = "";
     history_cursor = history.size();
 }
-void Command::clear()
+void Command::clear() const
 {
+    if (!can_refresh())
+        return;
+
     wclear(window);
     wrefresh(window);
 }
 
-void Command::print_current_command()
+void Command::print_current_command() const
 {
     wclear(window);
     // noecho mode so need to reprint the character where it's needed
@@ -145,8 +149,11 @@ void Command::handle_input(const std::string *base_command)
 }
 
 
-void Command::print_message(const std::string &message)
+void Command::print_message(const std::string &message) const
 {
+    if (!can_refresh())
+        return;
+
     wclear(window);
     wprintw(window, "%s", message.c_str());
     wrefresh(window);

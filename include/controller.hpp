@@ -20,6 +20,9 @@ class Controller {
         Controller();
         ~Controller();
 
+        static void pause();
+        static void unpause();
+
         static Controller *instance;
     
         // helpers

@@ -4,6 +4,7 @@
 namespace Widgets {
 
 Tabs::Tabs()
+    : Widget()
 {
     // Takes only the first line
     window = newwin(1, COLS, 0, 0);
@@ -40,7 +41,7 @@ int8_t Tabs::add_tab(Document *new_doc, uint8_t tab_index)
     if (current_tab_index < 0)
         current_tab_index = 0;
 
-    update_view();
+    refresh_display();
     return get_tabs_nb()-1;
 }
 bool Tabs::can_add_tab() const
@@ -54,7 +55,7 @@ void Tabs::replace_document(Document *new_doc, uint8_t tab_index)
         return;
     delete docs[tab_index];
     docs[tab_index] = new_doc;
-    update_view();
+    refresh_display();
 }
 
 int8_t Tabs::set_current_tab_index(uint8_t new_tab_index)
@@ -65,7 +66,7 @@ int8_t Tabs::set_current_tab_index(uint8_t new_tab_index)
         return 0;
 
     current_tab_index = (int8_t) new_tab_index;
-    update_view();
+    refresh_display();
 
     return 0;
 }
@@ -78,8 +79,11 @@ uint8_t Tabs::get_tabs_nb() const
     return (uint8_t) docs.size();
 }
 
-void Tabs::update_view()
+void Tabs::refresh_display() const
 {
+    if (!can_refresh())
+        return;
+
     wclear(window);
 
     const uint16_t tab_size = COLS/get_tabs_nb();
@@ -117,7 +121,7 @@ int Tabs::close_tab(uint8_t tab_index)
             current_tab_index--;
     }
     
-    update_view();
+    refresh_display();
     return 0;
 }
 

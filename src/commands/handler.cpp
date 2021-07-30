@@ -6,6 +6,8 @@
 #include <string.h>
 #include <glib.h>
 #include <unistd.h>
+#include "controller.hpp"
+#include "input_handler.hpp"
 #include "commands/handler.hpp"
 #include "commands/quit.hpp"
 #include "commands/open.hpp"
@@ -51,7 +53,10 @@ int Handler::exec(const std::string &command) const
             modified_command += argv[i];
             modified_command += " ";
         }
+        Controller::pause();
         system(modified_command.c_str() + 1);
+        Controller::input_handler->wait_for_input();
+        Controller::unpause();
         g_strfreev(argv);
         return 0;
     }

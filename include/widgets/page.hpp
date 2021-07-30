@@ -2,19 +2,20 @@
 #define __WIDGETS_PAGE_HPP__
 
 #include <stdint.h>
+#include "widgets/widget.hpp"
 #include "model/nodes/interactive_element.hpp"
 
 class Document;
 
 namespace Widgets {
-    class Page {
+    class Page : public Widget {
         public:
             Page();
-            ~Page();
+            virtual ~Page();
             void display(Document *doc, uint32_t start_line = 0);
             Document *get_displayed_document();
             void scroll_to(uint32_t start_line);
-            void refresh_display();
+            void refresh_display() const;
             void refresh_display(Nodes::PrintingOptions new_options);
             uint32_t get_start_line() const;
             

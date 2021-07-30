@@ -13,7 +13,8 @@ class InputHandler {
     public:
         InputHandler();
         ~InputHandler();
-        uint16_t get_char();
+        uint16_t get_input();
+        void wait_for_input();
         void wait_and_read(int (*exec) (const std::string&));
 
     private:

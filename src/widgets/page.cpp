@@ -6,6 +6,7 @@
 namespace Widgets {
 
 Page::Page()
+    : Widget()
 {
     pad = newpad(MAX_LINES_NB, COLS);
     keypad(pad, TRUE);
@@ -24,7 +25,9 @@ void Page::display(Document *doc, uint32_t start_line_p)
 
     // Printing doc
     start_line = start_line_p;
-    refresh_display();
+
+    if (!isendwin())
+        refresh_display();
 }
 
 Document *Page::get_displayed_document()
@@ -41,8 +44,11 @@ void Page::scroll_to(uint32_t start_line_p)
     prefresh(pad, start_line, 0, 1, 0, LINES-2, COLS);
 }
 
-void Page::refresh_display()
+void Page::refresh_display() const
 {
+    if (!can_refresh())
+        return;
+
     wclear(pad);
     displayed_document->printw(pad, printing_options);
     prefresh(pad, start_line, 0, 1, 0, LINES-2, COLS);

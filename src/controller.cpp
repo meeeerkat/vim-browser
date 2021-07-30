@@ -68,6 +68,28 @@ Controller::~Controller()
     Config::free();
 }
 
+void Controller::pause()
+{
+    tabs_widget->set_refresh_policy(false);
+    page_widget->set_refresh_policy(false);
+    command_widget->set_refresh_policy(false);
+
+    endwin();
+}
+
+void Controller::unpause()
+{
+    initscr();
+    
+    tabs_widget->set_refresh_policy(true);
+    page_widget->set_refresh_policy(true);
+    command_widget->set_refresh_policy(true);
+
+    tabs_widget->refresh_display();
+    page_widget->refresh_display();
+    command_widget->clear();
+}
+
 
 void Controller::print_message(const std::string &message)
 {

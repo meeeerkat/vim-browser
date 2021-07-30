@@ -4,17 +4,19 @@
 #include <ncurses.h>
 #include <string>
 #include <vector>
+#include "widgets/widget.hpp"
 #include "commands/handler.hpp"
 
 
 namespace Widgets {
-    class Command {
+    class Command : public Widget {
 
         public:
             Command(int (*exec_command_callback) (const std::string&));
-            ~Command();
+            virtual ~Command();
             void handle_input(const std::string *base_command = NULL);
-            void print_message(const std::string &message);
+            void print_message(const std::string &message) const;
+            void clear() const;
 
         private:
             WINDOW *window;
@@ -24,12 +26,11 @@ namespace Widgets {
             uint16_t history_cursor; // Currently displayed history command
             int (*exec_command_callback) (const std::string&);
 
-            void print_current_command();
             void reset();
-            void clear();
             void insert_char(char c);
             void delete_char();
             void set_command(const std::string &command);
+            void print_current_command() const;
     };
 }
 

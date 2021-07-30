@@ -2,16 +2,17 @@
 #define __WIDGETS_TABS_HPP__
 
 #include <ncurses.h>
+#include "widgets/widget.hpp"
 #include "model/document.hpp"
 
 #define TABS_MAX_NB 10
 
 namespace Widgets {
-    class Tabs {
+    class Tabs : public Widget {
 
         public:
             Tabs();
-            ~Tabs();
+            virtual ~Tabs();
 
             Document *get_document(uint8_t tab_index);
             Document *get_current_document();
@@ -25,7 +26,7 @@ namespace Widgets {
             int close_current_tab();
             int close_tab(uint8_t tab_index);
 
-            void update_view();
+            void refresh_display() const;
 
         private:
             WINDOW *window;

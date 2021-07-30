@@ -1,9 +1,9 @@
 #include "input_handler.hpp"
-#include <cassert>
 #include "config/shortcuts.hpp"
 #include "widgets/page.hpp"
 #include "widgets/command.hpp"
 #include "config/shortcuts.hpp"
+
 
 InputHandler::InputHandler()
 {
@@ -19,9 +19,14 @@ InputHandler::~InputHandler()
     delwin(fake_window);
 }
 
-uint16_t InputHandler::get_char()
+uint16_t InputHandler::get_input()
 {
     return wgetch(fake_window);
+}
+
+void InputHandler::wait_for_input()
+{
+    get_input();
 }
 
 void InputHandler::wait_and_read(int (*exec) (const std::string&))
