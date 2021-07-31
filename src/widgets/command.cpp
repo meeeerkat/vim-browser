@@ -23,8 +23,7 @@ Command::~Command()
 // Inputs
 void Command::reset()
 {
-    command_cursor = 0;
-    current_command = "";
+    command.reset();
     history_cursor = history.size();
 }
 void Command::clear() const
@@ -36,45 +35,22 @@ void Command::clear() const
     wrefresh(window);
 }
 
-void Command::print_current_command() const
+void Command::refresh_display() const
 {
     wclear(window);
     // noecho mode so need to reprint the character where it's needed
-    mvwprintw(window, 0, 0, ":%s", current_command.c_str());
-    wmove(window, 0, command_cursor+1);
+    mvwprintw(window, 0, 0, ":%s", command.get_value().c_str());
+    wmove(window, 0, command.get_cursor()+1);
 
     wrefresh(window);
 }
-
-void Command::insert_char(char c)
-{
-    current_command.insert(command_cursor, 1, c);
-    command_cursor++;
-}
-
-void Command::delete_char()
-{
-    if (command_cursor < current_command.length())
-        current_command.erase(command_cursor, 1);
-    else if (command_cursor == current_command.length() && current_command.length() > 0) {
-        current_command.erase(command_cursor-1, 1);
-        command_cursor--;
-    }
-}
-
-void Command::set_command(const std::string &command)
-{
-    current_command = command;
-    command_cursor = command.length();
-}
-
 
 void Command::handle_input(const std::string *base_command)
 {
     wclear(window); // Necessary to clear messages
     if (base_command) {
-        set_command(std::string(*base_command));
-        print_current_command();
+        command.set_value(std::string(*base_command));
+        refresh_display();
     }
     else
         waddch(window, ':');
@@ -82,69 +58,19 @@ void Command::handle_input(const std::string *base_command)
     
     while (TRUE) {
         const uint16_t code = wgetch(window);
-        // TODO: handle ESC to leave command input forwarding
-        // (or another key since ncurses seems to have problems with ESC)
-        // TODO: handle backspace to delete char (cancel works but isn't enought)
-        // TODO: handle history_nb getting > to HISTORY_MAX_NB (cyclic structure ??)
-        // for now the program just crashes
-
-        switch (code) {
-            case '\n':
-            case KEY_ENTER:
-                if (current_command.empty()) {
-                    clear();
-                    reset();
-                    return;
-                }
-                history.push_back(current_command);
+        if (!command.handle_input(code)) {
+            if (command.get_value().empty()) {
                 clear();
-                exec_command_callback(current_command);
                 reset();
                 return;
-
-            case KEY_DC:
-                delete_char();
-                print_current_command();
-                break;
-
-            case KEY_LEFT:
-                if (command_cursor > 0) {
-                    wmove(window, 0, (--command_cursor)+1);
-                    wrefresh(window);
-                }
-                break;
-
-            case KEY_RIGHT:
-                if (command_cursor < current_command.length()) {
-                    wmove(window, 0, (++command_cursor)+1);
-                    wrefresh(window);
-                }
-                break;
-
-            case KEY_UP:
-                if (history_cursor > 0) {
-                    set_command(history[--history_cursor]);
-                    print_current_command();
-                }
-                break;
-
-            case KEY_DOWN:
-                if (history_cursor < history.size()) {
-                    history_cursor++;
-                    if (history_cursor < history.size())
-                        set_command(history[history_cursor]);
-                    else
-                        set_command("");
-                    print_current_command();
-                }
-                break;
-
-            default:
-                // If we're here then the code is a simple character
-                insert_char((char) code);
-                print_current_command();
-                break;
+            }
+            history.push_back(command.get_value());
+            clear();
+            exec_command_callback(command.get_value());
+            reset();
+            return;
         }
+        refresh_display();
     }
 }
 
