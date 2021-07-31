@@ -1,5 +1,8 @@
 #include "model/nodes/loader.hpp"
 #include "model/nodes/input.hpp"
+#include "controller.hpp"
+#include "input_handler.hpp"
+#include "widgets/page.hpp"
 
 
 namespace Nodes {
@@ -24,9 +27,21 @@ namespace Nodes {
             InteractiveElement::printw(window, printing_options);
     }
     
-    void Input::interact(PrintingOptions::InteractionType type)
+    void Input::interact(PrintingOptions::InteractionType interaction_type)
     {
-        if (type != PrintingOptions::InteractionType::Input)
+        if (interaction_type != PrintingOptions::InteractionType::Input)
             return;
+
+        if (type == "text") {
+            while (true) {
+                char input = Controller::input_handler->get_input();
+                if (input == '\n')
+                    return;
+                value += input;
+                Controller::page_widget->refresh_display(Nodes::PrintingOptions{});
+            }
+        }
+        else if (type == "select") {
+        }
     }
 }

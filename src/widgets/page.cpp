@@ -81,8 +81,10 @@ int Page::interact(Nodes::PrintingOptions::InteractionType type, std::string *er
 
     if (c == '\n' || c == KEY_ENTER) {
         Nodes::InteractiveElement *el = displayed_document->get_interactive_element(printing_options.interaction_current_id);
-        if (el != NULL)
+        if (el != NULL) {
+            refresh_display(Nodes::PrintingOptions{});
             el->interact(type);
+        }
         else {
             refresh_display(Nodes::PrintingOptions{});
             *error_message = "Id not found.";
@@ -90,7 +92,6 @@ int Page::interact(Nodes::PrintingOptions::InteractionType type, std::string *er
         }
     }
 
-    refresh_display(Nodes::PrintingOptions{});
     return 0;
 }
 
