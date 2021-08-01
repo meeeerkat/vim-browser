@@ -9,6 +9,10 @@ namespace Nodes {
         build_data.interactive_elements.push_back(this);
     }
 
+    InteractiveElement::~InteractiveElement()
+    {
+    }
+
     void InteractiveElement::printw(WINDOW *window, PrintingOptions &printing_options) const
     {
         attron(A_ITALIC);

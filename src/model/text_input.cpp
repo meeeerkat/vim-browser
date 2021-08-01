@@ -62,7 +62,7 @@ void TextInput::set_value(const std::string &new_value)
     value = new_value;
     cursor = value.length();
 }
-const std::string &TextInput::get_value() const
+const std::string TextInput::get_value() const
 {
     return value;
 }

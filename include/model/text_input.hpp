@@ -13,7 +13,7 @@ class TextInput {
 
         void reset();
         void set_value(const std::string &new_text);
-        const std::string& get_value() const;
+        const std::string get_value() const;
 
         uint16_t get_cursor() const;
 

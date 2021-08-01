@@ -1,5 +1,5 @@
-#include "model/nodes/loader.hpp"
 #include "model/nodes/input.hpp"
+#include "model/nodes/loader.hpp"
 #include "controller.hpp"
 #include "input_handler.hpp"
 #include "widgets/page.hpp"
@@ -11,6 +11,17 @@ namespace Nodes {
     {
         type = Nodes::load_attribute(el, "type");
         value = Nodes::load_attribute(el, "value");
+
+        if (type == "text") {
+            text_input = new TextInput();
+            text_input->set_value(value);
+        }
+    }
+
+    Input::~Input()
+    {
+        if (text_input)
+            delete text_input;
     }
 
     void Input::printw(WINDOW *window, PrintingOptions &printing_options) const
@@ -34,10 +45,10 @@ namespace Nodes {
 
         if (type == "text") {
             while (true) {
-                char input = Controller::input_handler->get_input();
-                if (input == '\n')
+                uint16_t code = Controller::input_handler->get_input();
+                if (!text_input->handle_input(code))
                     return;
-                value += input;
+                value = std::string(text_input->get_value());
                 Controller::page_widget->refresh_display(Nodes::PrintingOptions{});
             }
         }

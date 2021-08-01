@@ -64,7 +64,7 @@ void Command::handle_input(const std::string *base_command)
                 reset();
                 return;
             }
-            history.push_back(command.get_value());
+            history.push_back(std::string(command.get_value()));
             clear();
             exec_command_callback(command.get_value());
             reset();
