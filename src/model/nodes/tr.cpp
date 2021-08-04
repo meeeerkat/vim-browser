@@ -8,9 +8,10 @@ namespace Nodes {
 
     }
 
-    void Tr::printw(WINDOW *window, PrintingOptions &printing_options) const
+    void Tr::printw(WINDOW *window, PrintingOptions &printing_options)
     {
-        wprintw(window, "\n");
         Element::printw(window, printing_options);
+        wprintw(window, "\n");
+        Element::print_children(window, printing_options);
     }
 }

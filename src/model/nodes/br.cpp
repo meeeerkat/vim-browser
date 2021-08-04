@@ -9,7 +9,7 @@ namespace Nodes {
 
     }
 
-    void Br::printw(WINDOW *window, PrintingOptions &printing_options) const
+    void Br::printw(WINDOW *window, PrintingOptions &printing_options)
     {
         wprintw(window, "\n");
     }

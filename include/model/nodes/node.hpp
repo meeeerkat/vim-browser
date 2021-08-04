@@ -19,13 +19,14 @@ namespace Nodes {
         enum InteractionType { None, Link, LinkNewTab, Content, Input };
         InteractionType interaction_type = InteractionType::None;
         std::string interaction_current_id;
+        int cursor_y=-1, cursor_x=-1;
     };
 
     class Node {
         public:
             Node(BuildData &build_data);
             virtual ~Node();
-            virtual void printw(WINDOW *window, PrintingOptions &printing_options) const = 0;
+            virtual void printw(WINDOW *window, PrintingOptions &printing_options) = 0;
     };
 }
 

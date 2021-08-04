@@ -7,7 +7,7 @@ namespace Nodes {
     class Ol : public Element {
         public:
             Ol(const GumboElement *el, BuildData &build_data);
-            virtual void printw(WINDOW *window, PrintingOptions &printing_options) const;
+            virtual void printw(WINDOW *window, PrintingOptions &printing_options);
     };
 }
 

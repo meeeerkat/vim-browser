@@ -10,7 +10,7 @@ namespace Nodes {
     class Select : public Element {
         public:
             Select(const GumboElement *el, BuildData &build_data);
-            virtual void printw(WINDOW *window, PrintingOptions &printing_options) const;
+            virtual void printw(WINDOW *window, PrintingOptions &printing_options);
 
         protected:
             bool is_value_set() const;

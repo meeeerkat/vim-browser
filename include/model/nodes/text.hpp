@@ -9,7 +9,7 @@ namespace Nodes {
         public:
             Text(const GumboText *text, BuildData &build_data);
             ~Text();
-            virtual void printw(WINDOW *window, PrintingOptions &printing_options) const;
+            virtual void printw(WINDOW *window, PrintingOptions &printing_options);
 
         protected:
             std::string text;

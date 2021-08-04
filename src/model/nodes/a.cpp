@@ -14,15 +14,17 @@ namespace Nodes {
             Helpers::Url::fix(href, base_url);
     }
 
-    void A::printw(WINDOW *window, PrintingOptions &printing_options) const
+    void A::printw(WINDOW *window, PrintingOptions &printing_options)
     {
+        InteractiveElement::printw(window, printing_options);
+        
         wattron(window, A_UNDERLINE);
-        Element::printw(window, printing_options);
+        InteractiveElement::print_children(window, printing_options);
         wattroff(window, A_UNDERLINE);
 
         if (printing_options.interaction_type == PrintingOptions::InteractionType::Link
                 || printing_options.interaction_type == PrintingOptions::InteractionType::LinkNewTab)
-            InteractiveElement::printw(window, printing_options);
+            InteractiveElement::print_id(window, printing_options);
     }
     
     void A::interact(PrintingOptions::InteractionType type)

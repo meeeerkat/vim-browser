@@ -24,8 +24,10 @@ namespace Nodes {
             delete text_input;
     }
 
-    void Input::printw(WINDOW *window, PrintingOptions &printing_options) const
+    void Input::printw(WINDOW *window, PrintingOptions &printing_options)
     {
+        InteractiveElement::printw(window, printing_options);
+
         if (type == "text")
             wprintw(window, "%s________________ ", value.c_str());
         else if (type == "submit") {
@@ -35,7 +37,7 @@ namespace Nodes {
         }
         
         if (printing_options.interaction_type == PrintingOptions::InteractionType::Input)
-            InteractiveElement::printw(window, printing_options);
+            InteractiveElement::print_id(window, printing_options);
     }
     
     void Input::interact(PrintingOptions::InteractionType interaction_type)
@@ -44,15 +46,24 @@ namespace Nodes {
             return;
 
         if (type == "text") {
+            refresh_display();
             while (true) {
                 uint16_t code = Controller::input_handler->get_input();
                 if (!text_input->handle_input(code))
                     return;
                 value = std::string(text_input->get_value());
-                Controller::page_widget->refresh_display(Nodes::PrintingOptions{});
+                refresh_display();
             }
         }
         else if (type == "select") {
         }
+    }
+
+    void Input::refresh_display() const
+    {
+        PrintingOptions options{};
+        options.cursor_y = y;
+        options.cursor_x = x + text_input->get_cursor();
+        Controller::page_widget->refresh_display(options);
     }
 }

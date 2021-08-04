@@ -7,7 +7,7 @@ namespace Nodes {
 
     }
 
-    void Ul::printw(WINDOW *window, PrintingOptions &printing_options) const
+    void Ul::printw(WINDOW *window, PrintingOptions &printing_options)
     {
 
     }

@@ -13,10 +13,15 @@ namespace Nodes {
     {
     }
 
-    void InteractiveElement::printw(WINDOW *window, PrintingOptions &printing_options) const
+    void InteractiveElement::print_id(WINDOW *window, PrintingOptions &printing_options) const
     {
         attron(A_ITALIC);
         wprintw(window, "{%d}", id);
         attroff(A_ITALIC);
+    }
+
+    void InteractiveElement::printw(WINDOW *window, PrintingOptions &printing_options)
+    {
+        Element::printw(window, printing_options);
     }
 }

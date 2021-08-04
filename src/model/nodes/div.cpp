@@ -8,13 +8,14 @@ namespace Nodes {
 
     }
 
-    void Div::printw(WINDOW *window, PrintingOptions &printing_options) const
+    void Div::printw(WINDOW *window, PrintingOptions &printing_options)
     {
+        Element::printw(window, printing_options);
         if (children.size() == 0)
             return;
 
+        Element::print_children(window, printing_options);
         wprintw(window, "\n");
-        Element::printw(window, printing_options);
     }
 }
 

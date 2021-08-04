@@ -7,9 +7,11 @@ namespace Nodes {
 
     }
 
-    void Li::printw(WINDOW *window, PrintingOptions &printing_options) const
+    void Li::printw(WINDOW *window, PrintingOptions &printing_options)
     {
-        wprintw(window, "\n");
         Element::printw(window, printing_options);
+
+        wprintw(window, "\n");
+        Element::print_children(window, printing_options);
     }
 }

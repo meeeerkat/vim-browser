@@ -11,7 +11,7 @@ namespace Nodes {
             Input(const GumboElement *el, BuildData &build_data);
             virtual ~Input();
 
-            virtual void printw(WINDOW *window, PrintingOptions &printing_options) const;
+            virtual void printw(WINDOW *window, PrintingOptions &printing_options);
             
             virtual void interact(PrintingOptions::InteractionType type);
 
@@ -20,6 +20,8 @@ namespace Nodes {
             std::string value;
 
             TextInput *text_input = nullptr;
+
+            void refresh_display() const;
     };
 }
 

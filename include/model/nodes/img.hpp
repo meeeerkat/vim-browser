@@ -8,7 +8,7 @@ namespace Nodes {
     class Img : public InteractiveElement {
         public:
             Img(const GumboElement *el, BuildData &build_data);
-            virtual void printw(WINDOW *window, PrintingOptions &printing_options) const;
+            virtual void printw(WINDOW *window, PrintingOptions &printing_options);
             
             virtual void interact(PrintingOptions::InteractionType type);
 

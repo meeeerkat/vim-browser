@@ -11,10 +11,12 @@ namespace Nodes {
             Element(BuildData &build_data);
             Element(const GumboElement *el, BuildData &build_data);
             virtual ~Element();
-            virtual void printw(WINDOW *window, PrintingOptions &printing_options) const;
+            virtual void printw(WINDOW *window, PrintingOptions &printing_options);
+            virtual void print_children(WINDOW *window, PrintingOptions &printing_options) const;
 
         protected:
             std::vector<Node*> children;
+            int y,x;
     };
 }
 

@@ -26,8 +26,9 @@ namespace Nodes {
             value = "";
     }
 
-    void Select::printw(WINDOW *window, PrintingOptions &printing_options) const
+    void Select::printw(WINDOW *window, PrintingOptions &printing_options)
     {
+        Element::printw(window, printing_options);
         if (is_value_set()) {
             const std::string label = option_labels.at(value);
             wprintw(window, "%s ", label.c_str());

@@ -1,5 +1,6 @@
 #include "model/nodes/element.hpp"
 #include "model/nodes/loader.hpp"
+#include <ncurses.h>
 
 
 namespace Nodes {
@@ -10,7 +11,7 @@ namespace Nodes {
     }
 
     Element::Element(const GumboElement* el, BuildData &build_data)
-        : Node(build_data)
+        : Element(build_data)
     {
         // Setting up children
         const GumboVector* gchildren = &el->children;
@@ -26,9 +27,15 @@ namespace Nodes {
             delete child;
     }
     
-    void Element::printw(WINDOW *window, PrintingOptions &printing_options) const
+    void Element::printw(WINDOW *window, PrintingOptions &printing_options)
+    {
+        getyx(window, y, x);
+    }
+
+    void Element::print_children(WINDOW *window, PrintingOptions &printing_options) const
     {
         for (Node *child : children)
             child->printw(window, printing_options);
     }
+
 }

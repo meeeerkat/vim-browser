@@ -7,8 +7,9 @@ namespace Nodes {
 
     }
 
-    void Ol::printw(WINDOW *window, PrintingOptions &printing_options) const
+    void Ol::printw(WINDOW *window, PrintingOptions &printing_options)
     {
         Element::printw(window, printing_options);
+        Element::print_children(window, printing_options);
     }
 }

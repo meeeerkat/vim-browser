@@ -109,7 +109,10 @@ void Document::printw(WINDOW *window, Nodes::PrintingOptions printing_options) c
 {
     if (is_loading())
         return;
+
     body->printw(window, printing_options);
+    if (printing_options.cursor_y >= 0 && printing_options.cursor_x >= 0)
+        wmove(window, printing_options.cursor_y, printing_options.cursor_x);
 }
 
 Nodes::InteractiveElement *Document::get_interactive_element(const std::string &id)
