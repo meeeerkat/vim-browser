@@ -114,7 +114,13 @@ void Document::printw(WINDOW *window, Nodes::PrintingOptions printing_options) c
 
 Nodes::InteractiveElement *Document::get_interactive_element(const std::string &id)
 {
-    uint32_t el_index = std::stoi(id);
+    uint32_t el_index;
+    try {
+        el_index = std::stoi(id);
+    } catch (const std::invalid_argument & e) {
+        return NULL;
+    }
+
     if (el_index < build_data.interactive_elements.size())
         return build_data.interactive_elements[el_index];
     return NULL;
