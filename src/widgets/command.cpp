@@ -58,7 +58,21 @@ void Command::handle_input(const std::string *base_command)
     
     while (TRUE) {
         const uint16_t code = wgetch(window);
-        if (!command.handle_input(code)) {
+        if (code == KEY_UP) {
+            if (history_cursor > 0) {
+                command.set_value(history[--history_cursor]);
+            }
+        }
+        else if (code == KEY_DOWN) {
+            if (history_cursor < history.size()) {
+                history_cursor++;
+                if (history_cursor < history.size())
+                    command.set_value(history[history_cursor]);
+                else
+                    command.set_value("");
+            }
+        }
+        else if (!command.handle_input(code)) {
             if (command.get_value().empty()) {
                 clear();
                 reset();
