@@ -5,6 +5,8 @@
 #include "model/nodes/p.hpp"
 #include "model/nodes/form.hpp"
 #include "model/nodes/input.hpp"
+#include "model/nodes/text_input.hpp"
+#include "model/nodes/submit_input.hpp"
 #include "model/nodes/img.hpp"
 #include "model/nodes/h1.hpp"
 #include "model/nodes/h2.hpp"
@@ -30,6 +32,17 @@ namespace Nodes {
     inline Node* create(const GumboElement *el, BuildData &build_data)
     {
         return new T(el, build_data);
+    }
+    
+    template <>
+    inline Node* create<Input>(const GumboElement *el, BuildData &build_data)
+    {
+        std::string type = Nodes::load_attribute(el, "type");
+        if (type == "text")
+            return new TextInput(el, build_data);
+        else if (type == "submit")
+            return new SubmitInput(el, build_data);
+        return nullptr;
     }
 
     namespace {
@@ -83,7 +96,9 @@ namespace Nodes {
                 }
                 return;
             }
-            nodes->push_back(elements_creators[el->tag](el, build_data));
+            Node *new_node = elements_creators[el->tag](el, build_data);
+            if (new_node != nullptr)
+                nodes->push_back(new_node);
             return;
         }
 

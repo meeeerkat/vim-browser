@@ -2,6 +2,7 @@
 #include <ncurses.h>
 
 
+namespace Model {
 
 TextInput::TextInput()
     : cursor{0}
@@ -70,4 +71,6 @@ const std::string TextInput::get_value() const
 uint16_t TextInput::get_cursor() const
 {
     return cursor;
+}
+
 }

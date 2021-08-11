@@ -8,6 +8,8 @@ namespace Nodes {
         public:
             Form(const GumboElement *el, BuildData &build_data);
             virtual void printw(WINDOW *window, PrintingOptions &printing_options);
+
+            void send();
     };
 }
 

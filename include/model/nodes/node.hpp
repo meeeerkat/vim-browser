@@ -10,11 +10,14 @@
 namespace Nodes {
     
     class InteractiveElement;
+    class Form;
 
     struct BuildData {
         std::vector<InteractiveElement*> interactive_elements;
         std::string base_url;
+        Form *current_form;
     };
+
     struct PrintingOptions {
         enum InteractionType { None, Link, LinkNewTab, Content, Input };
         InteractionType interaction_type = InteractionType::None;

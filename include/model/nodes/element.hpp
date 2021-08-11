@@ -10,7 +10,9 @@ namespace Nodes {
         public:
             Element(BuildData &build_data);
             Element(const GumboElement *el, BuildData &build_data);
+            void setup_children(const GumboElement* el, BuildData &build_data);
             virtual ~Element();
+
             virtual void printw(WINDOW *window, PrintingOptions &printing_options);
             virtual void print_children(WINDOW *window, PrintingOptions &printing_options) const;
 

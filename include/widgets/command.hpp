@@ -21,7 +21,7 @@ namespace Widgets {
 
         private:
             WINDOW *window;
-            TextInput command;
+            Model::TextInput command;
             std::vector<std::string> history; // History cache
             uint16_t history_cursor; // Currently displayed history command
             int (*exec_command_callback) (const std::string&);

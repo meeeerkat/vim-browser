@@ -13,7 +13,11 @@ namespace Nodes {
     Element::Element(const GumboElement* el, BuildData &build_data)
         : Element(build_data)
     {
-        // Setting up children
+        setup_children(el, build_data);
+    }
+
+    void Element::setup_children(const GumboElement* el, BuildData &build_data)
+    {
         const GumboVector* gchildren = &el->children;
         for (uint16_t i=0; i < gchildren->length; i++) {
             GumboNode *gchild = static_cast<GumboNode*>(gchildren->data[i]);
