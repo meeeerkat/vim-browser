@@ -23,7 +23,7 @@ namespace Nodes {
     
     void SubmitInput::interact(PrintingOptions::InteractionType interaction_type)
     {
-        form->send();
+        form->send(interaction_type == PrintingOptions::InteractionType::NewTab);
     }
 
 }

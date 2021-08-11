@@ -40,7 +40,8 @@ void DocumentLoader::add_request(Document *doc)
 
     switch (doc->get_request().type) {
         case Helpers::HttpRequest::Type::GET:
-            curl_easy_setopt(handle, CURLOPT_URL, (doc->get_request().url + "?" + doc->get_request().fields).c_str());
+            if (!doc->get_request().fields.empty())
+                curl_easy_setopt(handle, CURLOPT_URL, (doc->get_request().url + "?" + doc->get_request().fields).c_str());
             break;
         case Helpers::HttpRequest::Type::POST:
             curl_easy_setopt(handle, CURLOPT_POSTFIELDS, doc->get_request().fields.c_str());

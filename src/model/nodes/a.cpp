@@ -22,9 +22,7 @@ namespace Nodes {
         InteractiveElement::print_children(window, printing_options);
         wattroff(window, A_UNDERLINE);
 
-        if (printing_options.interaction_type == PrintingOptions::InteractionType::Link
-                || printing_options.interaction_type == PrintingOptions::InteractionType::LinkNewTab)
-            InteractiveElement::print_id(window, printing_options);
+        InteractiveElement::print_id(window, printing_options);
     }
     
     void A::interact(PrintingOptions::InteractionType type)
@@ -33,9 +31,17 @@ namespace Nodes {
             return;
 
         Helpers::HttpRequest request{href};
-        if (type == PrintingOptions::InteractionType::Link)
-            Commands::open_in_current_tab(request);
-        else if (type == PrintingOptions::InteractionType::LinkNewTab)
-            Commands::open_in_new_tab(request);
+
+        switch (type) {
+            case PrintingOptions::InteractionType::CurrentTab:
+                Commands::open_in_current_tab(request);
+                break;
+            case PrintingOptions::InteractionType::NewTab:
+                Commands::open_in_new_tab(request);
+                break;
+            default:
+                break;
+        }
     }
+
 }

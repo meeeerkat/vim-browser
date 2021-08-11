@@ -14,9 +14,8 @@ namespace Nodes {
             Form(const GumboElement *el, BuildData &build_data);
             virtual void printw(WINDOW *window, PrintingOptions &printing_options);
 
-            void send();
-
             void add_input(Input *input);
+            void send(bool in_new_tab = false) const;
 
         private:
             std::vector<Input*> inputs;

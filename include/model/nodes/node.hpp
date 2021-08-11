@@ -19,7 +19,7 @@ namespace Nodes {
     };
 
     struct PrintingOptions {
-        enum InteractionType { None, Link, LinkNewTab, Content, Input };
+        enum InteractionType { CurrentTab, NewTab, None };
         InteractionType interaction_type = InteractionType::None;
         std::string interaction_current_id;
         int cursor_y=-1, cursor_x=-1;

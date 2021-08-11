@@ -15,6 +15,9 @@ namespace Nodes {
 
     void InteractiveElement::print_id(WINDOW *window, PrintingOptions &printing_options) const
     {
+        if (printing_options.interaction_type == PrintingOptions::InteractionType::None)
+            return;
+
         attron(A_ITALIC);
         wprintw(window, "{%d}", id);
         attroff(A_ITALIC);

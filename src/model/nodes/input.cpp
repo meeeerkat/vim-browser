@@ -19,12 +19,6 @@ namespace Nodes {
         InteractiveElement::printw(window, printing_options);
     }
 
-    void Input::print_id(WINDOW *window, PrintingOptions &printing_options) const
-    {
-        if (printing_options.interaction_type == PrintingOptions::InteractionType::Input)
-            InteractiveElement::print_id(window, printing_options);
-    }
-
     std::string Input::get_name() const
     {
         return name;

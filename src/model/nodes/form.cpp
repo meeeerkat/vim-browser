@@ -38,15 +38,14 @@ namespace Nodes {
         inputs.push_back(input);
     }
 
-    void Form::send()
+    void Form::send(bool in_new_tab) const
     {
         Helpers::HttpRequest request{action, method};
         for (Input* input : inputs)
             if (!input->get_name().empty())
                 request.fields += input->get_name() + "=" + input->get_value() + "&";
 
-        std::cerr << request.fields << "\n";
-        Commands::open_in_current_tab(request);
+        Commands::open(request, in_new_tab);
     }
 
 }

@@ -44,6 +44,13 @@ namespace Commands {
     }
 
 
+    void open(const Helpers::HttpRequest &request, bool in_new_tab)
+    {
+        if (in_new_tab)
+            open_in_new_tab(request);
+        else
+            open_in_current_tab(request);
+    }
 
     void open_in_current_tab(const Helpers::HttpRequest &request)
     {
