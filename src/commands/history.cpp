@@ -3,8 +3,9 @@
 #include "controller.hpp"
 
 namespace Commands {
-    int history_exec(int argc, char **argv, std::string *error_message)
+    int history_exec(int, char **, std::string *)
     {
         // TODO: renders a webpage in the page_widget presenting the commands history
+        return 0;
     }
 }

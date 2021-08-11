@@ -15,7 +15,7 @@ namespace Nodes {
 
     }
 
-    void Text::printw(WINDOW *window, PrintingOptions &printing_options)
+    void Text::printw(WINDOW *window, PrintingOptions &)
     {
         wprintw(window, "%s ", text.c_str());
     }

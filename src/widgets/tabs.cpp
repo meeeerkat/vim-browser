@@ -87,7 +87,7 @@ void Tabs::refresh_display() const
     wclear(window);
 
     const uint16_t tab_size = COLS/get_tabs_nb();
-    for (uint32_t i=0; i < get_tabs_nb(); i++) {
+    for (uint8_t i=0; i < get_tabs_nb(); i++) {
         const bool is_current_tab = get_current_tab_index() == i;
         if (is_current_tab)
             wattron(window, A_BOLD);

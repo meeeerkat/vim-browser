@@ -12,13 +12,14 @@ namespace Commands {
         }
         const uint8_t new_index = std::stoi(argv[1]);
         tab_move(new_index);
+        return 0;
     }
-    int tab_next_exec(int argc, char **argv, std::string *error_message)
+    int tab_next_exec(int, char **, std::string *)
     {
         tab_next();
         return 0;
     }
-    int tab_prev_exec(int argc, char **argv, std::string *error_message)
+    int tab_prev_exec(int, char **, std::string *)
     {
         tab_prev();
         return 0;

@@ -5,7 +5,7 @@
 #include "controller.hpp"
 
 namespace Commands {
-    int close_exec(int argc, char **argv, std::string *error_message)
+    int close_exec(int, char **, std::string *error_message)
     {
         const int err_code = Controller::tabs_widget->close_current_tab();
         if (err_code < 0)

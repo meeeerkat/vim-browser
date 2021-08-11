@@ -21,7 +21,7 @@ namespace Nodes {
         Input::print_id(window, printing_options);
     }
     
-    void TextInput::interact(PrintingOptions::InteractionType interaction_type)
+    void TextInput::interact(PrintingOptions::InteractionType)
     {
         refresh_display();
         while (true) {

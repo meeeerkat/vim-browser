@@ -28,7 +28,7 @@ namespace Nodes {
         InteractiveElement::print_id(window, printing_options);
     }
     
-    void Img::interact(PrintingOptions::InteractionType type)
+    void Img::interact(PrintingOptions::InteractionType)
     {
         std::string command = std::regex_replace(Config::media->get_display_command(), std::regex("\\$URL"), src);
         system(command.c_str());

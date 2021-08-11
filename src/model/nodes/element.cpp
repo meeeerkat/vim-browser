@@ -31,7 +31,7 @@ namespace Nodes {
             delete child;
     }
     
-    void Element::printw(WINDOW *window, PrintingOptions &printing_options)
+    void Element::printw(WINDOW *window, PrintingOptions &)
     {
         getyx(window, y, x);
     }

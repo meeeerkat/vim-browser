@@ -5,7 +5,7 @@
 
 
 namespace Commands {
-    int quit_exec(int argc, char **argv, std::string *error_message)
+    int quit_exec(int, char **, std::string *)
     {
         delete Controller::instance;
         exit(EXIT_SUCCESS);

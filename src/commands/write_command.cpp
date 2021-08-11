@@ -4,7 +4,7 @@
 
 
 namespace Commands {
-    int write_command_exec(int argc, char **argv, std::string *error_message)
+    int write_command_exec(int argc, char **argv, std::string *)
     {
         if (argc == 2) {
             const std::string base_command(argv[1]);
@@ -12,5 +12,7 @@ namespace Commands {
         }
         else
             Controller::command_widget->handle_input(NULL);
+
+        return 0;
     }
 }
