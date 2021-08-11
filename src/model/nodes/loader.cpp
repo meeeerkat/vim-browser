@@ -7,6 +7,7 @@
 #include "model/nodes/input.hpp"
 #include "model/nodes/text_input.hpp"
 #include "model/nodes/submit_input.hpp"
+#include "model/nodes/hidden_input.hpp"
 #include "model/nodes/img.hpp"
 #include "model/nodes/h1.hpp"
 #include "model/nodes/h2.hpp"
@@ -42,6 +43,8 @@ namespace Nodes {
             return new TextInput(el, build_data);
         else if (type == "submit")
             return new SubmitInput(el, build_data);
+        else if (type == "hidden")
+            return new HiddenInput(el, build_data);
         return nullptr;
     }
 

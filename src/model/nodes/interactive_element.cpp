@@ -2,11 +2,13 @@
 
 
 namespace Nodes {
-    InteractiveElement::InteractiveElement(const GumboElement *el, BuildData &build_data)
+    InteractiveElement::InteractiveElement(const GumboElement *el, BuildData &build_data, bool is_interactive)
         : Element(el, build_data)
     {
-        id = build_data.interactive_elements.size();
-        build_data.interactive_elements.push_back(this);
+        if (is_interactive) {
+            id = build_data.interactive_elements.size();
+            build_data.interactive_elements.push_back(this);
+        }
     }
 
     InteractiveElement::~InteractiveElement()
@@ -21,10 +23,5 @@ namespace Nodes {
         attron(A_ITALIC);
         wprintw(window, "{%d}", id);
         attroff(A_ITALIC);
-    }
-
-    void InteractiveElement::printw(WINDOW *window, PrintingOptions &printing_options)
-    {
-        Element::printw(window, printing_options);
     }
 }
