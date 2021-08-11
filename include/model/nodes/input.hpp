@@ -12,8 +12,11 @@ namespace Nodes {
             virtual void printw(WINDOW *window, PrintingOptions &printing_options);
             virtual void interact(PrintingOptions::InteractionType type) = 0;
             void print_id(WINDOW *window, PrintingOptions &printing_options) const;
+            std::string get_name() const;
+            std::string get_value() const;
 
         protected:
+            std::string name;
             std::string value;
     };
 }

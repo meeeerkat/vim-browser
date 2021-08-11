@@ -6,17 +6,18 @@
 #include "model/nodes/body.hpp"
 #include "model/nodes/interactive_element.hpp"
 #include "helpers/callback.hpp"
+#include "helpers/http_request.hpp"
 
 class DocumentLoader;
 
 class Document {
     public:
-        Document(const std::string &url, DocumentLoader *loader);
-        Document(const std::string &url, DocumentLoader *loader, Helpers::Callback *on_loaded_callback);
+        Document(const Helpers::HttpRequest &request, DocumentLoader *loader);
+        Document(const Helpers::HttpRequest &request, DocumentLoader *loader, Helpers::Callback *on_loaded_callback);
         ~Document();
 
         const std::string &get_title() const;
-        const std::string &get_url() const;
+        const Helpers::HttpRequest &get_request() const;
         // just a public shortcut for DocumentLoader::is_loading(Document*)
         bool is_loading() const;
         void on_loaded(GumboOutput* output);
@@ -26,7 +27,7 @@ class Document {
         Nodes::InteractiveElement *get_interactive_element(const std::string &id);
 
     private:
-        std::string url;
+        Helpers::HttpRequest request;
         DocumentLoader *loader; // Not owned
         Helpers::Callback *on_loaded_callback;
 

@@ -44,7 +44,7 @@ Controller::Controller()
     tabs_widget = new Widgets::Tabs();
 
     // Opening base window
-    Commands::open_in_new_tab(Config::general->get_welcome_url());
+    Commands::open_in_new_tab(Helpers::HttpRequest{Config::general->get_welcome_url()});
 
     // Setup complete, now everything is done after an user command
     input_handler->wait_and_read(exec);

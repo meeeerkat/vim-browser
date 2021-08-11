@@ -6,16 +6,16 @@
 
 
 
-Document::Document(const std::string &url, DocumentLoader *loader)
-    :url(url), loader(loader), on_loaded_callback(NULL), body(NULL)
+Document::Document(const Helpers::HttpRequest &request, DocumentLoader *loader)
+    :request(request), loader(loader), on_loaded_callback(NULL), body(NULL)
 {
-    build_data.base_url = Helpers::Url::get_base(url);
+    build_data.base_url = Helpers::Url::get_base(request.url);
     loader->load_async(this);
 }
-Document::Document(const std::string &url, DocumentLoader *loader, Helpers::Callback *on_loaded_callback)
-    :url(url), loader(loader), on_loaded_callback(on_loaded_callback), body(NULL)
+Document::Document(const Helpers::HttpRequest &request, DocumentLoader *loader, Helpers::Callback *on_loaded_callback)
+    :request(request), loader(loader), on_loaded_callback(on_loaded_callback), body(NULL)
 {
-    build_data.base_url = Helpers::Url::get_base(url);
+    build_data.base_url = Helpers::Url::get_base(request.url);
     loader->load_async(this);
 }
 
@@ -88,16 +88,16 @@ void Document::on_loaded(GumboOutput *gdoc)
     on_loaded_callback->exec();
 }
 
-const std::string &Document::get_url() const
+const Helpers::HttpRequest &Document::get_request() const
 {
-    return url;
+    return request;
 }
 
 const std::string &Document::get_title() const
 {
     if (!is_loading())
         return title;
-    return get_url();
+    return get_request().url;
 }
 
 bool Document::is_loading() const

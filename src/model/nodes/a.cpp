@@ -32,9 +32,10 @@ namespace Nodes {
         if (href.empty())
             return;
 
+        Helpers::HttpRequest request{href};
         if (type == PrintingOptions::InteractionType::Link)
-            Commands::open_in_current_tab(href);
+            Commands::open_in_current_tab(request);
         else if (type == PrintingOptions::InteractionType::LinkNewTab)
-            Commands::open_in_new_tab(href);
+            Commands::open_in_new_tab(request);
     }
 }

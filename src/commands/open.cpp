@@ -32,34 +32,35 @@ namespace Commands {
             return -1;
         }
 
-        std::string url(argv[optind]);
-        Helpers::Url::fix(url);
+        Helpers::HttpRequest request{argv[optind]};
+        Helpers::Url::fix(request.url);
 
         if (new_tab)
-            open_in_new_tab(url);
+            open_in_new_tab(request);
         else
-            open_in_current_tab(url);
+            open_in_current_tab(request);
 
         return 0;
     }
 
 
 
-    void open_in_current_tab(const std::string &url)
+    void open_in_current_tab(const Helpers::HttpRequest &request)
     {
         // Current_tab_index is supposed to be deleted in on_doc_loaded
         uint8_t *current_tab_index = new uint8_t(Controller::tabs_widget->get_current_tab_index());
-        Document *new_doc = new Document(url, Controller::document_loader, new Helpers::Callback(on_doc_loaded, current_tab_index));
+        Document *new_doc = new Document(request, Controller::document_loader, new Helpers::Callback(on_doc_loaded, current_tab_index));
         Controller::tabs_widget->replace_document(new_doc, *current_tab_index);
         Controller::page_widget->display(new_doc);
     }
-    void open_in_new_tab(const std::string &url)
+
+    void open_in_new_tab(const Helpers::HttpRequest &request)
     {
         if (!Controller::tabs_widget->can_add_tab())
             return;
 
         uint8_t *next_tab_index = new uint8_t(Controller::tabs_widget->get_current_tab_index() + 1);
-        Document *new_doc = new Document(url, Controller::document_loader, new Helpers::Callback(on_doc_loaded, next_tab_index));
+        Document *new_doc = new Document(request, Controller::document_loader, new Helpers::Callback(on_doc_loaded, next_tab_index));
         Controller::tabs_widget->add_tab(new_doc, *next_tab_index);
         Controller::tabs_widget->set_current_tab_index(*next_tab_index);
         Controller::page_widget->display(new_doc);
