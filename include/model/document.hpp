@@ -21,6 +21,7 @@ class Document {
         // just a public shortcut for DocumentLoader::is_loading(Document*)
         bool is_loading() const;
         void on_loaded(GumboOutput* output);
+        void on_loading_failed(const std::string &error_code);
 
         void printw(WINDOW *window, Nodes::PrintingOptions printing_options = Nodes::PrintingOptions{}) const;
 

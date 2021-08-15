@@ -75,10 +75,18 @@ void *DocumentLoader::load_documents(void *args)
         CURLMsg *msg;
         int msgs_left = -1;
         while((msg = curl_multi_info_read(loader->curl, &msgs_left))) {
-            if(msg->msg == CURLMSG_DONE) {
-                CURL *easy_handle = msg->easy_handle;
-                Document *doc;
-                curl_easy_getinfo(easy_handle, CURLINFO_PRIVATE, &doc);
+            // libcurl doc says there is no other message types defined yet
+            assert(msg->msg == CURLMSG_DONE);
+
+            CURL *easy_handle = msg->easy_handle;
+            Document *doc;
+            curl_easy_getinfo(easy_handle, CURLINFO_PRIVATE, &doc);
+            if (msg->data.result != CURLE_OK) {
+                // Deleting the request
+                loader->remove_request(doc);
+                doc->on_loading_failed(curl_easy_strerror(msg->data.result));
+            }
+            else {
                 // Parsing output
                 GumboOutput *parsed_output = gumbo_parse(loader->requests[doc].buffer.c_str());
                 // Deleting the request
@@ -86,11 +94,6 @@ void *DocumentLoader::load_documents(void *args)
                 // Calling callback (request has to be deleted first)
                 doc->on_loaded(parsed_output);
                 gumbo_destroy_output(&kGumboDefaultOptions, parsed_output);
-            }
-            else {
-                // TODO: Handle errors
-                assert(false);
-                return NULL;
             }
         }
         // curl_multi_poll waits the timeout if there is no handle attached

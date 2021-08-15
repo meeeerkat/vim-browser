@@ -3,11 +3,18 @@
 
 
 namespace Nodes {
+
     Text::Text(const GumboText *gumbo_text, BuildData &build_data)
         : Node(build_data)
     {
         text = std::string(gumbo_text->text);
         boost::trim(text);
+    }
+
+    Text::Text(const std::string &text, BuildData &build_data)
+        : Node(build_data)
+    {
+        this->text = text;
     }
 
     Text::~Text()

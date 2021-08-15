@@ -16,8 +16,11 @@ namespace Nodes {
             virtual void printw(WINDOW *window, PrintingOptions &printing_options);
             virtual void print_children(WINDOW *window, PrintingOptions &printing_options) const;
 
-        protected:
+            // Public because you can't mess up the invariant
+            // no matter what you do with this vector
             std::vector<Node*> children;
+
+        protected:
             int y,x;
     };
 }

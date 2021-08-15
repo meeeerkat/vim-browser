@@ -2,6 +2,7 @@
 #include <iostream>
 #include "model/document.hpp"
 #include "model/document_loader.hpp"
+#include "model/nodes/text.hpp"
 #include "helpers/url.hpp"
 
 
@@ -88,6 +89,17 @@ void Document::on_loaded(GumboOutput *gdoc)
     on_loaded_callback->exec();
 }
 
+void Document::on_loading_failed(const std::string &error)
+{
+    body = new Nodes::Body(build_data);
+    std::string error_msg = std::string(error);
+    Nodes::Text *error_text_node = new Nodes::Text(error_msg, build_data);
+    body->children.push_back(error_text_node);
+
+    // Calling external callback
+    on_loaded_callback->exec();
+}
+
 const Helpers::HttpRequest &Document::get_request() const
 {
     return request;
@@ -95,7 +107,7 @@ const Helpers::HttpRequest &Document::get_request() const
 
 const std::string &Document::get_title() const
 {
-    if (!is_loading())
+    if (!title.empty())
         return title;
     return get_request().url;
 }
@@ -120,7 +132,7 @@ Nodes::InteractiveElement *Document::get_interactive_element(const std::string &
     uint32_t el_index;
     try {
         el_index = std::stoi(id);
-    } catch (const std::invalid_argument & e) {
+    } catch (const std::invalid_argument &e) {
         return NULL;
     }
 
