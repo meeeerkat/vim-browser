@@ -19,7 +19,6 @@ it will only print in a way that is both functionnal & easy to read
 - Add help to all commands (-h prints help in the page\_widget & can be exited with 'q')  
 - Media system should differentiate image, audio and video to be able call a different command for each (3 things to set in media config)  
 - Copy paste in page content
-- Error when page doesn't load (http errors)
 
 ## TODO in a long time
 - Bookmarks  
