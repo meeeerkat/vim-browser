@@ -23,4 +23,3 @@ it will only print in a way that is both functionnal & easy to read
 ## TODO in a long time
 - Bookmarks  
 - Cookies support  
-- https certificates checks  
