@@ -24,6 +24,7 @@ class DocumentLoader {
         };
 
         CURLM *curl;
+        CURLSH *share;
         pthread_t thread_id;
         //char curl_errbuf[CURL_ERROR_SIZE];
         std::map<Document*, curl_easy_request> requests;

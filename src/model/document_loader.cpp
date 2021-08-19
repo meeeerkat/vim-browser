@@ -5,19 +5,25 @@
 #include <limits>
 #include "model/document_loader.hpp"
 #include "model/document.hpp"
+#include "config/general.hpp"
 
 
 DocumentLoader::DocumentLoader()
 {
     curl_global_init(CURL_GLOBAL_ALL);
     curl = curl_multi_init();
-    
+
+    share = curl_share_init();
+    curl_share_setopt(share, CURLSHOPT_SHARE, CURL_LOCK_DATA_COOKIE);
+
     pthread_create(&thread_id, NULL, load_documents, this);
 }
 
 DocumentLoader::~DocumentLoader()
 {
     pthread_cancel(thread_id);
+
+    curl_share_cleanup(share);
     curl_multi_cleanup(curl);
     curl_global_cleanup();
 }
@@ -33,9 +39,17 @@ void DocumentLoader::add_request(Document *doc)
     requests[doc] = {};
 
     CURL *handle = curl_easy_init();
+    curl_easy_setopt(handle, CURLOPT_SHARE, share);
     curl_easy_setopt(handle, CURLOPT_NOPROGRESS, 1L);
     curl_easy_setopt(handle, CURLOPT_VERBOSE, 0L);
     curl_easy_setopt(handle, CURLOPT_WRITEFUNCTION, append_to_buffer);
+    curl_easy_setopt(handle, CURLOPT_URL, doc->get_request().url.c_str());
+    // Cookies
+    if (Config::general->are_cookies_accepted()) {
+        curl_easy_setopt(handle, CURLOPT_COOKIEFILE, Config::general->get_cookies_storage_path().c_str());
+        curl_easy_setopt(handle, CURLOPT_COOKIEJAR, Config::general->get_cookies_storage_path().c_str());
+    }
+
     curl_easy_setopt(handle, CURLOPT_URL, doc->get_request().url.c_str());
 
     switch (doc->get_request().type) {
