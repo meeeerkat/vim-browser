@@ -15,6 +15,9 @@ DocumentLoader::DocumentLoader()
 
     share = curl_share_init();
     curl_share_setopt(share, CURLSHOPT_SHARE, CURL_LOCK_DATA_COOKIE);
+    curl_share_setopt(share, CURLSHOPT_SHARE, CURL_LOCK_DATA_DNS);
+    curl_share_setopt(share, CURLSHOPT_SHARE, CURL_LOCK_DATA_SSL_SESSION);
+    curl_share_setopt(share, CURLSHOPT_SHARE, CURL_LOCK_DATA_CONNECT);
 
     pthread_create(&thread_id, NULL, load_documents, this);
 }
