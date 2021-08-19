@@ -59,9 +59,8 @@ void Command::handle_input(const std::string *base_command)
     while (TRUE) {
         const uint16_t code = wgetch(window);
         if (code == KEY_UP) {
-            if (history_cursor > 0) {
+            if (history_cursor > 0)
                 command.set_value(history[--history_cursor]);
-            }
         }
         else if (code == KEY_DOWN) {
             if (history_cursor < history.size()) {
@@ -72,17 +71,32 @@ void Command::handle_input(const std::string *base_command)
                     command.set_value("");
             }
         }
-        else if (!command.handle_input(code)) {
-            if (command.get_value().empty()) {
-                clear();
-                reset();
-                return;
+        else {
+            Model::TextInput::InputState input_state = command.handle_input(code);
+            switch (input_state) {
+                case Model::TextInput::InputState::WaitingInput:
+                    break;
+
+                case Model::TextInput::InputState::Canceled:
+                    clear();
+                    reset();
+                    return;
+
+                case Model::TextInput::InputState::Sent:
+                    // Checking first if the command isn't empty to avoid pushing an empty string to the commands' history
+                    if (command.get_value().empty()) {
+                        clear();
+                        reset();
+                        return;
+                    }
+                    // Executing command & pushing it in the commands' history
+                    history.push_back(std::string(command.get_value()));
+                    clear();
+                    exec_command_callback(command.get_value());
+                    reset();
+                    return;
+                    break;
             }
-            history.push_back(std::string(command.get_value()));
-            clear();
-            exec_command_callback(command.get_value());
-            reset();
-            return;
         }
         refresh_display();
     }

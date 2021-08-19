@@ -26,10 +26,16 @@ namespace Nodes {
         refresh_display();
         while (true) {
             uint16_t code = Controller::input_handler->get_input();
-            if (!model.handle_input(code))
-                return;
-            value = std::string(model.get_value());
-            refresh_display();
+            switch (model.handle_input(code)) {
+                case Model::TextInput::InputState::WaitingInput:
+                    value = std::string(model.get_value());
+                    refresh_display();
+                    break;
+
+                case Model::TextInput::InputState::Canceled:
+                case Model::TextInput::InputState::Sent:
+                    return;
+            }
         }
     }
 

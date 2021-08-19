@@ -32,6 +32,7 @@ Controller::Controller()
 
     // ncurses init
     initscr();
+    noecho();
 
     // helpers init
     document_loader = new DocumentLoader();

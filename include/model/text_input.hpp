@@ -9,8 +9,10 @@ namespace Model {
     class TextInput {
 
         public:
+            enum InputState { WaitingInput, Canceled, Sent };
+
             TextInput();
-            bool handle_input(uint16_t code);
+            InputState handle_input(uint16_t code);
 
             void reset();
             void set_value(const std::string &new_text);
@@ -23,7 +25,6 @@ namespace Model {
             uint16_t cursor;
 
             void insert_char(char c);
-            void delete_char();
     };
 }
 
