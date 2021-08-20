@@ -3,9 +3,9 @@
 #include <string>
 #include <ncurses.h>
 #include <gumbo.h>
+#include <functional>
 #include "model/nodes/body.hpp"
 #include "model/nodes/interactive_element.hpp"
-#include "helpers/callback.hpp"
 #include "helpers/http_request.hpp"
 
 class DocumentLoader;
@@ -13,7 +13,7 @@ class DocumentLoader;
 class Document {
     public:
         Document(const Helpers::HttpRequest &request, DocumentLoader *loader);
-        Document(const Helpers::HttpRequest &request, DocumentLoader *loader, Helpers::Callback *on_loaded_callback);
+        Document(const Helpers::HttpRequest &request, DocumentLoader *loader, std::function<void()> on_loaded_callback);
         ~Document();
 
         const std::string &get_title() const;
@@ -30,7 +30,8 @@ class Document {
     private:
         Helpers::HttpRequest request;
         DocumentLoader *loader; // Not owned
-        Helpers::Callback *on_loaded_callback;
+        std::function<void()> on_loaded_callback;
+
 
         std::string title;
         Nodes::Body *body;

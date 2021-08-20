@@ -83,6 +83,10 @@ uint DocumentLoader::append_to_buffer(char *chunck, uint size, uint nmemb, std::
 // Loads all the requested documents
 void *DocumentLoader::load_documents(void *args)
 {
+    int old_pthread_state;
+    pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, &old_pthread_state);
+    pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, &old_pthread_state);
+
     DocumentLoader *loader = static_cast<DocumentLoader*>(args);
 
     while (true) {
@@ -104,6 +108,7 @@ void *DocumentLoader::load_documents(void *args)
                 doc->on_loading_failed(curl_easy_strerror(msg->data.result));
             }
             else {
+                pthread_setcanceltype(PTHREAD_CANCEL_DEFERRED, &old_pthread_state);
                 // Parsing output
                 GumboOutput *parsed_output = gumbo_parse(loader->requests[doc].buffer.c_str());
                 // Deleting the request
@@ -111,6 +116,7 @@ void *DocumentLoader::load_documents(void *args)
                 // Calling callback (request has to be deleted first)
                 doc->on_loaded(parsed_output);
                 gumbo_destroy_output(&kGumboDefaultOptions, parsed_output);
+                pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, &old_pthread_state);
             }
         }
         // curl_multi_poll waits the timeout if there is no handle attached

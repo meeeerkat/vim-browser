@@ -59,9 +59,9 @@ Controller::~Controller()
     delete tabs_widget;
 
     // helpers freeing
-    delete document_loader;
     delete input_handler;
     delete commands_handler;
+    delete document_loader;
 
     // ncurses closing
     endwin();

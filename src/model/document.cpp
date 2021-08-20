@@ -13,7 +13,7 @@ Document::Document(const Helpers::HttpRequest &request, DocumentLoader *loader)
     build_data.base_url = Helpers::Url::get_base(request.url);
     loader->load_async(this);
 }
-Document::Document(const Helpers::HttpRequest &request, DocumentLoader *loader, Helpers::Callback *on_loaded_callback)
+Document::Document(const Helpers::HttpRequest &request, DocumentLoader *loader, std::function<void()> on_loaded_callback)
     :request(request), loader(loader), on_loaded_callback(on_loaded_callback), body(NULL)
 {
     build_data.base_url = Helpers::Url::get_base(request.url);
@@ -24,9 +24,6 @@ Document::~Document()
 {
     if (is_loading())
         loader->cancel_async_loading(this);
-
-    if (on_loaded_callback)
-        delete on_loaded_callback;
 
     if (body)
         delete body;
@@ -86,7 +83,7 @@ void Document::on_loaded(GumboOutput *gdoc)
     body = new Nodes::Body(gumbo_body, build_data);
 
     // Calling external callback
-    on_loaded_callback->exec();
+    on_loaded_callback();
 }
 
 void Document::on_loading_failed(const std::string &error)
@@ -97,7 +94,7 @@ void Document::on_loading_failed(const std::string &error)
     body->children.push_back(error_text_node);
 
     // Calling external callback
-    on_loaded_callback->exec();
+    on_loaded_callback();
 }
 
 const Helpers::HttpRequest &Document::get_request() const
