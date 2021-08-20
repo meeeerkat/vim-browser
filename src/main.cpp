@@ -3,8 +3,8 @@
 
 int main()
 {
-    Controller *controller = new Controller();
-    delete controller;
+    Controller controller;
+    controller.wait_and_handle_input();
 
     return 0;
 }

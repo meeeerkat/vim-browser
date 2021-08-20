@@ -19,9 +19,12 @@ class Controller {
     public:
         Controller();
         ~Controller();
+        
+        void wait_and_handle_input();
 
         static void pause();
         static void unpause();
+        static void quit_when_possible();
 
         static Controller *instance;
     
@@ -35,8 +38,11 @@ class Controller {
         static Widgets::Tabs *tabs_widget;
 
     private:
+
         static void print_message(const std::string &message);
         static int exec(const std::string &command);
+
+        static bool should_quit;
 };
 
 

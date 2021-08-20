@@ -1,5 +1,5 @@
-#include <cassert>
 #include "controller.hpp"
+#include <cassert>
 #include "model/document_loader.hpp"
 #include "widgets/tabs.hpp"
 #include "widgets/page.hpp"
@@ -9,6 +9,7 @@
 #include "commands/handler.hpp"
 #include "config/manager.hpp"
 #include "config/general.hpp"
+#include "config/shortcuts.hpp"
 
 Controller *Controller::instance = nullptr;
 // helpers
@@ -19,6 +20,8 @@ Commands::Handler *Controller::commands_handler = nullptr;
 Widgets::Page *Controller::page_widget = nullptr;
 Widgets::Command *Controller::command_widget = nullptr;
 Widgets::Tabs *Controller::tabs_widget = nullptr;
+
+bool Controller::should_quit = false;
 
 
 
@@ -32,7 +35,6 @@ Controller::Controller()
 
     // ncurses init
     initscr();
-    noecho();
 
     // helpers init
     document_loader = new DocumentLoader();
@@ -46,13 +48,12 @@ Controller::Controller()
 
     // Opening base window
     Commands::open_in_new_tab(Helpers::HttpRequest{Config::general->get_welcome_url()});
-
-    // Setup complete, now everything is done after an user command
-    input_handler->wait_and_read(exec);
 }
 
 Controller::~Controller()
 {
+    delete document_loader;
+
     // widgets freeing
     delete page_widget;
     delete command_widget;
@@ -61,7 +62,6 @@ Controller::~Controller()
     // helpers freeing
     delete input_handler;
     delete commands_handler;
-    delete document_loader;
 
     // ncurses closing
     endwin();
@@ -91,6 +91,21 @@ void Controller::unpause()
     command_widget->clear();
 }
 
+void Controller::quit_when_possible()
+{
+    should_quit = true;
+}
+
+void Controller::wait_and_handle_input()
+{
+    while (!should_quit) {
+        // Here we only handle shortcuts (some redirect to the widgets)
+        const uint16_t c = input_handler->get_input();
+        const std::string *command = Config::shortcuts->get_command(c);
+        if (command)
+            exec(*command);
+    }
+}
 
 void Controller::print_message(const std::string &message)
 {

@@ -15,7 +15,6 @@ class InputHandler {
         ~InputHandler();
         uint16_t get_input();
         void wait_for_input();
-        void wait_and_read(int (*exec) (const std::string&));
 
     private:
         WINDOW *fake_window;

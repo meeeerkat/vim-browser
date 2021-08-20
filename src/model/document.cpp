@@ -22,9 +22,6 @@ Document::Document(const Helpers::HttpRequest &request, DocumentLoader *loader, 
 
 Document::~Document()
 {
-    if (is_loading())
-        loader->cancel_async_loading(this);
-
     if (body)
         delete body;
 }

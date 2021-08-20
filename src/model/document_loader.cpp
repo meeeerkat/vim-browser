@@ -20,6 +20,7 @@ DocumentLoader::DocumentLoader()
     curl_share_setopt(share, CURLSHOPT_SHARE, CURL_LOCK_DATA_CONNECT);
 
     pthread_create(&thread_id, NULL, load_documents, this);
+    pthread_detach(thread_id);
 }
 
 DocumentLoader::~DocumentLoader()
@@ -108,7 +109,7 @@ void *DocumentLoader::load_documents(void *args)
                 doc->on_loading_failed(curl_easy_strerror(msg->data.result));
             }
             else {
-                pthread_setcanceltype(PTHREAD_CANCEL_DEFERRED, &old_pthread_state);
+                pthread_setcancelstate(PTHREAD_CANCEL_DISABLE, &old_pthread_state);
                 // Parsing output
                 GumboOutput *parsed_output = gumbo_parse(loader->requests[doc].buffer.c_str());
                 // Deleting the request
@@ -116,7 +117,7 @@ void *DocumentLoader::load_documents(void *args)
                 // Calling callback (request has to be deleted first)
                 doc->on_loaded(parsed_output);
                 gumbo_destroy_output(&kGumboDefaultOptions, parsed_output);
-                pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, &old_pthread_state);
+                pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, &old_pthread_state);
             }
         }
         // curl_multi_poll waits the timeout if there is no handle attached

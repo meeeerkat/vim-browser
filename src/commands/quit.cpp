@@ -6,11 +6,9 @@
 
 
 namespace Commands {
-    int quit_exec(int, char **argv, std::string *)
+    int quit_exec(int, char **, std::string *)
     {
-        g_strfreev(argv);
-        delete Controller::instance;
-        exit(EXIT_SUCCESS);
+        Controller::quit_when_possible();
         return 0;
     }
 }
