@@ -1,3 +1,5 @@
 welcome_url: https://github.com/meeeerkat/vim-browser
 # %SEARCH_STRING will be replaced by the search string
 search_url: https://lite.duckduckgo.com/lite?q=$SEARCH_STRING
+cookies_accept: false
+cookies_storage_path: /home/USER/.vim-browser/cookies
