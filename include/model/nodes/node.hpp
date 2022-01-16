@@ -23,6 +23,7 @@ namespace Nodes {
         InteractionType interaction_type = InteractionType::None;
         std::string interaction_current_id;
         int cursor_y=-1, cursor_x=-1;
+        bool is_new_line = true;
     };
 
     class Node {

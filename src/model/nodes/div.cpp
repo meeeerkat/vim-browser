@@ -14,8 +14,14 @@ namespace Nodes {
         if (children.size() == 0)
             return;
 
+        if (!printing_options.is_new_line) {
+            wprintw(window, "\n");
+            printing_options.is_new_line = true;
+        }
+
         Element::print_children(window, printing_options);
-        wprintw(window, "\n");
+        
+        printing_options.is_new_line = false;
     }
 }
 

@@ -1,7 +1,14 @@
 
 ## Current state
+This project is on hold for now but it won't be dead as long as there is not good terminal based - content focused browser.
 It's usable but there will be a lot of bugs and one needs to find another search engine (duckduckgo lite isn't supported yet due to weird url links)  
-Currently working on the document printing, user interactions & config setup  
+
+## How will this be different to lynx ?
+- It already has multi-tabs support
+- It's vim-like
+- It's content oriented and doesn't/won't care at all about any CSS (only the HTML structure matters)
+- I hope to make user interactions more efficient (by choosing the input/link following qutebrowser's way among other things, a basic version of this system is already functionnal (interact command))
+
 
 ## Config
 Configuration files are under ~/.vim-browser directory  
@@ -21,6 +28,7 @@ it will only print in a way that is both functionnal & easy to read
 - Copy paste in page content  
 - Throw error message for YAML parsing errors in config files  
 - Free all the used memory when quitting (valgrind debug)  
+- Need to print html pages in a much prettier way
 
 ## TODO in a long time
 - Bookmarks  

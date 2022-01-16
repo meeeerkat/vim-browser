@@ -11,8 +11,12 @@ namespace Nodes {
     {
         Element::printw(window, printing_options);
         wattron(window, A_BOLD);
-        wprintw(window, "\n");
+        if (!printing_options.is_new_line) {
+            wprintw(window, "\n");
+            printing_options.is_new_line = true;
+        }
         Element::print_children(window, printing_options);
+        printing_options.is_new_line = false;
         wattroff(window, A_BOLD);
     }
 }
