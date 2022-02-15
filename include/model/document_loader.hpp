@@ -6,18 +6,21 @@
 #include <map>
 
 class Document;
+class BrowserConfig;
 
 
 class DocumentLoader {
 
     public:
-        DocumentLoader();
+        DocumentLoader(BrowserConfig *config);
         ~DocumentLoader();
         void load_async(Document *doc);
         void cancel_async_loading(Document *doc);
         bool is_loading(const Document *doc) const;
 
     private:
+        BrowserConfig *config; // not owned
+        
         struct curl_easy_request {
             CURL *handle = NULL;
             std::string buffer = "";

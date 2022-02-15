@@ -12,14 +12,13 @@ class DocumentLoader;
 
 class Document {
     public:
-        Document(const Helpers::HttpRequest &request, DocumentLoader *loader);
-        Document(const Helpers::HttpRequest &request, DocumentLoader *loader, std::function<void()> on_loaded_callback);
+        Document(const Helpers::HttpRequest &request);
+        Document(const Helpers::HttpRequest &request, std::function<void()> on_loaded_callback);
         ~Document();
 
         const std::string &get_title() const;
         const Helpers::HttpRequest &get_request() const;
         // just a public shortcut for DocumentLoader::is_loading(Document*)
-        bool is_loading() const;
         void on_loaded(GumboOutput* output);
         void on_loading_failed(const std::string &error_code);
 
@@ -29,7 +28,6 @@ class Document {
 
     private:
         Helpers::HttpRequest request;
-        DocumentLoader *loader; // Not owned
         std::function<void()> on_loaded_callback;
 
 
@@ -39,6 +37,8 @@ class Document {
 
         void parse_head(GumboElement *head);
         void parse_title(GumboElement *title_element);
+
+        bool is_loaded;
 
 };
 

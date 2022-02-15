@@ -3,7 +3,7 @@
 
 #include <string>
 
-namespace Config { class Manager; }
+class BrowserConfig;
 class DocumentLoader;
 class InputHandler;
 namespace Commands { class Handler; }
@@ -28,6 +28,7 @@ class App {
         
         int exec(const std::string &command);
 
+        BrowserConfig *getConfig();
         DocumentLoader *getDocumentLoader();
         InputHandler *getInputHandler();
 
@@ -37,6 +38,7 @@ class App {
 
     private:
         // helpers
+        BrowserConfig *config;
         DocumentLoader *document_loader;
         InputHandler *input_handler;
         Commands::Handler *commands_handler;

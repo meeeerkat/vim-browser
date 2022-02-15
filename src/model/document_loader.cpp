@@ -5,10 +5,11 @@
 #include <limits>
 #include "model/document_loader.hpp"
 #include "model/document.hpp"
-#include "config/general.hpp"
+#include "browser_config.hpp"
 
 
-DocumentLoader::DocumentLoader()
+DocumentLoader::DocumentLoader(BrowserConfig *_config)
+    : config(_config)
 {
     curl_global_init(CURL_GLOBAL_ALL);
     curl = curl_multi_init();
@@ -49,9 +50,9 @@ void DocumentLoader::add_request(Document *doc)
     curl_easy_setopt(handle, CURLOPT_WRITEFUNCTION, append_to_buffer);
     curl_easy_setopt(handle, CURLOPT_URL, doc->get_request().url.c_str());
     // Cookies
-    if (Config::general->are_cookies_accepted()) {
-        curl_easy_setopt(handle, CURLOPT_COOKIEFILE, Config::general->get_cookies_storage_path().c_str());
-        curl_easy_setopt(handle, CURLOPT_COOKIEJAR, Config::general->get_cookies_storage_path().c_str());
+    if (config->are_cookies_accepted()) {
+        curl_easy_setopt(handle, CURLOPT_COOKIEFILE, config->get_cookies_storage_path().c_str());
+        curl_easy_setopt(handle, CURLOPT_COOKIEJAR, config->get_cookies_storage_path().c_str());
     }
 
     curl_easy_setopt(handle, CURLOPT_URL, doc->get_request().url.c_str());

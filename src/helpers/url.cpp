@@ -1,9 +1,9 @@
 #include "helpers/url.hpp"
 #include <regex>
-#include "config/general.hpp"
+#include "browser_config.hpp"
 
 namespace Helpers::Url {
-    void fix(std::string &url, const std::string &base)
+    void fix(std::string &url, const std::string &search_url, const std::string &base)
     {
         if (std::regex_match(url, std::regex("^https?:\\/\\/.*")))
             return;
@@ -19,7 +19,7 @@ namespace Helpers::Url {
         }
 
         if (base.empty()) {
-            url = std::regex_replace(Config::general->get_search_url(), std::regex("\\$SEARCH_STRING"), url);
+            url = std::regex_replace(search_url, std::regex("\\$SEARCH_STRING"), url);
             return;
         }
 

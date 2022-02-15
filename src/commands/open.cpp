@@ -2,9 +2,11 @@
 #include <iostream>
 #include <functional>
 #include "commands/open.hpp"
+#include "model/document_loader.hpp"
 #include "widgets/page.hpp"
 #include "widgets/tabs.hpp"
 #include "helpers/url.hpp"
+#include "browser_config.hpp"
 #include "app.hpp"
 
 
@@ -32,7 +34,7 @@ namespace Commands {
         }
 
         Helpers::HttpRequest request{argv[optind]};
-        Helpers::Url::fix(request.url);
+        Helpers::Url::fix(request.url, app->getConfig()->get_search_url());
 
         if (new_tab)
             open_in_new_tab(app, request);
@@ -66,7 +68,8 @@ namespace Commands {
     {
         // Current_tab_index is supposed to be deleted in on_doc_loaded
         const uint8_t current_tab_index = app->getTabsWidget()->get_current_tab_index();
-        Document *new_doc = new Document(request, app->getDocumentLoader(), std::bind(&on_doc_loaded, app, current_tab_index));
+        Document *new_doc = new Document(request, std::bind(&on_doc_loaded, app, current_tab_index));
+        app->getDocumentLoader()->load_async(new_doc);
         app->getTabsWidget()->replace_document(new_doc, current_tab_index);
         app->getPageWidget()->display(new_doc);
     }
@@ -77,7 +80,8 @@ namespace Commands {
             return;
 
         const uint8_t next_tab_index = app->getTabsWidget()->get_current_tab_index() + 1;
-        Document *new_doc = new Document(request, app->getDocumentLoader(), std::bind(&on_doc_loaded, app, next_tab_index));
+        Document *new_doc = new Document(request, std::bind(&on_doc_loaded, app, next_tab_index));
+        app->getDocumentLoader()->load_async(new_doc);
         app->getTabsWidget()->add_tab(new_doc, next_tab_index);
         app->getTabsWidget()->set_current_tab_index(next_tab_index);
         app->getPageWidget()->display(new_doc);

@@ -7,17 +7,15 @@
 
 
 
-Document::Document(const Helpers::HttpRequest &request, DocumentLoader *loader)
-    :request(request), loader(loader), on_loaded_callback(NULL), body(NULL)
+Document::Document(const Helpers::HttpRequest &request)
+    :request(request), on_loaded_callback(NULL), body(NULL), is_loaded(false)
 {
     build_data.base_url = Helpers::Url::get_base(request.url);
-    loader->load_async(this);
 }
-Document::Document(const Helpers::HttpRequest &request, DocumentLoader *loader, std::function<void()> on_loaded_callback)
-    :request(request), loader(loader), on_loaded_callback(on_loaded_callback), body(NULL)
+Document::Document(const Helpers::HttpRequest &request, std::function<void()> on_loaded_callback)
+    :request(request), on_loaded_callback(on_loaded_callback), body(NULL), is_loaded(false)
 {
     build_data.base_url = Helpers::Url::get_base(request.url);
-    loader->load_async(this);
 }
 
 Document::~Document()
@@ -78,6 +76,9 @@ void Document::on_loaded(GumboOutput *gdoc)
 
     // Building body
     body = new Nodes::Body(gumbo_body, build_data);
+    
+    // set loaded before calling callback as it'll be needed
+    is_loaded = true;
 
     // Calling external callback
     on_loaded_callback();
@@ -106,14 +107,9 @@ const std::string &Document::get_title() const
     return get_request().url;
 }
 
-bool Document::is_loading() const
-{
-    return loader->is_loading(this);
-}
-
 void Document::printw(WINDOW *window, Nodes::PrintingOptions printing_options) const
 {
-    if (is_loading())
+    if (!is_loaded)
         return;
 
     body->printw(window, printing_options);

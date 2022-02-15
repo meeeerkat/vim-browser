@@ -4,8 +4,6 @@
 #include <ncurses.h>
 #include <string>
 
-namespace Config { class Shortcuts; }
-
 // Only handles shortcuts (in the normal mode)
 // Command writing or page form filling input is
 // taken care of in the widgets themselves

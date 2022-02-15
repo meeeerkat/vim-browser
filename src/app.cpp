@@ -1,4 +1,6 @@
 #include "app.hpp"
+#include <stdlib.h>
+#include <yaml-cpp/yaml.h>
 #include "model/document_loader.hpp"
 #include "widgets/tabs.hpp"
 #include "widgets/page.hpp"
@@ -6,21 +8,21 @@
 #include "input_handler.hpp"
 #include "commands/open.hpp"
 #include "commands/handler.hpp"
-#include "config/manager.hpp"
-#include "config/general.hpp"
-#include "config/shortcuts.hpp"
+#include "browser_config.hpp"
 
 
 App::App()
     : should_quit(false)
 {
-    Config::load();
+    std::string path = std::string(getenv("HOME")) + "/.vim-browser.yaml";
+    YAML::Node yaml_config = YAML::LoadFile(path);
+    config = new BrowserConfig(yaml_config);
 
     // ncurses init
     initscr();
 
     // helpers init
-    document_loader = new DocumentLoader();
+    document_loader = new DocumentLoader(config);
     input_handler = new InputHandler();
     commands_handler = new Commands::Handler();
 
@@ -30,7 +32,7 @@ App::App()
     tabs_widget = new Widgets::Tabs();
 
     // Opening base window
-    Commands::open_in_new_tab(this, Helpers::HttpRequest{Config::general->get_welcome_url()});
+    Commands::open_in_new_tab(this, Helpers::HttpRequest{config->get_welcome_url()});
 }
 
 App::~App()
@@ -48,8 +50,6 @@ App::~App()
 
     // ncurses closing
     endwin();
-
-    Config::free();
 }
 
 void App::pause()
@@ -84,7 +84,7 @@ void App::wait_and_handle_input()
     while (!should_quit) {
         // Here we only handle shortcuts (some redirect to the widgets)
         const uint16_t c = input_handler->get_input();
-        const std::string *command = Config::shortcuts->get_command(c);
+        const std::string *command = config->get_command_from_shortcut(c);
         if (command)
             exec(*command);
     }
@@ -95,6 +95,9 @@ int App::exec(const std::string &command)
     return commands_handler->exec(this, command);
 }
 
+BrowserConfig *App::getConfig() {
+    return config;
+}
 DocumentLoader *App::getDocumentLoader() {
     return document_loader;
 }
