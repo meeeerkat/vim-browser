@@ -12,7 +12,7 @@ namespace Nodes {
             SubmitInput(const GumboElement *el, BuildData &build_data);
 
             virtual void printw(WINDOW *window, PrintingOptions &printing_options);
-            virtual void interact(PrintingOptions::InteractionType type);
+            virtual void interact(App *app, PrintingOptions::InteractionType type);
 
         private:
             Form *form;

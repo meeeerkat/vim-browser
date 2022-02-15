@@ -3,8 +3,10 @@
 
 #include <string>
 
+class App;
+
 namespace Commands {
-    int interact_exec(int argc, char **argv, std::string *error_message);
+    int interact_exec(App *app, int argc, char **argv, std::string *error_message);
 }
 
 #endif

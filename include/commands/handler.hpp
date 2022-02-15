@@ -3,12 +3,13 @@
 
 #include <string>
 #include <map>
-#include "global.hpp"
+#include "commands/global.hpp"
 
+class App;
 
 namespace Commands {
 
-    #define DECLARE_COMMAND(NAME) int NAME ## _exec(int, char**, std::string*);
+    #define DECLARE_COMMAND(NAME) int NAME ## _exec(App*, int, char**, std::string*);
     DECLARE_COMMAND(quit)
     DECLARE_COMMAND(open)
     DECLARE_COMMAND(history)
@@ -23,14 +24,14 @@ namespace Commands {
 
     class Handler {
         public:
-            Handler(void (*print_message_callback) (const std::string&));
+            Handler();
             ~Handler();
-            int exec(const std::string &command) const;
+            int exec(App *app, const std::string &command) const;
 
         private:
-            void (*print_message_callback) (const std::string&);
+            void print_message(App *app, const std::string&) const;
             #define COMMAND(NAME)  { #NAME, NAME ## _exec }
-            std::map<std::string, int (*) (int, char**, std::string*)> COMMANDS = 
+            std::map<std::string, int (*) (App*, int, char**, std::string*)> COMMANDS = 
             {
                 COMMAND(quit),
                 COMMAND(open),
@@ -44,8 +45,8 @@ namespace Commands {
                 COMMAND(interact),
             };
 
-            void set_global_variables(char **argv, int argc) const;
-            std::map<std::string, const std::string& (*) ()> global_vars_getters = 
+            void set_global_variables(App *app, char **argv, int argc) const;
+            std::map<std::string, const std::string& (*) (App*)> global_vars_getters = 
             {
                 { "$CURRENT_URL", Global::get_current_url },
             };

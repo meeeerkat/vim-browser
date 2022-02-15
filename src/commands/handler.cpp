@@ -6,8 +6,9 @@
 #include <string.h>
 #include <glib.h>
 #include <unistd.h>
-#include "controller.hpp"
+#include "app.hpp"
 #include "input_handler.hpp"
+#include "widgets/command.hpp"
 #include "commands/handler.hpp"
 #include "commands/quit.hpp"
 #include "commands/open.hpp"
@@ -21,17 +22,11 @@
 
 namespace Commands {
 
-Handler::Handler(void (*print_message_callback_p) (const std::string&))
-{
-    print_message_callback = print_message_callback_p;
-}
+Handler::Handler() {}
 
-Handler::~Handler()
-{
+Handler::~Handler() {}
 
-}
-
-int Handler::exec(const std::string &command) const
+int Handler::exec(App *app, const std::string &command) const
 {
     int argc;
     char **argv;
@@ -39,12 +34,12 @@ int Handler::exec(const std::string &command) const
 
     if (!g_shell_parse_argv (command.c_str(), &argc, &argv, &error)) {
         std::string error_message(error->message);
-        print_message_callback(error_message);
+        print_message(app, error_message);
         g_clear_error(&error);
         return -1;
     }
 
-    set_global_variables(argv, argc);
+    set_global_variables(app, argv, argc);
     const std::string command_name(argv[0]);
     if (command_name[0] == '!') {
         // Shell command
@@ -53,23 +48,23 @@ int Handler::exec(const std::string &command) const
             modified_command += argv[i];
             modified_command += " ";
         }
-        Controller::pause();
+        app->pause();
         system(modified_command.c_str() + 1);
-        Controller::input_handler->wait_for_input();
-        Controller::unpause();
+        app->getInputHandler()->wait_for_input();
+        app->unpause();
         g_strfreev(argv);
         return 0;
     }
 
     if (COMMANDS.count(command_name) == 0) {
-        print_message_callback("Unknown command.");
+        print_message(app, "Unknown command.");
         g_strfreev(argv);
         return -1;
     }
 
     std::string error_message;
-    if (COMMANDS.at(command_name)(argc, argv, &error_message) < 0) {
-        print_message_callback(error_message);
+    if (COMMANDS.at(command_name)(app, argc, argv, &error_message) < 0) {
+        print_message(app, error_message);
         g_strfreev(argv);
         return -2;
     }
@@ -78,16 +73,19 @@ int Handler::exec(const std::string &command) const
     return 0;
 }
 
-void Handler::set_global_variables(char **argv, int argc) const
+void Handler::set_global_variables(App *app, char **argv, int argc) const
 {
     for (int i=0; i < argc; i++) {
         std::string arg(argv[i]);
         if (global_vars_getters.count(arg) > 0) {
-            const std::string replacement = global_vars_getters.at(arg)();
+            const std::string replacement = global_vars_getters.at(arg)(app);
             free(argv[i]);
             argv[i] = strdup(replacement.c_str());
         }
     }
 }
 
+void Handler::print_message(App *app, const std::string &message) const {
+    app->getCommandWidget()->print_message(message);
+}
 }

@@ -6,6 +6,7 @@
 #include "model/nodes/interactive_element.hpp"
 
 class Document;
+class App;
 
 namespace Widgets {
     class Page : public Widget {
@@ -19,7 +20,7 @@ namespace Widgets {
             void refresh_display(Nodes::PrintingOptions new_options);
             uint32_t get_start_line() const;
             
-            int interact(Nodes::PrintingOptions::InteractionType type, std::string *error_message);
+            int interact(App *app, Nodes::PrintingOptions::InteractionType type, std::string *error_message);
 
         private:
             WINDOW *pad;

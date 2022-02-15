@@ -1,4 +1,5 @@
 #include "model/nodes/hidden_input.hpp"
+#include "app.hpp"
 
 
 namespace Nodes {
@@ -9,7 +10,7 @@ namespace Nodes {
 
     }
 
-    void HiddenInput::interact(PrintingOptions::InteractionType)
+    void HiddenInput::interact(App *app, PrintingOptions::InteractionType)
     {
 
     }

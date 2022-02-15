@@ -3,8 +3,10 @@
 
 #include <string>
 
+class App;
+
 namespace Commands {
-    int close_exec(int argc, char **argv, std::string *error_message);
+    int close_exec(App *app, int argc, char **argv, std::string *error_message);
 }
 
 #endif

@@ -2,6 +2,7 @@
 #include <ctype.h>
 #include "widgets/page.hpp"
 #include "model/document.hpp"
+#include "app.hpp"
 
 namespace Widgets {
 
@@ -65,7 +66,7 @@ uint32_t Page::get_start_line() const
     return start_line;
 }
 
-int Page::interact(Nodes::PrintingOptions::InteractionType type, std::string *error_message)
+int Page::interact(App *app, Nodes::PrintingOptions::InteractionType type, std::string *error_message)
 {
     // Printing doc showing interactions
     printing_options = Nodes::PrintingOptions{type, ""};
@@ -83,7 +84,7 @@ int Page::interact(Nodes::PrintingOptions::InteractionType type, std::string *er
         Nodes::InteractiveElement *el = displayed_document->get_interactive_element(printing_options.interaction_current_id);
         if (el != NULL) {
             refresh_display(Nodes::PrintingOptions{});
-            el->interact(type);
+            el->interact(app, type);
         }
         else {
             refresh_display(Nodes::PrintingOptions{});

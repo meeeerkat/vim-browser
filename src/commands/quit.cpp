@@ -1,14 +1,14 @@
 #include <stdlib.h>
 #include <glib.h>
 #include "commands/quit.hpp"
-#include "controller.hpp"
+#include "app.hpp"
 
 
 
 namespace Commands {
-    int quit_exec(int, char **, std::string *)
+    int quit_exec(App *app, int, char **, std::string *)
     {
-        Controller::quit_when_possible();
+        app->quit_when_possible();
         return 0;
     }
 }

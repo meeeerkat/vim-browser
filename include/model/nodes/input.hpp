@@ -9,7 +9,7 @@ namespace Nodes {
         public:
             Input(const GumboElement *el, BuildData &build_data, bool is_interactive = true);
 
-            virtual void interact(PrintingOptions::InteractionType type) = 0;
+            virtual void interact(App *app, PrintingOptions::InteractionType type) = 0;
 
             std::string get_name() const;
             std::string get_value() const;

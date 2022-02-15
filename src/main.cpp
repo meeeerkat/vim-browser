@@ -1,10 +1,10 @@
-#include "controller.hpp"
+#include "app.hpp"
 
 
 int main()
 {
-    Controller controller;
-    controller.wait_and_handle_input();
+    App app;
+    app.wait_and_handle_input();
 
     return 0;
 }

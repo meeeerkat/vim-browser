@@ -3,8 +3,10 @@
 
 #include <string>
 
+class App;
+
 namespace Commands::Global {
-    const std::string &get_current_url();
+    const std::string &get_current_url(App *app);
 }
 
 #endif

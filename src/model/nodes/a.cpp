@@ -2,6 +2,7 @@
 #include "model/nodes/loader.hpp"
 #include "commands/open.hpp"
 #include "helpers/url.hpp"
+#include "app.hpp"
 
 namespace Nodes {
     A::A(const GumboElement *el, BuildData &build_data)
@@ -25,7 +26,7 @@ namespace Nodes {
         InteractiveElement::print_id(window, printing_options);
     }
     
-    void A::interact(PrintingOptions::InteractionType type)
+    void A::interact(App *app, PrintingOptions::InteractionType type)
     {
         if (href.empty())
             return;
@@ -34,10 +35,10 @@ namespace Nodes {
 
         switch (type) {
             case PrintingOptions::InteractionType::CurrentTab:
-                Commands::open_in_current_tab(request);
+                Commands::open_in_current_tab(app, request);
                 break;
             case PrintingOptions::InteractionType::NewTab:
-                Commands::open_in_new_tab(request);
+                Commands::open_in_new_tab(app, request);
                 break;
             default:
                 break;

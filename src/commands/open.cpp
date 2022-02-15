@@ -5,13 +5,12 @@
 #include "widgets/page.hpp"
 #include "widgets/tabs.hpp"
 #include "helpers/url.hpp"
-#include "controller.hpp"
+#include "app.hpp"
 
 
 namespace Commands {
-    void on_doc_loaded(uint8_t tab_index);
 
-    int open_exec(int argc, char **argv, std::string *error_message)
+    int open_exec(App *app, int argc, char **argv, std::string *error_message)
     {
         bool new_tab = false;
         char opt;
@@ -36,50 +35,51 @@ namespace Commands {
         Helpers::Url::fix(request.url);
 
         if (new_tab)
-            open_in_new_tab(request);
+            open_in_new_tab(app, request);
         else
-            open_in_current_tab(request);
+            open_in_current_tab(app, request);
 
         return 0;
     }
 
 
-    void open(const Helpers::HttpRequest &request, bool in_new_tab)
+    void open(App *app, const Helpers::HttpRequest &request, bool in_new_tab)
     {
         if (in_new_tab)
-            open_in_new_tab(request);
+            open_in_new_tab(app, request);
         else
-            open_in_current_tab(request);
+            open_in_current_tab(app, request);
     }
 
-    void open_in_current_tab(const Helpers::HttpRequest &request)
-    {
-        // Current_tab_index is supposed to be deleted in on_doc_loaded
-        const uint8_t current_tab_index = Controller::tabs_widget->get_current_tab_index();
-        Document *new_doc = new Document(request, Controller::document_loader, std::bind(&on_doc_loaded, current_tab_index));
-        Controller::tabs_widget->replace_document(new_doc, current_tab_index);
-        Controller::page_widget->display(new_doc);
-    }
 
-    void open_in_new_tab(const Helpers::HttpRequest &request)
-    {
-        if (!Controller::tabs_widget->can_add_tab())
-            return;
-
-        const uint8_t next_tab_index = Controller::tabs_widget->get_current_tab_index() + 1;
-        Document *new_doc = new Document(request, Controller::document_loader, std::bind(&on_doc_loaded, next_tab_index));
-        Controller::tabs_widget->add_tab(new_doc, next_tab_index);
-        Controller::tabs_widget->set_current_tab_index(next_tab_index);
-        Controller::page_widget->display(new_doc);
-    }
-
-    void on_doc_loaded(uint8_t tab_index)
+    static void on_doc_loaded(App *app, uint8_t tab_index)
     {
         // Updating tabs because the page's title is now set
-        Controller::tabs_widget->refresh_display();
+        app->getTabsWidget()->refresh_display();
 
         // Displaying it
-        if (tab_index == Controller::tabs_widget->get_current_tab_index())
-            Controller::page_widget->display(Controller::tabs_widget->get_document(tab_index));
+        if (tab_index == app->getTabsWidget()->get_current_tab_index())
+            app->getPageWidget()->display(app->getTabsWidget()->get_document(tab_index));
+    }
+
+    void open_in_current_tab(App *app, const Helpers::HttpRequest &request)
+    {
+        // Current_tab_index is supposed to be deleted in on_doc_loaded
+        const uint8_t current_tab_index = app->getTabsWidget()->get_current_tab_index();
+        Document *new_doc = new Document(request, app->getDocumentLoader(), std::bind(&on_doc_loaded, app, current_tab_index));
+        app->getTabsWidget()->replace_document(new_doc, current_tab_index);
+        app->getPageWidget()->display(new_doc);
+    }
+
+    void open_in_new_tab(App *app, const Helpers::HttpRequest &request)
+    {
+        if (!app->getTabsWidget()->can_add_tab())
+            return;
+
+        const uint8_t next_tab_index = app->getTabsWidget()->get_current_tab_index() + 1;
+        Document *new_doc = new Document(request, app->getDocumentLoader(), std::bind(&on_doc_loaded, app, next_tab_index));
+        app->getTabsWidget()->add_tab(new_doc, next_tab_index);
+        app->getTabsWidget()->set_current_tab_index(next_tab_index);
+        app->getPageWidget()->display(new_doc);
     }
 }

@@ -1,9 +1,9 @@
 #include "commands/history.hpp"
 #include "widgets/command.hpp"
-#include "controller.hpp"
+#include "app.hpp"
 
 namespace Commands {
-    int history_exec(int, char **, std::string *)
+    int history_exec(App*, int, char **, std::string *)
     {
         // TODO: renders a webpage in the page_widget presenting the commands history
         return 0;

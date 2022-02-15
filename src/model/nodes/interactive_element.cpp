@@ -1,6 +1,5 @@
 #include "model/nodes/interactive_element.hpp"
 
-
 namespace Nodes {
     InteractiveElement::InteractiveElement(const GumboElement *el, BuildData &build_data, bool is_interactive)
         : Element(el, build_data)

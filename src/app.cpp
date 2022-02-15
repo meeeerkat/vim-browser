@@ -1,5 +1,4 @@
-#include "controller.hpp"
-#include <cassert>
+#include "app.hpp"
 #include "model/document_loader.hpp"
 #include "widgets/tabs.hpp"
 #include "widgets/page.hpp"
@@ -11,26 +10,10 @@
 #include "config/general.hpp"
 #include "config/shortcuts.hpp"
 
-Controller *Controller::instance = nullptr;
-// helpers
-DocumentLoader *Controller::document_loader = nullptr;
-InputHandler *Controller::input_handler = nullptr;
-Commands::Handler *Controller::commands_handler = nullptr;
-// widgets
-Widgets::Page *Controller::page_widget = nullptr;
-Widgets::Command *Controller::command_widget = nullptr;
-Widgets::Tabs *Controller::tabs_widget = nullptr;
 
-bool Controller::should_quit = false;
-
-
-
-Controller::Controller()
+App::App()
+    : should_quit(false)
 {
-    // Controller is a Singleton (the only one)
-    assert(!instance);
-    instance = this;
-
     Config::load();
 
     // ncurses init
@@ -39,24 +22,24 @@ Controller::Controller()
     // helpers init
     document_loader = new DocumentLoader();
     input_handler = new InputHandler();
-    commands_handler = new Commands::Handler(print_message);
+    commands_handler = new Commands::Handler();
 
     // widgets init
+    command_widget = new Widgets::Command();
     page_widget = new Widgets::Page();
-    command_widget = new Widgets::Command(exec);
     tabs_widget = new Widgets::Tabs();
 
     // Opening base window
-    Commands::open_in_new_tab(Helpers::HttpRequest{Config::general->get_welcome_url()});
+    Commands::open_in_new_tab(this, Helpers::HttpRequest{Config::general->get_welcome_url()});
 }
 
-Controller::~Controller()
+App::~App()
 {
     delete document_loader;
 
     // widgets freeing
-    delete page_widget;
     delete command_widget;
+    delete page_widget;
     delete tabs_widget;
 
     // helpers freeing
@@ -69,7 +52,7 @@ Controller::~Controller()
     Config::free();
 }
 
-void Controller::pause()
+void App::pause()
 {
     tabs_widget->set_refresh_policy(false);
     page_widget->set_refresh_policy(false);
@@ -78,7 +61,7 @@ void Controller::pause()
     endwin();
 }
 
-void Controller::unpause()
+void App::unpause()
 {
     initscr();
     
@@ -91,12 +74,12 @@ void Controller::unpause()
     command_widget->clear();
 }
 
-void Controller::quit_when_possible()
+void App::quit_when_possible()
 {
     should_quit = true;
 }
 
-void Controller::wait_and_handle_input()
+void App::wait_and_handle_input()
 {
     while (!should_quit) {
         // Here we only handle shortcuts (some redirect to the widgets)
@@ -107,12 +90,23 @@ void Controller::wait_and_handle_input()
     }
 }
 
-void Controller::print_message(const std::string &message)
+int App::exec(const std::string &command)
 {
-    command_widget->print_message(message);
+    return commands_handler->exec(this, command);
 }
 
-int Controller::exec(const std::string &command)
-{
-    return commands_handler->exec(command);
+DocumentLoader *App::getDocumentLoader() {
+    return document_loader;
+}
+InputHandler *App::getInputHandler() {
+    return input_handler;
+}
+Widgets::Command *App::getCommandWidget() {
+    return command_widget;
+}
+Widgets::Page *App::getPageWidget() {
+    return page_widget;
+}
+Widgets::Tabs *App::getTabsWidget() {
+    return tabs_widget;
 }

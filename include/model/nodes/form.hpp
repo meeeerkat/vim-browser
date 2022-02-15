@@ -6,6 +6,8 @@
 #include <vector>
 #include "helpers/http_request.hpp"
 
+class App;
+
 namespace Nodes {
     class Input;
 
@@ -15,7 +17,7 @@ namespace Nodes {
             virtual void printw(WINDOW *window, PrintingOptions &printing_options);
 
             void add_input(Input *input);
-            void send(bool in_new_tab = false) const;
+            void send(App *app, bool in_new_tab = false) const;
 
         private:
             std::vector<Input*> inputs;

@@ -1,11 +1,11 @@
 #include <unistd.h>
 #include "commands/scroll.hpp"
 #include "widgets/page.hpp"
-#include "controller.hpp"
+#include "app.hpp"
 
 
 namespace Commands {
-    int scroll_exec(int argc, char **argv, std::string *error_message)
+    int scroll_exec(App *app, int argc, char **argv, std::string *error_message)
     {
         bool is_absolute = false;
         bool is_negative = false;
@@ -35,9 +35,9 @@ namespace Commands {
         if (is_negative)
             line = -line;
         if (!is_absolute)
-            line += Controller::page_widget->get_start_line();
+            line += app->getPageWidget()->get_start_line();
 
-        Controller::page_widget->scroll_to(line);
+        app->getPageWidget()->scroll_to(line);
 
         return 0;
     }

@@ -3,13 +3,15 @@
 
 #include <string>
 
+class App;
+
 namespace Commands {
-    int tab_move_exec(int argc, char **argv, std::string *error_message);
-    int tab_next_exec(int argc, char **argv, std::string *error_message);
-    int tab_prev_exec(int argc, char **argv, std::string *error_message);
-    void tab_move(uint8_t new_index);
-    void tab_prev();
-    void tab_next();
+    int tab_move_exec(App *app, int argc, char **argv, std::string *error_message);
+    int tab_next_exec(App *app, int argc, char **argv, std::string *error_message);
+    int tab_prev_exec(App *app, int argc, char **argv, std::string *error_message);
+    void tab_move(App *app, uint8_t new_index);
+    void tab_prev(App *app);
+    void tab_next(App *app);
 }
 
 #endif

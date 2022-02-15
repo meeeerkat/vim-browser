@@ -4,6 +4,8 @@
 #include "model/nodes/element.hpp"
 #include <stdint.h>
 
+class App;
+
 namespace Nodes {
     class InteractiveElement : public Element {
         public:
@@ -11,7 +13,7 @@ namespace Nodes {
             virtual ~InteractiveElement();
 
             void print_id(WINDOW *window, PrintingOptions &printing_options) const;
-            virtual void interact(PrintingOptions::InteractionType type) = 0;
+            virtual void interact(App *app, PrintingOptions::InteractionType type) = 0;
 
         protected:
             uint32_t id;

@@ -1,9 +1,10 @@
 #include "model/nodes/form.hpp"
 #include "model/nodes/input.hpp"
 #include "model/nodes/loader.hpp"
-#include "helpers/url.hpp"
-#include "commands/open.hpp"
 #include <iostream>
+#include "helpers/url.hpp"
+#include "app.hpp"
+#include "commands/open.hpp"
 
 
 namespace Nodes {
@@ -38,14 +39,14 @@ namespace Nodes {
         inputs.push_back(input);
     }
 
-    void Form::send(bool in_new_tab) const
+    void Form::send(App *app, bool in_new_tab) const
     {
         Helpers::HttpRequest request{action, method};
         for (Input* input : inputs)
             if (!input->get_name().empty())
                 request.fields += input->get_name() + "=" + input->get_value() + "&";
 
-        Commands::open(request, in_new_tab);
+        Commands::open(app, request, in_new_tab);
     }
 
 }

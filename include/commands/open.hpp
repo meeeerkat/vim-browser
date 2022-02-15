@@ -4,12 +4,14 @@
 #include <string>
 #include "helpers/http_request.hpp"
 
-namespace Commands {
-    int open_exec(int argc, char **argv, std::string *error_message);
+class App;
 
-    void open(const Helpers::HttpRequest &request, bool in_new_tab = false);
-    void open_in_current_tab(const Helpers::HttpRequest &request);
-    void open_in_new_tab(const Helpers::HttpRequest &request);
+namespace Commands {
+    int open_exec(App *app, int argc, char **argv, std::string *error_message);
+
+    void open(App *app, const Helpers::HttpRequest &request, bool in_new_tab = false);
+    void open_in_current_tab(App *app, const Helpers::HttpRequest &request);
+    void open_in_new_tab(App *app, const Helpers::HttpRequest &request);
 }
 
 #endif

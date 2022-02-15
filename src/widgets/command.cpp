@@ -1,13 +1,12 @@
 #include "widgets/command.hpp"
+#include "app.hpp"
 
 
 namespace Widgets {
 
-Command::Command(int (*exec_command_callback_p) (const std::string&))
+Command::Command()
     : Widget()
 {
-    exec_command_callback = exec_command_callback_p;
-
     // Takes only the last line
     window = newwin(1, COLS, LINES-1, 0);
     keypad(window, TRUE);
@@ -45,7 +44,7 @@ void Command::refresh_display() const
     wrefresh(window);
 }
 
-void Command::handle_input(const std::string *base_command)
+void Command::handle_input(App *app, const std::string *base_command)
 {
     wclear(window); // Necessary to clear messages
     if (base_command) {
@@ -92,7 +91,7 @@ void Command::handle_input(const std::string *base_command)
                     // Executing command & pushing it in the commands' history
                     history.push_back(std::string(command.get_value()));
                     clear();
-                    exec_command_callback(command.get_value());
+                    app->exec(command.get_value());
                     reset();
                     return;
                     break;

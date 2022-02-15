@@ -4,6 +4,7 @@
 #include "model/nodes/loader.hpp"
 #include "helpers/url.hpp"
 #include "config/media.hpp"
+#include "app.hpp"
 
 
 namespace Nodes {
@@ -28,7 +29,7 @@ namespace Nodes {
         InteractiveElement::print_id(window, printing_options);
     }
     
-    void Img::interact(PrintingOptions::InteractionType)
+    void Img::interact(App *app, PrintingOptions::InteractionType)
     {
         std::string command = std::regex_replace(Config::media->get_display_command(), std::regex("\\$URL"), src);
         system(command.c_str());

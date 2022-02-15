@@ -1,5 +1,6 @@
 #include "model/nodes/submit_input.hpp"
 #include "model/nodes/form.hpp"
+#include "app.hpp"
 
 
 namespace Nodes {
@@ -21,9 +22,9 @@ namespace Nodes {
         Input::print_id(window, printing_options);
     }
     
-    void SubmitInput::interact(PrintingOptions::InteractionType interaction_type)
+    void SubmitInput::interact(App *app, PrintingOptions::InteractionType interaction_type)
     {
-        form->send(interaction_type == PrintingOptions::InteractionType::NewTab);
+        form->send(app, interaction_type == PrintingOptions::InteractionType::NewTab);
     }
 
 }

@@ -1,7 +1,7 @@
 #include "model/nodes/text_input.hpp"
-#include "controller.hpp"
 #include "input_handler.hpp"
 #include "widgets/page.hpp"
+#include "app.hpp"
 
 
 namespace Nodes {
@@ -21,15 +21,15 @@ namespace Nodes {
         Input::print_id(window, printing_options);
     }
     
-    void TextInput::interact(PrintingOptions::InteractionType)
+    void TextInput::interact(App *app, PrintingOptions::InteractionType)
     {
-        refresh_display();
+        refresh_display(app);
         while (true) {
-            uint16_t code = Controller::input_handler->get_input();
+            uint16_t code = app->getInputHandler()->get_input();
             switch (model.handle_input(code)) {
                 case Model::TextInput::InputState::WaitingInput:
                     value = std::string(model.get_value());
-                    refresh_display();
+                    refresh_display(app);
                     break;
 
                 case Model::TextInput::InputState::Canceled:
@@ -39,12 +39,12 @@ namespace Nodes {
         }
     }
 
-    void TextInput::refresh_display() const
+    void TextInput::refresh_display(App *app) const
     {
         PrintingOptions printing_options;
         printing_options.cursor_y = y;
         printing_options.cursor_x = x + model.get_cursor();
-        Controller::page_widget->refresh_display(printing_options);
+        app->getPageWidget()->refresh_display(printing_options);
     }
 
 }
