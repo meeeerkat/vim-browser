@@ -2,8 +2,6 @@
 main
 *.o
 
-libvim
-
 gmon.out
 vgcore*
 
