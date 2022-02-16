@@ -1,0 +1,27 @@
+# This is an example of config file
+# It should be copied to ~/.vim-browser.yaml to be effective
+# Lack of a proper config file results in undefined behavior for now
+
+shortcuts:
+  :: write_command
+  o: write_command "open "
+  O: write_command "open -t "
+  d: close
+  k: scroll -n 1
+  j: scroll 1
+  i: interact
+  I: interact 1
+  n: tab_next
+  p: tab_prev
+  y: "!echo $CURRENT_URL | xclip"
+
+general:
+  welcome_url: https://github.com/meeeerkat/vim-browser
+  # %SEARCH_STRING will be replaced by the search string
+  search_url: https://lite.duckduckgo.com/lite?q=$SEARCH_STRING
+  cookies_accept: false
+  cookies_storage_path: /home/USER/.vim-browser/cookies
+
+media:
+  # %URL will be replaced by the choosen url
+  display_command: display $URL
