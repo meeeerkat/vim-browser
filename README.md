@@ -1,7 +1,17 @@
 
 ## Current state
 This project is on hold for now.
-It's usable but there will be a lot of bugs and one needs to find another search engine (duckduckgo lite isn't supported yet due to weird url links)  
+It's usable but there might be some bugs and one needs to find another search engine (duckduckgo lite isn't supported yet due to weird url links)  
+
+## How to build it
+make
+### Dependencies
+- libvim (see https://github.com/meeeerkat/vim-base) (should be in libvim directory)
+- ncurses
+- glib2.0
+- gumbo-parser
+- yaml-cpp
+- libcurl
 
 ## How will this be different to lynx ?
 - It already has multi-tabs support
@@ -9,10 +19,8 @@ It's usable but there will be a lot of bugs and one needs to find another search
 - It's content oriented and doesn't/won't care at all about any CSS (only the HTML structure matters)
 - I hope to make user interactions more efficient (by choosing the input/link following qutebrowser's way among other things, a basic version of this system is already functionnal (interact command))
 
-
 ## Config
-Configuration files are under ~/.vim-browser directory  
-Example of a valid set of config files can be found under the config\_example directory  
+The configuration file is ~/.vim-browser.yaml, an example can be found in the top directory
 
 ## Document printing
 HTML documents are (and will be) printed without any consideration for stylesheets:  
