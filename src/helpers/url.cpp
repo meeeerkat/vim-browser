@@ -1,6 +1,5 @@
 #include "helpers/url.hpp"
 #include <regex>
-#include "browser_config.hpp"
 
 namespace Helpers::Url {
     void fix(std::string &url, const std::string &search_url, const std::string &base)

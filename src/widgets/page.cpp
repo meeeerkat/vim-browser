@@ -7,7 +7,7 @@
 namespace Widgets {
 
 Page::Page()
-    : Widget()
+    : Vim::Widgets::Widget()
 {
     pad = newpad(MAX_LINES_NB, COLS);
     keypad(pad, TRUE);

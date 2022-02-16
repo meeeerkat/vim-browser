@@ -3,7 +3,7 @@
 #include <regex>
 #include "model/nodes/loader.hpp"
 #include "helpers/url.hpp"
-#include "browser_config.hpp"
+#include "config.hpp"
 #include "app.hpp"
 
 
@@ -31,7 +31,7 @@ namespace Nodes {
     
     void Img::interact(App *app, PrintingOptions::InteractionType)
     {
-        std::string command = std::regex_replace(app->getConfig()->get_media_display_command(), std::regex("\\$URL"), src);
+        std::string command = std::regex_replace(app->get_config()->get_media_display_command(), std::regex("\\$URL"), src);
         system(command.c_str());
     }
 

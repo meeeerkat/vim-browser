@@ -1,53 +1,40 @@
-#ifndef __CONTROLLER_HPP__
-#define __CONTROLLER_HPP__
+#ifndef __APP_HPP__
+#define __APP_HPP__
 
 #include <string>
+#include "vim/app.hpp"
 
-class BrowserConfig;
+class Config;
 class DocumentLoader;
-class InputHandler;
 namespace Commands { class Handler; }
 namespace Widgets {
     class Page;
-    class Command;
     class Tabs;
 }
 
 // Mostly only initialisation & modules management
-class App {
+class App : public Vim::App {
 
     public:
         App();
         ~App();
         
-        void wait_and_handle_input();
-
         void pause();
         void unpause();
-        void quit_when_possible();
-        
-        int exec(const std::string &command);
 
-        BrowserConfig *getConfig();
-        DocumentLoader *getDocumentLoader();
-        InputHandler *getInputHandler();
+        Config *get_config();
+        DocumentLoader *get_document_loader();
 
-        Widgets::Command *getCommandWidget();
-        Widgets::Page *getPageWidget();
-        Widgets::Tabs *getTabsWidget();
+        Widgets::Page *get_page_widget();
+        Widgets::Tabs *get_tabs_widget();
 
     private:
         // helpers
-        BrowserConfig *config;
+        Config *config;
         DocumentLoader *document_loader;
-        InputHandler *input_handler;
-        Commands::Handler *commands_handler;
         // widgets
         Widgets::Page *page_widget;
-        Widgets::Command *command_widget;
         Widgets::Tabs *tabs_widget;
-
-        bool should_quit;
 };
 
 

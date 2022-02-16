@@ -5,10 +5,10 @@
 #include <limits>
 #include "model/document_loader.hpp"
 #include "model/document.hpp"
-#include "browser_config.hpp"
+#include "config.hpp"
 
 
-DocumentLoader::DocumentLoader(BrowserConfig *_config)
+DocumentLoader::DocumentLoader(Config *_config)
     : config(_config)
 {
     curl_global_init(CURL_GLOBAL_ALL);

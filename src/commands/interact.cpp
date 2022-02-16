@@ -12,7 +12,7 @@ namespace Commands {
 
         Nodes::PrintingOptions::InteractionType type = static_cast<Nodes::PrintingOptions::InteractionType>(type_int);
         if (type != Nodes::PrintingOptions::InteractionType::None)
-            return app->getPageWidget()->interact(app, type, error_message);
+            return app->get_page_widget()->interact(app, type, error_message);
 
         return 0;
     }

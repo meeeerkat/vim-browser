@@ -26,22 +26,22 @@ namespace Commands {
     }
     void tab_move(App *app, uint8_t new_index)
     {
-        app->getTabsWidget()->set_current_tab_index(new_index);
-        app->getPageWidget()->display(app->getTabsWidget()->get_current_document());
+        app->get_tabs_widget()->set_current_tab_index(new_index);
+        app->get_page_widget()->display(app->get_tabs_widget()->get_current_document());
     }
     void tab_prev(App *app)
     {
-        uint8_t current_tab_index = app->getTabsWidget()->get_current_tab_index();
+        uint8_t current_tab_index = app->get_tabs_widget()->get_current_tab_index();
         if (current_tab_index != 0)
-            tab_move(app, app->getTabsWidget()->get_current_tab_index() - 1);
+            tab_move(app, app->get_tabs_widget()->get_current_tab_index() - 1);
         else
-            tab_move(app, app->getTabsWidget()->get_tabs_nb() - 1);
+            tab_move(app, app->get_tabs_widget()->get_tabs_nb() - 1);
     }
     void tab_next(App *app)
     {
-        uint8_t current_tab_index = app->getTabsWidget()->get_current_tab_index();
-        if (current_tab_index != app->getTabsWidget()->get_tabs_nb() - 1)
-            tab_move(app, app->getTabsWidget()->get_current_tab_index() + 1);
+        uint8_t current_tab_index = app->get_tabs_widget()->get_current_tab_index();
+        if (current_tab_index != app->get_tabs_widget()->get_tabs_nb() - 1)
+            tab_move(app, app->get_tabs_widget()->get_current_tab_index() + 1);
         else
             tab_move(app, 0);
     }

@@ -2,13 +2,13 @@
 #define __WIDGETS_TABS_HPP__
 
 #include <ncurses.h>
-#include "widgets/widget.hpp"
+#include "vim/widgets/widget.hpp"
 #include "model/document.hpp"
 
 #define TABS_MAX_NB 10
 
 namespace Widgets {
-    class Tabs : public Widget {
+    class Tabs : public Vim::Widgets::Widget {
 
         public:
             Tabs();

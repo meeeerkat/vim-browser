@@ -3,55 +3,51 @@
 
 #include <string>
 #include <map>
-#include "commands/global.hpp"
+#include "vim/commands/handler.hpp"
 
 class App;
 
 namespace Commands {
 
+    typedef int (*Command) (App*, int, char**, std::string*);
+
     #define DECLARE_COMMAND(NAME) int NAME ## _exec(App*, int, char**, std::string*);
-    DECLARE_COMMAND(quit)
     DECLARE_COMMAND(open)
     DECLARE_COMMAND(history)
     DECLARE_COMMAND(close)
     DECLARE_COMMAND(tab_move)
     DECLARE_COMMAND(tab_next)
     DECLARE_COMMAND(tab_prev)
-    DECLARE_COMMAND(write_command)
     DECLARE_COMMAND(scroll)
     DECLARE_COMMAND(interact)
 
 
-    class Handler {
+    class Handler : public Vim::Commands::Handler {
         public:
-            Handler();
-            ~Handler();
-            int exec(App *app, const std::string &command) const;
+            Handler(App *app);
+            virtual ~Handler();
+            int exec(const std::string &command) const;
+
+        protected:
+            virtual int _exec_command(const std::string &command_name, int argc, char **argv, std::string *error_message) const;
 
         private:
-            void print_message(App *app, const std::string&) const;
+            App *app;
+
             #define COMMAND(NAME)  { #NAME, NAME ## _exec }
-            std::map<std::string, int (*) (App*, int, char**, std::string*)> COMMANDS = 
+            std::map<std::string, Command> COMMANDS = 
             {
-                COMMAND(quit),
                 COMMAND(open),
                 COMMAND(history),
                 COMMAND(close),
                 COMMAND(tab_move),
                 COMMAND(tab_next),
                 COMMAND(tab_prev),
-                COMMAND(write_command),
                 COMMAND(scroll),
                 COMMAND(interact),
             };
-
-            void set_global_variables(App *app, char **argv, int argc) const;
-            std::map<std::string, const std::string& (*) (App*)> global_vars_getters = 
-            {
-                { "$CURRENT_URL", Global::get_current_url },
-            };
     };
 
- }
+}
 
 #endif

@@ -1,5 +1,5 @@
 #include "model/nodes/text_input.hpp"
-#include "input_handler.hpp"
+#include "vim/input_handler.hpp"
 #include "widgets/page.hpp"
 #include "app.hpp"
 
@@ -25,15 +25,15 @@ namespace Nodes {
     {
         refresh_display(app);
         while (true) {
-            uint16_t code = app->getInputHandler()->get_input();
+            uint16_t code = app->get_input_handler()->get_input();
             switch (model.handle_input(code)) {
-                case Model::TextInput::InputState::WaitingInput:
+                case Vim::Model::TextInput::InputState::WaitingInput:
                     value = std::string(model.get_value());
                     refresh_display(app);
                     break;
 
-                case Model::TextInput::InputState::Canceled:
-                case Model::TextInput::InputState::Sent:
+                case Vim::Model::TextInput::InputState::Canceled:
+                case Vim::Model::TextInput::InputState::Sent:
                     return;
             }
         }
@@ -44,7 +44,7 @@ namespace Nodes {
         PrintingOptions printing_options;
         printing_options.cursor_y = y;
         printing_options.cursor_x = x + model.get_cursor();
-        app->getPageWidget()->refresh_display(printing_options);
+        app->get_page_widget()->refresh_display(printing_options);
     }
 
 }

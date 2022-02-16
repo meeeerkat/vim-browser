@@ -1,6 +1,6 @@
 
 ## Current state
-This project is on hold for now because I'm implementing some libraries that will greatly improve this project's structure and avoid mixing so many different components.
+This project is on hold for now.
 It's usable but there will be a lot of bugs and one needs to find another search engine (duckduckgo lite isn't supported yet due to weird url links)  
 
 ## How will this be different to lynx ?

@@ -2,14 +2,14 @@
 #define __WIDGETS_PAGE_HPP__
 
 #include <stdint.h>
-#include "widgets/widget.hpp"
+#include "vim/widgets/widget.hpp"
 #include "model/nodes/interactive_element.hpp"
 
 class Document;
 class App;
 
 namespace Widgets {
-    class Page : public Widget {
+    class Page : public Vim::Widgets::Widget {
         public:
             Page();
             virtual ~Page();

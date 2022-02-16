@@ -6,7 +6,7 @@
 namespace Commands::Global {
     const std::string &get_current_url(App *app)
     {
-        return app->getPageWidget()->get_displayed_document()->get_request().url;
+        return app->get_page_widget()->get_displayed_document()->get_request().url;
     }
 }
 

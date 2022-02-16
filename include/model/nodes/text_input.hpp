@@ -2,7 +2,7 @@
 #define __MODEL_NODES_TEXTINPUT_H__
 
 #include "model/nodes/input.hpp"
-#include "model/text_input.hpp"
+#include "vim/model/text_input.hpp"
 
 namespace Nodes {
     class TextInput : public Input {
@@ -13,7 +13,7 @@ namespace Nodes {
             virtual void interact(App *app, PrintingOptions::InteractionType type);
 
         private:
-            Model::TextInput model;
+            Vim::Model::TextInput model;
             
             void refresh_display(App *app) const;
     };

@@ -6,20 +6,20 @@
 #include <map>
 
 class Document;
-class BrowserConfig;
+class Config;
 
 
 class DocumentLoader {
 
     public:
-        DocumentLoader(BrowserConfig *config);
+        DocumentLoader(Config *config);
         ~DocumentLoader();
         void load_async(Document *doc);
         void cancel_async_loading(Document *doc);
         bool is_loading(const Document *doc) const;
 
     private:
-        BrowserConfig *config; // not owned
+        Config *config; // not owned
         
         struct curl_easy_request {
             CURL *handle = NULL;

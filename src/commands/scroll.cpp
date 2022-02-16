@@ -27,7 +27,7 @@ namespace Commands {
             }
         }
         if (optind + 1 != argc) {
-            *error_message = "Usage: scroll [-a] line";
+            *error_message = "Usage: scroll [-an] line";
             return -1;
         }
 
@@ -35,9 +35,9 @@ namespace Commands {
         if (is_negative)
             line = -line;
         if (!is_absolute)
-            line += app->getPageWidget()->get_start_line();
+            line += app->get_page_widget()->get_start_line();
 
-        app->getPageWidget()->scroll_to(line);
+        app->get_page_widget()->scroll_to(line);
 
         return 0;
     }

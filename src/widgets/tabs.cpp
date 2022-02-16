@@ -4,7 +4,7 @@
 namespace Widgets {
 
 Tabs::Tabs()
-    : Widget()
+    : Vim::Widgets::Widget()
 {
     // Takes only the first line
     window = newwin(1, COLS, 0, 0);

@@ -1,5 +1,4 @@
 #include "commands/history.hpp"
-#include "widgets/command.hpp"
 #include "app.hpp"
 
 namespace Commands {
