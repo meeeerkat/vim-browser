@@ -2,8 +2,7 @@
 main
 *.o
 
-libvim/*
-!libvim/.gitkeep
+libvim
 
 gmon.out
 vgcore*
