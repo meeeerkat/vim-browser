@@ -1,5 +1,5 @@
-#ifndef __MODEL_NODES_HIDDENINPUT_H__
-#define __MODEL_NODES_HIDDENINPUT_H__
+#ifndef __MODEL_NODES_HIDDENINPUT_HPP__
+#define __MODEL_NODES_HIDDENINPUT_HPP__
 
 #include "model/nodes/input.hpp"
 

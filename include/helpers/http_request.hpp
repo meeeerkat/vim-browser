@@ -1,5 +1,5 @@
-#ifndef __HELPERS_HTTPREQUEST_H__
-#define __HELPERS_HTTPREQUEST_H__
+#ifndef __HELPERS_HTTPREQUEST_HPP__
+#define __HELPERS_HTTPREQUEST_HPP__
 
 #include <string>
 

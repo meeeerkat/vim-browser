@@ -1,7 +1,10 @@
-#ifndef __GLOBAL_H__
-#define __GLOBAL_H__
+#ifndef __COMMANDS_GLOBAL_HPP__
+#define __COMMANDS_GLOBAL_HPP__
 
 #include <string>
+
+// This file's use was removed when libvim was factorised out of this project
+// but the feature it uses will be re-implemented in libvim soon
 
 class App;
 

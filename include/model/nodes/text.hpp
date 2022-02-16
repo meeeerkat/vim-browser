@@ -1,5 +1,5 @@
-#ifndef __MODEL_NODES_TEXT_H__
-#define __MODEL_NODES_TEXT_H__
+#ifndef __MODEL_NODES_TEXT_HPP__
+#define __MODEL_NODES_TEXT_HPP__
 
 #include <string>
 #include "model/nodes/node.hpp"

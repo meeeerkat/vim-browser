@@ -1,5 +1,5 @@
-#ifndef __MODEL_NODES_TEXTINPUT_H__
-#define __MODEL_NODES_TEXTINPUT_H__
+#ifndef __MODEL_NODES_TEXTINPUT_HPP__
+#define __MODEL_NODES_TEXTINPUT_HPP__
 
 #include "model/nodes/input.hpp"
 #include "vim/model/text_input.hpp"

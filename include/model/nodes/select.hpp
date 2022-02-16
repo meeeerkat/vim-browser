@@ -1,5 +1,5 @@
-#ifndef __MODEL_NODES_SELECT_H__
-#define __MODEL_NODES_SELECT_H__
+#ifndef __MODEL_NODES_SELECT_HPP__
+#define __MODEL_NODES_SELECT_HPP__
 
 #include <map>
 #include <vector>

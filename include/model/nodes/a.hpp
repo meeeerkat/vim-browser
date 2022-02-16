@@ -1,5 +1,5 @@
-#ifndef __MODEL_NODES_A_H__
-#define __MODEL_NODES_A_H__
+#ifndef __MODEL_NODES_A_HPP__
+#define __MODEL_NODES_A_HPP__
 
 #include <string>
 #include "model/nodes/interactive_element.hpp"

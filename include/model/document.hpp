@@ -1,5 +1,6 @@
-#ifndef __MODEL_DOCUMENT_H__
-#define __MODEL_DOCUMENT_H__
+#ifndef __MODEL_DOCUMENT_HPP__
+#define __MODEL_DOCUMENT_HPP__
+
 #include <string>
 #include <ncurses.h>
 #include <gumbo.h>

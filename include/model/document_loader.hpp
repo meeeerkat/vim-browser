@@ -1,5 +1,6 @@
 #ifndef __MODEL_DOCUMENTLOADER_HPP__
 #define __MODEL_DOCUMENTLOADER_HPP__
+
 #include <curl/curl.h>
 #include <gumbo.h>
 #include <string>

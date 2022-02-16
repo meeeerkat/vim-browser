@@ -1,5 +1,5 @@
-#ifndef __MODEL_ELEMENTS_LOADER_H__
-#define __MODEL_ELEMENTS_LOADER_H__
+#ifndef __MODEL_ELEMENTS_LOADER_HPP__
+#define __MODEL_ELEMENTS_LOADER_HPP__
 
 #include <string>
 #include <gumbo.h>

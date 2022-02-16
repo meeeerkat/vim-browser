@@ -1,4 +1,4 @@
-#ifndef __COMMANDS_INTEERACT_HPP__
+#ifndef __COMMANDS_INTERACT_HPP__
 #define __COMMANDS_INTERACT_HPP__
 
 #include <string>

@@ -1,5 +1,5 @@
-#ifndef __MODEL_NODES_H3_H__
-#define __MODEL_NODES_H3_H__
+#ifndef __MODEL_NODES_H3_HPP__
+#define __MODEL_NODES_H3_HPP__
 
 #include "model/nodes/element.hpp"
 

@@ -1,5 +1,5 @@
-#ifndef __MODEL_NODES_SUBMITINPUT_H__
-#define __MODEL_NODES_SUBMITINPUT_H__
+#ifndef __MODEL_NODES_SUBMITINPUT_HPP__
+#define __MODEL_NODES_SUBMITINPUT_HPP__
 
 #include "model/nodes/input.hpp"
 

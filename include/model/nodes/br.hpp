@@ -1,5 +1,5 @@
-#ifndef __MODEL_NODES_BR_H__
-#define __MODEL_NODES_BR_H__
+#ifndef __MODEL_NODES_BR_HPP__
+#define __MODEL_NODES_BR_HPP__
 
 #include "model/nodes/element.hpp"
 

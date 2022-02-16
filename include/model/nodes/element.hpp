@@ -1,5 +1,5 @@
-#ifndef __MODEL_NODES_ELEMENT_H__
-#define __MODEL_NODES_ELEMENT_H__
+#ifndef __MODEL_NODES_ELEMENT_HPP__
+#define __MODEL_NODES_ELEMENT_HPP__
 
 #include <vector>
 #include <gumbo.h>
