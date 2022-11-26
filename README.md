@@ -7,6 +7,10 @@ Search engine support isn't working (duckduckgo lite will do the search but usin
 The lack of javascript support will break most websites.  
 There might be some bugs and one needs to find another search engine (duckduckgo lite isn't supported yet due to weird url links)  
 
+## Config
+The configuration file is ~/.vim-browser.yaml, an example can be found in the top directory.  
+/!\ Without a configuration file, the programm will exit with an error (containing the path where the config file is expected) but *with a badly formatted configuration file, the program will crash*.  
+
 ## How to build it
 make
 ### Dependencies
@@ -23,8 +27,6 @@ make
 - It's content oriented and doesn't/won't care at all about any CSS (only the HTML structure matters)
 - I hope to make user interactions more efficient (by choosing the input/link following qutebrowser's way among other things, a basic version of this system is already functionnal (interact command))
 
-## Config
-The configuration file is ~/.vim-browser.yaml, an example can be found in the top directory
 
 ## Document printing
 HTML documents are (and will be) printed without any consideration for stylesheets:  
