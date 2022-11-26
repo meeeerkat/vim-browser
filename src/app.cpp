@@ -1,5 +1,5 @@
 #include "app.hpp"
-#include <stdlib.h>
+#include <iostream>
 #include <yaml-cpp/yaml.h>
 #include "model/document_loader.hpp"
 #include "widgets/tabs.hpp"
@@ -9,16 +9,10 @@
 #include "config.hpp"
 
 
-App::App()
-    : Vim::App(new Commands::Handler(this))
+App::App(const YAML::Node &yaml_config)
+    : Vim::App(new Commands::Handler(this), yaml_config)
 {
-    std::string path = std::string(getenv("HOME")) + "/.vim-browser.yaml";
-    YAML::Node yaml_config = YAML::LoadFile(path);
     config = new Config(yaml_config);
-    Vim::App::set_config(yaml_config);
-
-    // ncurses init
-    initscr();
 
     // helpers init
     document_loader = new DocumentLoader(config);

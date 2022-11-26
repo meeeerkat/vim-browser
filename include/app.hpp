@@ -16,7 +16,7 @@ namespace Widgets {
 class App : public Vim::App {
 
     public:
-        App();
+        App(const YAML::Node &yaml_config);
         ~App();
         
         void pause();
