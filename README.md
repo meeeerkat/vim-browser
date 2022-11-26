@@ -1,9 +1,11 @@
 
 ## Current state
-This project is on hold for now.
-The lack of javascript support will break most websites and most webpages are hard to read using this software (display could be improved but it's limited by the terminal's capabilities anyways).
-It's somewhat usable for very specific websites (some wikipedia articles can be read) but there might be some bugs and one needs to find another search engine (duckduckgo lite isn't supported yet due to weird url links)  
-Auto url building isn't properly implemented yet. Example: wikipedia.fr will give an error but not www.wikipedia.fr (the http part is added automatically).
+This project is on hold for now.  
+Usable for mostly text based websites such as Wikipedia.  
+Search engine support isn't working (duckduckgo lite will do the search but using :interact to click on the link will not redirect to the right page)  
+-> Need to write the urls directly   
+The lack of javascript support will break most websites.  
+There might be some bugs and one needs to find another search engine (duckduckgo lite isn't supported yet due to weird url links)  
 
 ## How to build it
 make

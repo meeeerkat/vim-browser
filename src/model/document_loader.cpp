@@ -49,6 +49,9 @@ void DocumentLoader::add_request(Document *doc)
     curl_easy_setopt(handle, CURLOPT_VERBOSE, 0L);
     curl_easy_setopt(handle, CURLOPT_WRITEFUNCTION, append_to_buffer);
     curl_easy_setopt(handle, CURLOPT_URL, doc->get_request().url.c_str());
+    // Enabling redirections
+    curl_easy_setopt(handle, CURLOPT_FOLLOWLOCATION, 1L);
+
     // Cookies
     if (config->are_cookies_accepted()) {
         curl_easy_setopt(handle, CURLOPT_COOKIEFILE, config->get_cookies_storage_path().c_str());
@@ -103,10 +106,13 @@ void *DocumentLoader::load_documents(void *args)
 
             CURL *easy_handle = msg->easy_handle;
             Document *doc;
+            long http_code = 0;
             curl_easy_getinfo(easy_handle, CURLINFO_PRIVATE, &doc);
-            if (msg->data.result != CURLE_OK) {
+            curl_easy_getinfo (easy_handle, CURLINFO_RESPONSE_CODE, &http_code);
+            if (msg->data.result != CURLE_OK || http_code != 200) {
                 // Deleting the request
                 loader->remove_request(doc);
+
                 doc->on_loading_failed(curl_easy_strerror(msg->data.result));
             }
             else {
