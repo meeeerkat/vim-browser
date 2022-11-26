@@ -1,7 +1,9 @@
 
 ## Current state
 This project is on hold for now.
-It's usable but there might be some bugs and one needs to find another search engine (duckduckgo lite isn't supported yet due to weird url links)  
+The lack of javascript support will break most websites and most webpages are hard to read using this software (display could be improved but it's limited by the terminal's capabilities anyways).
+It's somewhat usable for very specific websites (some wikipedia articles can be read) but there might be some bugs and one needs to find another search engine (duckduckgo lite isn't supported yet due to weird url links)  
+Auto url building isn't properly implemented yet. Example: wikipedia.fr will give an error but not www.wikipedia.fr (the http part is added automatically).
 
 ## How to build it
 make
